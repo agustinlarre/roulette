@@ -5,6 +5,8 @@
 package servicios;
 
 import excepciones.UsuarioException;
+import excepciones.UsuarioLogueadoException;
+import excepciones.UsuarioNoEncontradoException;
 import java.util.ArrayList;
 import java.util.List;
 import logicaNegocio.*;
@@ -41,30 +43,36 @@ public class ServicioUsuarios {
     }
     
     private Sesion login(String cedula, String contrasenia, List<Usuario> listaUsuarios) throws UsuarioException {
-        Usuario usuario = this.getUsuario(cedula, contrasenia, listaUsuarios);
-        if (usuario != null) {
-            if (!this.existeSesionDeUsuario(usuario)) {
-                Sesion sesion = new Sesion(usuario);
-                this.agregarSesion(sesion);
-                return sesion;
-            } else {
-                throw new UsuarioException("Acceso denegado. El usuario ya tiene una sesión activa.");
-            }
-        } else {
+        try {
+            Usuario usuario = this.getUsuario(cedula, contrasenia, listaUsuarios);
+            Sesion sesion = new Sesion(usuario);
+            this.agregarSesionDeUsuario(sesion);
+            return sesion;
+        } catch (UsuarioNoEncontradoException ex1) {
             throw new UsuarioException("Credenciales incorrectas.");
+        } catch (UsuarioLogueadoException ex2) {
+            throw new UsuarioException("Acceso denegado. El usuario ya tiene una sesión activa.");
         }
     }
     
-    private Usuario getUsuario(String cedula, String contrasenia, List<Usuario> listaUsuarios) {
+    private Usuario getUsuario(String cedula, String contrasenia, List<Usuario> listaUsuarios) throws UsuarioNoEncontradoException {
         Usuario usuario = null;
         for (Usuario u : listaUsuarios) {
             if (u.getCedula().equals(cedula) && u.getPassword().equals(contrasenia)) usuario = u;
         }
-        return usuario;
+        if (usuario == null) {
+            throw new UsuarioNoEncontradoException();
+        } else {
+            return usuario;
+        }
     }
     
-    private void agregarSesion(Sesion sesion) {
-        this.sesionesActivas.add(sesion);
+    private void agregarSesionDeUsuario(Sesion sesion) throws UsuarioLogueadoException {
+        if (!this.existeSesionDeUsuario(sesion.getUsuario())) {
+                this.sesionesActivas.add(sesion);
+            } else {
+                throw new UsuarioLogueadoException();
+            }
     }
     
     public void logout(Sesion sesion) {
