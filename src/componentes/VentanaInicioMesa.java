@@ -39,7 +39,7 @@ public class VentanaInicioMesa extends javax.swing.JFrame {
     }
     
     private void inicializar() {
-        this.hidratarListaTiposApuesta();
+        hidratarListaTiposApuesta();
     }
     
     private void hidratarListaTiposApuesta() {
