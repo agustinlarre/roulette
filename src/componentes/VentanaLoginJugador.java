@@ -5,8 +5,6 @@
 package componentes;
 
 import excepciones.UsuarioException;
-import logicaNegocio.Jugador;
-import logicaNegocio.Usuario;
 import logicaNegocio.Sesion;
 import servicios.Fachada;
 
@@ -22,7 +20,7 @@ public class VentanaLoginJugador extends VentanaLogin {
 
     @Override
     protected Sesion login(String cedula, String contrasenia) throws UsuarioException {
-        return Fachada.getInstancia().loginCrupier(cedula, contrasenia);
+        return Fachada.getInstancia().loginJugador(cedula, contrasenia);
     }
 
     @Override

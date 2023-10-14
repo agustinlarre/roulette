@@ -37,8 +37,8 @@ public class MainApp {
         Jugador jugador1 = new Jugador("201", "LuckyOne321");
         Jugador jugador2 = new Jugador("202", "DarkSide55");
         Jugador jugador3 = new Jugador("203", "PinkKitten77");
-        Jugador jugador4 = new Jugador("201", "HappyGuy99");
-        Jugador jugador5 = new Jugador("201", "UnluckyBastard03");
+        Jugador jugador4 = new Jugador("204", "HappyGuy99");
+        Jugador jugador5 = new Jugador("205", "UnluckyBastard03");
         Fachada.getInstancia().agregarJugador(jugador1);
         Fachada.getInstancia().agregarJugador(jugador2);
         Fachada.getInstancia().agregarJugador(jugador3);
@@ -49,5 +49,13 @@ public class MainApp {
         Efecto aleatorioCompleto = new Efecto("Aleatorio completo");
         Efecto aleatorioParcial = new Efecto("Aleatorio parcial");
         Efecto simulador = new Efecto("Simulador");
+        
+        // Tipos de apuesta
+        TipoApuesta apuestaDirecta = new TipoApuesta("Apuesta directa");
+        TipoApuesta apuestaColores = new TipoApuesta("Apuesta colores");
+        TipoApuesta apuestaDocena = new TipoApuesta("Apuesta docena");
+        Fachada.getInstancia().agregarTipoApuesta(apuestaDirecta);
+        Fachada.getInstancia().agregarTipoApuesta(apuestaColores);
+        Fachada.getInstancia().agregarTipoApuesta(apuestaDocena);
     }
 }

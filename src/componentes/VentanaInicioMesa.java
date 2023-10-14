@@ -6,8 +6,10 @@ package componentes;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import logicaNegocio.Crupier;
 import logicaNegocio.Sesion;
+import logicaNegocio.TipoApuesta;
 import servicios.Fachada;
 
 /**
@@ -24,6 +26,7 @@ public class VentanaInicioMesa extends javax.swing.JFrame {
      */
     public VentanaInicioMesa(Sesion sesionActual) {
         initComponents();
+        inicializar();
         this.sesion = sesionActual;
         this.crupier = (Crupier) sesionActual.getUsuario();
         this.setTitle("Aplicación Crupier - Iniciar mesa");
@@ -33,6 +36,17 @@ public class VentanaInicioMesa extends javax.swing.JFrame {
                 Fachada.getInstancia().logout(sesionActual);
             }
         });
+    }
+    
+    private void inicializar() {
+        this.hidratarListaTiposApuesta();
+    }
+    
+    private void hidratarListaTiposApuesta() {
+        //Como elegir el tipo de apuesta seleccionado de la lista...
+        //TipoApuesta tipoApuestaSelecionada= (TipoApuesta) listaTiposApuesta.getSelectedValue();
+        ArrayList<TipoApuesta> tiposApuesta = Fachada.getInstancia().getTiposApuesta();
+        listaTiposApuesta.setListData(tiposApuesta.toArray());
     }
 
     /**
@@ -46,7 +60,7 @@ public class VentanaInicioMesa extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        listaTiposApuesta = new javax.swing.JList<>();
+        listaTiposApuesta = new javax.swing.JList();
         btnIniciarMesa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -88,6 +102,6 @@ public class VentanaInicioMesa extends javax.swing.JFrame {
     private javax.swing.JButton btnIniciarMesa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<String> listaTiposApuesta;
+    private javax.swing.JList listaTiposApuesta;
     // End of variables declaration//GEN-END:variables
 }

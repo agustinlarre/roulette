@@ -5,6 +5,7 @@
 package servicios;
 
 import excepciones.UsuarioException;
+import java.util.ArrayList;
 import java.util.List;
 import logicaNegocio.*;
 
@@ -45,11 +46,19 @@ public class Fachada {
         return this.servicioUsuarios.loginCrupier(cedula, contrasenia);
     }
     
+    public void logout(Sesion sesion) {
+        this.servicioUsuarios.logout(sesion);
+    }
+    
     public void agregarMesa(Mesa mesa) {
         this.servicioMesas.agregarMesa(mesa);
     }
     
-    public void logout(Sesion sesion) {
-        this.servicioUsuarios.logout(sesion);
+    public void agregarTipoApuesta(TipoApuesta tipoApuesta) {
+        this.servicioMesas.agregarTipoApuesta(tipoApuesta);
+    }
+    
+    public ArrayList<TipoApuesta> getTiposApuesta() {
+        return this.servicioMesas.getTiposApuesta();
     }
 }
