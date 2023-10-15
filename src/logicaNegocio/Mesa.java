@@ -14,7 +14,9 @@ public class Mesa {
     private ArrayList<TipoApuesta> tiposApuesta;
     private Efecto efecto;
 
-    public Mesa() {
+    public Mesa(ArrayList<TipoApuesta> tiposApuesta, Efecto efecto) {
+        this.tiposApuesta = tiposApuesta;
+        this.efecto = efecto;
     }
 
     public ArrayList<TipoApuesta> getTiposApuesta() {
@@ -32,5 +34,5 @@ public class Mesa {
 
     public void setEfecto(Efecto efecto) {
         this.efecto = efecto;
-    } 
+    }  
 }

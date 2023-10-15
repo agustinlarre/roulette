@@ -4,7 +4,7 @@
  */
 package componentes;
 
-import excepciones.UsuarioException;
+import excepcionesSistema.UsuarioException;
 import javax.swing.JOptionPane;
 import logicaNegocio.Sesion;
 

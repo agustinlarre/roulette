@@ -4,9 +4,9 @@
  */
 package servicios;
 
-import excepciones.UsuarioException;
-import excepciones.UsuarioLogueadoException;
-import excepciones.UsuarioNoEncontradoException;
+import excepcionesSistema.UsuarioException;
+import excepcionesSistema.UsuarioLogueadoException;
+import excepcionesSistema.UsuarioNoEncontradoException;
 import java.util.ArrayList;
 import java.util.List;
 import logicaNegocio.*;

@@ -4,7 +4,7 @@
  */
 package componentes;
 
-import excepciones.UsuarioException;
+import excepcionesSistema.UsuarioException;
 import logicaNegocio.Sesion;
 import servicios.Fachada;
 
