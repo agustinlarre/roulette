@@ -12,11 +12,12 @@ import java.util.ArrayList;
  */
 public class Mesa {
     private ArrayList<TipoApuesta> tiposApuesta;
-    private Efecto efecto;
+    private ArrayList<Efecto> listaEfectos;
 
-    public Mesa(ArrayList<TipoApuesta> tiposApuesta, Efecto efecto) {
+    public Mesa(ArrayList<TipoApuesta> tiposApuesta) {
         this.tiposApuesta = tiposApuesta;
-        this.efecto = efecto;
+        this.listaEfectos = new ArrayList();
+        hidratarListaEfectos();
     }
 
     public ArrayList<TipoApuesta> getTiposApuesta() {
@@ -27,12 +28,13 @@ public class Mesa {
     public void setTipoApuesta(TipoApuesta tipo) {
         this.tiposApuesta.add(tipo);
     }
-
-    public Efecto getEfecto() {
-        return efecto;
+    
+    private void hidratarListaEfectos() {
+        Efecto aleatorioCompleto = new Efecto("Aleatorio completo");
+        Efecto aleatorioParcial = new Efecto("Aleatorio parcial");
+        Efecto simulador = new Efecto("Simulador");
+        this.listaEfectos.add(aleatorioCompleto);
+        this.listaEfectos.add(aleatorioParcial);
+        this.listaEfectos.add(simulador);
     }
-
-    public void setEfecto(Efecto efecto) {
-        this.efecto = efecto;
-    }  
 }

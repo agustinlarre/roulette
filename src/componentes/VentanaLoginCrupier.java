@@ -5,8 +5,6 @@
 package componentes;
 
 import excepcionesSistema.UsuarioException;
-import logicaNegocio.Crupier;
-import logicaNegocio.Usuario;
 import logicaNegocio.Sesion;
 import servicios.Fachada;
 

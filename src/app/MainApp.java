@@ -45,11 +45,6 @@ public class MainApp {
         Fachada.getInstancia().agregarJugador(jugador4);
         Fachada.getInstancia().agregarJugador(jugador5);
         
-        // Efectos
-        Efecto aleatorioCompleto = new Efecto("Aleatorio completo");
-        Efecto aleatorioParcial = new Efecto("Aleatorio parcial");
-        Efecto simulador = new Efecto("Simulador");
-        
         // Tipos de apuesta
         TipoApuesta apuestaDirecta = new TipoApuesta("Apuesta directa");
         TipoApuesta apuestaColores = new TipoApuesta("Apuesta colores");

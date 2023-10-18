@@ -4,9 +4,13 @@
  */
 package componentes;
 
+import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
 import logicaNegocio.Crupier;
 import logicaNegocio.Sesion;
 import logicaNegocio.TipoApuesta;
@@ -40,6 +44,7 @@ public class VentanaInicioMesa extends javax.swing.JFrame {
     
     private void inicializar() {
         hidratarListaTiposApuesta();
+        listaTiposApuesta.setCellRenderer(new TipoApuestaRenderer());
     }
     
     private void hidratarListaTiposApuesta() {
@@ -47,6 +52,17 @@ public class VentanaInicioMesa extends javax.swing.JFrame {
         //TipoApuesta tipoApuestaSelecionada= (TipoApuesta) listaTiposApuesta.getSelectedValue();
         ArrayList<TipoApuesta> tiposApuesta = Fachada.getInstancia().getTiposApuesta();
         listaTiposApuesta.setListData(tiposApuesta.toArray());
+    }
+    
+    private class TipoApuestaRenderer implements ListCellRenderer<TipoApuesta> {
+
+        @Override
+        public Component getListCellRendererComponent(JList list, TipoApuesta tipoApuesta, int index, boolean isSelected, boolean cellHasFocus) {
+            JLabel ta = new JLabel();
+            ta.setText(tipoApuesta.getNombreTipo() + " - Factor de pago: " + tipoApuesta.getFactorPago());
+            return ta;
+        }
+        
     }
 
     /**

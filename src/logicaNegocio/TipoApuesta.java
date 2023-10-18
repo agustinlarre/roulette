@@ -38,9 +38,9 @@ public class TipoApuesta {
     public int getFactorPago() {
         return factorPago;
     }
-    
-    @Override
-    public String toString() {
-        return nombreTipo + " - Factor de pago: " + factorPago;
+
+    public String getNombreTipo() {
+        return nombreTipo;
     }
+
 }
