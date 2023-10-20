@@ -10,18 +10,18 @@ package logicaNegocio;
  */
 public abstract class Usuario {
     private String cedula;
-    private String password;
+    private String contrasenia;
 
     public Usuario(String cedula, String password) {
         this.cedula = cedula;
-        this.password = password;
+        this.contrasenia = password;
     }
 
     public String getCedula() {
         return cedula;
     }
-
-    public String getPassword() {
-        return password;
+    
+    public boolean equals(String cedula, String contrasenia){
+        return cedula.equals(this.cedula) && contrasenia.equals(this.contrasenia);
     }
 }

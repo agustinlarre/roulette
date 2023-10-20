@@ -34,12 +34,16 @@ public class ServicioUsuarios {
         this.listaCrupieres.add(crupier);
     }
     
-    public Sesion loginJugador(String usuario, String contrasenia) throws UsuarioException {
-        return this.login(usuario, contrasenia, (List) this.listaJugadores);
+    public Sesion loginJugador(String cedula, String contrasenia) throws UsuarioException {
+        return this.login(cedula, contrasenia, (List) this.listaJugadores);
     }
     
-    public Sesion loginCrupier(String usuario, String contrasenia) throws UsuarioException {
-        return this.login(usuario, contrasenia, (List) this.listaCrupieres);
+    public Sesion loginCrupier(String cedula, String contrasenia) throws UsuarioException {
+        return this.login(cedula, contrasenia, (List) this.listaCrupieres);
+    }
+    
+    public void logout(Sesion sesion) {
+        this.sesionesActivas.remove(sesion);
     }
     
     private Sesion login(String cedula, String contrasenia, List<Usuario> listaUsuarios) throws UsuarioException {
@@ -58,7 +62,7 @@ public class ServicioUsuarios {
     private Usuario getUsuario(String cedula, String contrasenia, List<Usuario> listaUsuarios) throws UsuarioNoEncontradoException {
         Usuario usuario = null;
         for (Usuario u : listaUsuarios) {
-            if (u.getCedula().equals(cedula) && u.getPassword().equals(contrasenia)) usuario = u;
+            if (u.equals(cedula, contrasenia)) usuario = u;
         }
         if (usuario == null) {
             throw new UsuarioNoEncontradoException();
@@ -73,10 +77,6 @@ public class ServicioUsuarios {
             } else {
                 throw new UsuarioLogueadoException();
             }
-    }
-    
-    public void logout(Sesion sesion) {
-        this.sesionesActivas.remove(sesion);
     }
     
     private boolean existeSesionDeUsuario(Usuario usuario) {

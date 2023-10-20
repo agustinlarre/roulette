@@ -25,6 +25,6 @@ public class VentanaLoginCrupier extends VentanaLogin {
 
     @Override
     protected void proximoCU(Sesion sesionActual) {
-        new VentanaInicioMesa(sesionActual).setVisible(true);
+        new VentanaIniciarMesa(sesionActual).setVisible(true);
     }
 }

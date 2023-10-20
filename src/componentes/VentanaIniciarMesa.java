@@ -20,7 +20,7 @@ import servicios.Fachada;
  *
  * @author agust
  */
-public class VentanaInicioMesa extends javax.swing.JFrame {
+public class VentanaIniciarMesa extends javax.swing.JFrame {
     
     private Sesion sesion;
     private Crupier crupier;
@@ -28,7 +28,7 @@ public class VentanaInicioMesa extends javax.swing.JFrame {
     /**
      * Creates new form VentanaInicioMesa
      */
-    public VentanaInicioMesa(Sesion sesionActual) {
+    public VentanaIniciarMesa(Sesion sesionActual) {
         initComponents();
         inicializar();
         this.sesion = sesionActual;
