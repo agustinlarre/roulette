@@ -46,9 +46,9 @@ public class MainApp {
         Fachada.getInstancia().agregarJugador(jugador5);
         
         // Tipos de apuesta
-        TipoApuesta apuestaDirecta = new TipoApuesta("Apuesta directa");
-        TipoApuesta apuestaColores = new TipoApuesta("Apuesta colores");
-        TipoApuesta apuestaDocena = new TipoApuesta("Apuesta docena");
+        TipoApuesta apuestaDirecta = new ApuestaDirecta();
+        TipoApuesta apuestaColores = new ApuestaColores();
+        TipoApuesta apuestaDocena = new ApuestaDocenas();
         Fachada.getInstancia().agregarTipoApuesta(apuestaDirecta);
         Fachada.getInstancia().agregarTipoApuesta(apuestaColores);
         Fachada.getInstancia().agregarTipoApuesta(apuestaDocena);

@@ -83,6 +83,7 @@ public class VentanaIniciarMesa extends javax.swing.JFrame {
 
         jLabel1.setText("Tipo de apuesta");
 
+        listaTiposApuesta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(listaTiposApuesta);
 
         btnIniciarMesa.setText("Iniciar");
