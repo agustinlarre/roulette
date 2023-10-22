@@ -26,11 +26,11 @@ public class ServicioUsuarios {
         this.sesionesActivas = new ArrayList();
     }
     
-    public void agregarJugador(Jugador jugador) {
+    public void addJugador(Jugador jugador) {
         this.listaJugadores.add(jugador);
     }
     
-    public void agregarCrupier(Crupier crupier) {
+    public void addCrupier(Crupier crupier) {
         this.listaCrupieres.add(crupier);
     }
     
@@ -50,7 +50,7 @@ public class ServicioUsuarios {
         try {
             Usuario usuario = this.getUsuario(cedula, contrasenia, listaUsuarios);
             Sesion sesion = new Sesion(usuario);
-            this.agregarSesionDeUsuario(sesion);
+            this.addSesionDeUsuario(sesion);
             return sesion;
         } catch (UsuarioNoEncontradoException ex1) {
             throw new UsuarioException("Credenciales incorrectas.");
@@ -71,7 +71,7 @@ public class ServicioUsuarios {
         }
     }
     
-    private void agregarSesionDeUsuario(Sesion sesion) throws UsuarioLogueadoException {
+    private void addSesionDeUsuario(Sesion sesion) throws UsuarioLogueadoException {
         if (!this.existeSesionDeUsuario(sesion.getUsuario())) {
                 this.sesionesActivas.add(sesion);
             } else {

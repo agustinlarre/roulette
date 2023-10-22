@@ -29,12 +29,12 @@ public class Fachada {
         return instancia;
     }
     
-    public void agregarJugador(Jugador jugador) {
-        this.servicioUsuarios.agregarJugador(jugador);
+    public void addJugador(Jugador jugador) {
+        this.servicioUsuarios.addJugador(jugador);
     }
     
-    public void agregarCrupier(Crupier crupier) {
-        this.servicioUsuarios.agregarCrupier(crupier);
+    public void addCrupier(Crupier crupier) {
+        this.servicioUsuarios.addCrupier(crupier);
     }
     
     public Sesion loginJugador(String cedula, String contrasenia) throws UsuarioException {
@@ -49,15 +49,31 @@ public class Fachada {
         this.servicioUsuarios.logout(sesion);
     }
     
-    public void agregarMesa(Mesa mesa) {
-        this.servicioMesas.agregarMesa(mesa);
+    public void addMesa(Mesa mesa) {
+        this.servicioMesas.addMesa(mesa);
     }
     
-    public void agregarTipoApuesta(TipoApuesta tipoApuesta) {
-        this.servicioMesas.agregarTipoApuesta(tipoApuesta);
+    public void addTipoApuesta(TipoApuesta tipoApuesta) {
+        this.servicioMesas.addTipoApuesta(tipoApuesta);
     }
     
     public ArrayList<TipoApuesta> getTiposApuesta() {
         return this.servicioMesas.getTiposApuesta();
+    }
+    
+    public void addEfecto(Efecto efecto) {
+        this.servicioMesas.addEfecto(efecto);
+    }
+    
+    public ArrayList<Efecto> getEfectos() {
+        return this.servicioMesas.getEfectos();
+    }
+    
+    public void addCasillero(Casillero casillero) {
+        this.servicioMesas.addCasillero(casillero);
+    }
+    
+    public ArrayList<Casillero> getCasilleros() {
+        return this.servicioMesas.getCasilleros();
     }
 }

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class Mesa {
     private ArrayList<TipoApuesta> tiposApuesta;
     private ArrayList<Efecto> listaEfectos;
+    private ArrayList<Casillero> listaCasilleros;
 
     public Mesa(ArrayList<TipoApuesta> tiposApuesta) {
         this.tiposApuesta = tiposApuesta;
@@ -30,11 +31,10 @@ public class Mesa {
     }
     
     private void hidratarListaEfectos() {
-        Efecto aleatorioCompleto = new Efecto("Aleatorio completo");
-        Efecto aleatorioParcial = new Efecto("Aleatorio parcial");
-        Efecto simulador = new Efecto("Simulador");
-        this.listaEfectos.add(aleatorioCompleto);
-        this.listaEfectos.add(aleatorioParcial);
-        this.listaEfectos.add(simulador);
+        
     }
+    
+//    public static ArrayList<Casillero> getCasillerosBase() {
+//        
+//    }
 }

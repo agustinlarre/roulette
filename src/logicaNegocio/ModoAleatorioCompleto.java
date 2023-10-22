@@ -6,10 +6,17 @@ package logicaNegocio;
 
 /**
  *
- * @author agust
+ * @author Agustin
  */
-public abstract class Efecto {
-    protected String nombre;
+public class ModoAleatorioCompleto extends Efecto {
+    
+    public ModoAleatorioCompleto(String nombre) {
+        this.nombre = nombre;
+    }
 
-    public abstract void habilitarEfecto();
+    @Override
+    public void habilitarEfecto() {
+        
+    }
+    
 }
