@@ -4,6 +4,7 @@
  */
 package servicios;
 
+import excepcionesSistema.MesaException;
 import excepcionesSistema.UsuarioException;
 import java.util.ArrayList;
 import logicaNegocio.*;
@@ -49,7 +50,7 @@ public class Fachada {
         this.servicioUsuarios.logout(sesion);
     }
     
-    public void addMesa(Mesa mesa) {
+    public void addMesa(Mesa mesa) throws MesaException {
         this.servicioMesas.addMesa(mesa);
     }
     

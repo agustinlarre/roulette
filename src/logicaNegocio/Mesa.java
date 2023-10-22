@@ -4,24 +4,26 @@
  */
 package logicaNegocio;
 
+import excepcionesSistema.TipoApuestaObligatoriaException;
+import excepcionesSistema.TiposApuestaVaciaException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author agust
  */
 public class Mesa {
-    private ArrayList<TipoApuesta> tiposApuesta;
+    private List<TipoApuesta> tiposApuesta;
     private ArrayList<Efecto> listaEfectos;
     private ArrayList<Casillero> listaCasilleros;
 
-    public Mesa(ArrayList<TipoApuesta> tiposApuesta) {
+    public Mesa(List<TipoApuesta> tiposApuesta) {
         this.tiposApuesta = tiposApuesta;
         this.listaEfectos = new ArrayList();
-        hidratarListaEfectos();
     }
 
-    public ArrayList<TipoApuesta> getTiposApuesta() {
+    public List<TipoApuesta> getTiposApuesta() {
         return tiposApuesta;
     }
     
@@ -30,11 +32,15 @@ public class Mesa {
         this.tiposApuesta.add(tipo);
     }
     
-    private void hidratarListaEfectos() {
-        
+    public void validar() throws TipoApuestaObligatoriaException, TiposApuestaVaciaException {
+        boolean esValido = false;
+        if (this.tiposApuesta.isEmpty()) {
+            throw new TiposApuestaVaciaException();
+        } else {
+            for (TipoApuesta tipo : tiposApuesta) {
+                if (tipo.getNombreTipo().equals("Apuesta directa")) esValido = true;
+            }
+            if (!esValido) throw new TipoApuestaObligatoriaException();
+        }
     }
-    
-//    public static ArrayList<Casillero> getCasillerosBase() {
-//        
-//    }
 }

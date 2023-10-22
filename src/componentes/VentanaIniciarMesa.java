@@ -4,14 +4,20 @@
  */
 package componentes;
 
+import excepcionesSistema.MesaException;
 import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListCellRenderer;
+import javax.swing.ListSelectionModel;
 import logicaNegocio.Crupier;
+import logicaNegocio.Mesa;
 import logicaNegocio.Sesion;
 import logicaNegocio.TipoApuesta;
 import servicios.Fachada;
@@ -44,7 +50,6 @@ public class VentanaIniciarMesa extends javax.swing.JFrame {
     
     private void inicializar() {
         hidratarListaTiposApuesta();
-        listaTiposApuesta.setCellRenderer(new TipoApuestaRenderer());
     }
     
     private void hidratarListaTiposApuesta() {
@@ -52,13 +57,18 @@ public class VentanaIniciarMesa extends javax.swing.JFrame {
         //TipoApuesta tipoApuestaSelecionada= (TipoApuesta) listaTiposApuesta.getSelectedValue();
         ArrayList<TipoApuesta> tiposApuesta = Fachada.getInstancia().getTiposApuesta();
         listaTiposApuesta.setListData(tiposApuesta.toArray());
+        listaTiposApuesta.setCellRenderer(new TipoApuestaRenderer());
+        //Habilitar seleccion multiple
+        listaTiposApuesta.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
     
     private class TipoApuestaRenderer implements ListCellRenderer<TipoApuesta> {
+        
+        private DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
 
         @Override
         public Component getListCellRendererComponent(JList list, TipoApuesta tipoApuesta, int index, boolean isSelected, boolean cellHasFocus) {
-            JLabel ta = new JLabel();
+            JLabel ta = (JLabel) defaultRenderer.getListCellRendererComponent(list, index, index, isSelected, cellHasFocus);
             ta.setText(tipoApuesta.getNombreTipo() + " - Factor de pago: " + tipoApuesta.getFactorPago());
             return ta;
         }
@@ -87,6 +97,11 @@ public class VentanaIniciarMesa extends javax.swing.JFrame {
         jScrollPane1.setViewportView(listaTiposApuesta);
 
         btnIniciarMesa.setText("Iniciar");
+        btnIniciarMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarMesaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -114,6 +129,20 @@ public class VentanaIniciarMesa extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIniciarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarMesaActionPerformed
+        try {
+            List<TipoApuesta> tiposApuestaElegidos = listaTiposApuesta.getSelectedValuesList();
+            Mesa mesa = new Mesa(tiposApuestaElegidos);
+            this.crupier.setMesa(mesa);
+            Fachada.getInstancia().addMesa(mesa);
+            new VentanaMesaCrupier(this.sesion).setVisible(true);
+            dispose();
+        } catch(MesaException mesaEx) {
+            JOptionPane.showMessageDialog(this, mesaEx.getMessage());
+        }
+        
+    }//GEN-LAST:event_btnIniciarMesaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIniciarMesa;

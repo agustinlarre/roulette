@@ -4,6 +4,9 @@
  */
 package servicios;
 
+import excepcionesSistema.MesaException;
+import excepcionesSistema.TipoApuestaObligatoriaException;
+import excepcionesSistema.TiposApuestaVaciaException;
 import java.util.ArrayList;
 import logicaNegocio.Mesa;
 import logicaNegocio.TipoApuesta;
@@ -23,10 +26,19 @@ public class ServicioMesas {
     public ServicioMesas() {
         listaMesas = new ArrayList();
         tiposApuesta = new ArrayList();
+        listaEfectos = new ArrayList();
+        listaCasilleros = new ArrayList();
     }
     
-    public void addMesa(Mesa mesa) {
-        listaMesas.add(mesa);
+    public void addMesa(Mesa mesa) throws MesaException {
+        try {
+            mesa.validar();
+            listaMesas.add(mesa);
+        } catch(TiposApuestaVaciaException ex1) {
+            throw new MesaException("Debe seleccionar al menos un tipo de apuesta, recuerde que el tipo de apuesta 'Directa' es obligatorio.");
+        } catch(TipoApuestaObligatoriaException ex2) {
+            throw new MesaException("El tipo de apuesta directa debe ser obligatoria.");
+        }
     }
     
     public void addTipoApuesta(TipoApuesta tipoApuesta) {
