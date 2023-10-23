@@ -81,12 +81,12 @@ public class VentanaInicio extends javax.swing.JFrame {
 
     private void btnUsuarioJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioJugadorActionPerformed
         new VentanaLoginJugador().setVisible(true);
-        dispose();
+        //dispose();
     }//GEN-LAST:event_btnUsuarioJugadorActionPerformed
 
     private void btnUsuarioCrupierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioCrupierActionPerformed
         new VentanaLoginCrupier().setVisible(true);
-        dispose();
+        //dispose();
     }//GEN-LAST:event_btnUsuarioCrupierActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

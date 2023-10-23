@@ -4,7 +4,7 @@
  */
 package logicaNegocio;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class Casillero {
     
-    private ArrayList<Integer> numerosVinculados;
+    private List<Integer> numerosVinculados;
     private String nombre;
     private int cellCode;
 

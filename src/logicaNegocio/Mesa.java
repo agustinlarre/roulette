@@ -15,12 +15,20 @@ import java.util.List;
  */
 public class Mesa {
     private List<TipoApuesta> tiposApuesta;
-    private ArrayList<Efecto> listaEfectos;
-    private ArrayList<Casillero> listaCasilleros;
+    private List<Efecto> listaEfectos;
+    private List<Casillero> listaCasilleros;
+    private int nroMesa;
+    private static int nro = 1;
 
     public Mesa(List<TipoApuesta> tiposApuesta) {
         this.tiposApuesta = tiposApuesta;
         this.listaEfectos = new ArrayList();
+        this.nroMesa = nro;
+        nro++;
+    }
+
+    public int getNroMesa() {
+        return nroMesa;
     }
 
     public List<TipoApuesta> getTiposApuesta() {

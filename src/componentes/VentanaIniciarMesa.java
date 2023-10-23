@@ -8,7 +8,6 @@ import excepcionesSistema.MesaException;
 import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
@@ -54,8 +53,7 @@ public class VentanaIniciarMesa extends javax.swing.JFrame {
     
     private void hidratarListaTiposApuesta() {
         //Como elegir el tipo de apuesta seleccionado de la lista...
-        //TipoApuesta tipoApuestaSelecionada= (TipoApuesta) listaTiposApuesta.getSelectedValue();
-        ArrayList<TipoApuesta> tiposApuesta = Fachada.getInstancia().getTiposApuesta();
+        List<TipoApuesta> tiposApuesta = Fachada.getInstancia().getTiposApuesta();
         listaTiposApuesta.setListData(tiposApuesta.toArray());
         listaTiposApuesta.setCellRenderer(new TipoApuestaRenderer());
         //Habilitar seleccion multiple

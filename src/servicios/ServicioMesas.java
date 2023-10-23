@@ -8,32 +8,38 @@ import excepcionesSistema.MesaException;
 import excepcionesSistema.TipoApuestaObligatoriaException;
 import excepcionesSistema.TiposApuestaVaciaException;
 import java.util.ArrayList;
+import java.util.List;
 import logicaNegocio.Mesa;
 import logicaNegocio.TipoApuesta;
 import logicaNegocio.Casillero;
 import logicaNegocio.Efecto;
+import logicaNegocio.Jugador;
+import logicaNegocio.Notificable;
 
 /**
  *
  * @author agust
  */
 public class ServicioMesas {
-    private ArrayList<Mesa> listaMesas;
-    private ArrayList<TipoApuesta> tiposApuesta;
-    private ArrayList<Casillero> listaCasilleros;
-    private ArrayList<Efecto> listaEfectos;
+    private List<Mesa> listaMesas;
+    private List<TipoApuesta> tiposApuesta;
+    private List<Casillero> listaCasilleros;
+    private List<Efecto> listaEfectos;
+    private List<Notificable> notificables;
 
     public ServicioMesas() {
         listaMesas = new ArrayList();
         tiposApuesta = new ArrayList();
         listaEfectos = new ArrayList();
         listaCasilleros = new ArrayList();
+        notificables = new ArrayList();
     }
     
     public void addMesa(Mesa mesa) throws MesaException {
         try {
             mesa.validar();
             listaMesas.add(mesa);
+            this.recibirNoticiaMesaAbierta(mesa);
         } catch(TiposApuestaVaciaException ex1) {
             throw new MesaException("Debe seleccionar al menos un tipo de apuesta, recuerde que el tipo de apuesta 'Directa' es obligatorio.");
         } catch(TipoApuestaObligatoriaException ex2) {
@@ -41,11 +47,19 @@ public class ServicioMesas {
         }
     }
     
+    public List<Mesa> getMesas() {
+        return this.listaMesas;
+    }
+    
+    public void addNotificable(Notificable notificable) {
+        this.notificables.add(notificable);
+    }
+    
     public void addTipoApuesta(TipoApuesta tipoApuesta) {
         tiposApuesta.add(tipoApuesta);
     }
     
-    public ArrayList<TipoApuesta> getTiposApuesta() {
+    public List<TipoApuesta> getTiposApuesta() {
         return tiposApuesta;
     }
     
@@ -53,7 +67,7 @@ public class ServicioMesas {
         this.listaEfectos.add(efecto);
     }
     
-    public ArrayList<Efecto> getEfectos() {
+    public List<Efecto> getEfectos() {
         return this.listaEfectos;
     }
     
@@ -61,7 +75,13 @@ public class ServicioMesas {
         this.listaCasilleros.add(casillero);
     }
     
-    public ArrayList<Casillero> getCasilleros() {
+    public List<Casillero> getCasilleros() {
         return this.listaCasilleros;
+    }
+    
+    private void recibirNoticiaMesaAbierta(Mesa mesa) {
+        for (Notificable notificable : notificables) {
+            notificable.notificarMesaAbierta(mesa);
+        }
     }
 }

@@ -6,7 +6,7 @@ package servicios;
 
 import excepcionesSistema.MesaException;
 import excepcionesSistema.UsuarioException;
-import java.util.ArrayList;
+import java.util.List;
 import logicaNegocio.*;
 
 /**
@@ -34,6 +34,14 @@ public class Fachada {
         this.servicioUsuarios.addJugador(jugador);
     }
     
+    public List<Jugador> getJugadores() {
+        return this.servicioUsuarios.getJugadores();
+    }
+    
+    public void addNotificable(Notificable notificable) {
+        this.servicioMesas.addNotificable(notificable);
+    }
+    
     public void addCrupier(Crupier crupier) {
         this.servicioUsuarios.addCrupier(crupier);
     }
@@ -54,11 +62,15 @@ public class Fachada {
         this.servicioMesas.addMesa(mesa);
     }
     
+    public List<Mesa> getMesas() {
+        return this.servicioMesas.getMesas();
+    }
+    
     public void addTipoApuesta(TipoApuesta tipoApuesta) {
         this.servicioMesas.addTipoApuesta(tipoApuesta);
     }
     
-    public ArrayList<TipoApuesta> getTiposApuesta() {
+    public List<TipoApuesta> getTiposApuesta() {
         return this.servicioMesas.getTiposApuesta();
     }
     
@@ -66,7 +78,7 @@ public class Fachada {
         this.servicioMesas.addEfecto(efecto);
     }
     
-    public ArrayList<Efecto> getEfectos() {
+    public List<Efecto> getEfectos() {
         return this.servicioMesas.getEfectos();
     }
     
@@ -74,7 +86,7 @@ public class Fachada {
         this.servicioMesas.addCasillero(casillero);
     }
     
-    public ArrayList<Casillero> getCasilleros() {
+    public List<Casillero> getCasilleros() {
         return this.servicioMesas.getCasilleros();
     }
 }

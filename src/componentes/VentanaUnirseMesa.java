@@ -4,15 +4,24 @@
  */
 package componentes;
 
+import java.awt.Component;
+import java.util.List;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
+import javax.swing.ListSelectionModel;
 import logicaNegocio.Jugador;
+import logicaNegocio.Mesa;
 import logicaNegocio.Sesion;
+import logicaNegocio.Notificable;
 import servicios.Fachada;
 
 /**
  *
  * @author agust
  */
-public class VentanaUnirseMesa extends javax.swing.JFrame {
+public class VentanaUnirseMesa extends javax.swing.JFrame implements Notificable {
     
     private Sesion sesion;
     private Jugador jugador;
@@ -22,17 +31,40 @@ public class VentanaUnirseMesa extends javax.swing.JFrame {
      */
     public VentanaUnirseMesa(Sesion sesionActual) {
         initComponents();
+        inicializar();
         this.sesion = sesionActual;
         this.jugador = (Jugador) sesionActual.getUsuario();
         this.setTitle("Aplicación Jugador - Unirse a mesa");
     }
     
     private void inicializar() {
+        Fachada.getInstancia().addNotificable(this);
         hidratarListaMesas();
     }
     
     private void hidratarListaMesas() {
+        List<Mesa> mesasAbiertas = Fachada.getInstancia().getMesas();
+        listaMesasAbiertas.setListData(mesasAbiertas.toArray());
+        listaMesasAbiertas.setCellRenderer(new MesaAbiertaCellRenderer());
+        listaMesasAbiertas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+    
+    private class MesaAbiertaCellRenderer implements ListCellRenderer<Mesa> {
         
+        private DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
+
+        @Override
+        public Component getListCellRendererComponent(JList list, Mesa mesa, int index, boolean isSelected, boolean cellHasFocus) {
+            JLabel ta = (JLabel) defaultRenderer.getListCellRendererComponent(list, index, index, isSelected, cellHasFocus);
+            ta.setText("Mesa n°" + mesa.getNroMesa());
+            return ta;
+        }
+        
+    }
+    
+    @Override
+    public void notificarMesaAbierta(Mesa mesa) {
+        hidratarListaMesas();
     }
 
     /**
@@ -46,7 +78,7 @@ public class VentanaUnirseMesa extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        listaMesasAbiertas = new javax.swing.JList();
         btnUnirseMesa = new javax.swing.JButton();
         btnLogOff = new javax.swing.JButton();
 
@@ -54,12 +86,7 @@ public class VentanaUnirseMesa extends javax.swing.JFrame {
 
         jLabel1.setText("Mesas abiertas");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(listaMesasAbiertas);
 
         btnUnirseMesa.setText("Unirse");
         btnUnirseMesa.addActionListener(new java.awt.event.ActionListener() {
@@ -102,7 +129,7 @@ public class VentanaUnirseMesa extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUnirseMesa)
                     .addComponent(btnLogOff))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         pack();
@@ -121,7 +148,7 @@ public class VentanaUnirseMesa extends javax.swing.JFrame {
     private javax.swing.JButton btnLogOff;
     private javax.swing.JButton btnUnirseMesa;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList listaMesasAbiertas;
     // End of variables declaration//GEN-END:variables
 }

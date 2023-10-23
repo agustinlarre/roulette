@@ -30,6 +30,10 @@ public class ServicioUsuarios {
         this.listaJugadores.add(jugador);
     }
     
+    public List<Jugador> getJugadores() {
+        return this.listaJugadores;
+    }
+    
     public void addCrupier(Crupier crupier) {
         this.listaCrupieres.add(crupier);
     }

@@ -5,6 +5,7 @@
 package logicaNegocio;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -14,7 +15,7 @@ public class Jugador extends Usuario {
     private String cedula;
     private String password;
     private int saldoInicial;
-    private ArrayList<Mesa> mesas;
+    private List<Mesa> mesas;
 
     public Jugador(String cedula, String password) {
         super(cedula, password);
