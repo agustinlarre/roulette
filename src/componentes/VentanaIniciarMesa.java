@@ -66,9 +66,9 @@ public class VentanaIniciarMesa extends javax.swing.JFrame {
 
         @Override
         public Component getListCellRendererComponent(JList list, TipoApuesta tipoApuesta, int index, boolean isSelected, boolean cellHasFocus) {
-            JLabel ta = (JLabel) defaultRenderer.getListCellRendererComponent(list, index, index, isSelected, cellHasFocus);
-            ta.setText(tipoApuesta.getNombreTipo() + " - Factor de pago: " + tipoApuesta.getFactorPago());
-            return ta;
+            JLabel tipoAp = (JLabel) defaultRenderer.getListCellRendererComponent(list, index, index, isSelected, cellHasFocus);
+            tipoAp.setText(tipoApuesta.getNombreTipo() + " - Factor de pago: " + tipoApuesta.getFactorPago());
+            return tipoAp;
         }
         
     }

@@ -4,6 +4,9 @@
  */
 package logicaNegocio;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Agustin
@@ -11,13 +14,21 @@ package logicaNegocio;
 public class ApuestaDirecta extends TipoApuesta {
 
     public ApuestaDirecta() {
-        this.nombreTipo = "Apuesta directa";
         this.factorPago = 36;
     }
 
     @Override
-    public int getFactorPago() {
-        return this.factorPago;
+    public List<Integer> getUniversalCellCodes() {
+        List<Integer> listaCellCodes = new ArrayList();
+        for (int i = 0; i <= 36; i++) {
+            listaCellCodes.add(i);
+        }
+        return listaCellCodes;
+    }
+
+    @Override
+    public String getNombreTipo() {
+        return "Apuesta directa";
     }
     
 }

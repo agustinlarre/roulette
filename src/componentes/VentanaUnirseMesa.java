@@ -4,24 +4,27 @@
  */
 package componentes;
 
+import excepcionesSistema.MesaException;
 import java.awt.Component;
 import java.util.List;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 import logicaNegocio.Jugador;
 import logicaNegocio.Mesa;
 import logicaNegocio.Sesion;
-import logicaNegocio.Notificable;
 import servicios.Fachada;
+import logicaNegocio.MesaNotificable;
+import logicaNegocio.Participante;
 
 /**
  *
  * @author agust
  */
-public class VentanaUnirseMesa extends javax.swing.JFrame implements Notificable {
+public class VentanaUnirseMesa extends javax.swing.JFrame implements MesaNotificable {
     
     private Sesion sesion;
     private Jugador jugador;
@@ -141,7 +144,15 @@ public class VentanaUnirseMesa extends javax.swing.JFrame implements Notificable
     }//GEN-LAST:event_btnLogOffActionPerformed
 
     private void btnUnirseMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnirseMesaActionPerformed
-        // TODO add your handling code here:
+        try {
+            Mesa mesaElegida = (Mesa) listaMesasAbiertas.getSelectedValue();
+            Participante participante = new Participante(this.jugador, mesaElegida);
+            Fachada.getInstancia().addParticipante(participante);
+            new VentanaMesaJugador(participante).setVisible(true);
+        } catch(MesaException mesaEx) {
+            JOptionPane.showMessageDialog(this, mesaEx.getMessage());
+        }
+        
     }//GEN-LAST:event_btnUnirseMesaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

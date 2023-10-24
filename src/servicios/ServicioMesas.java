@@ -14,7 +14,7 @@ import logicaNegocio.TipoApuesta;
 import logicaNegocio.Casillero;
 import logicaNegocio.Efecto;
 import logicaNegocio.Jugador;
-import logicaNegocio.Notificable;
+import logicaNegocio.MesaNotificable;
 
 /**
  *
@@ -25,7 +25,7 @@ public class ServicioMesas {
     private List<TipoApuesta> tiposApuesta;
     private List<Casillero> listaCasilleros;
     private List<Efecto> listaEfectos;
-    private List<Notificable> notificables;
+    private List<MesaNotificable> notificables;
 
     public ServicioMesas() {
         listaMesas = new ArrayList();
@@ -51,7 +51,7 @@ public class ServicioMesas {
         return this.listaMesas;
     }
     
-    public void addNotificable(Notificable notificable) {
+    public void addNotificable(MesaNotificable notificable) {
         this.notificables.add(notificable);
     }
     
@@ -80,7 +80,7 @@ public class ServicioMesas {
     }
     
     private void recibirNoticiaMesaAbierta(Mesa mesa) {
-        for (Notificable notificable : notificables) {
+        for (MesaNotificable notificable : notificables) {
             notificable.notificarMesaAbierta(mesa);
         }
     }

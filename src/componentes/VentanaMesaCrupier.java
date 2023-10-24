@@ -1,6 +1,17 @@
 package componentes;
 
+import java.awt.Component;
+import java.util.List;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
+import logicaNegocio.Crupier;
+import logicaNegocio.Efecto;
+import logicaNegocio.Mesa;
 import logicaNegocio.Sesion;
+import logicaNegocio.TipoApuesta;
+import servicios.Fachada;
 
 /**
  *
@@ -9,6 +20,8 @@ import logicaNegocio.Sesion;
 public class VentanaMesaCrupier extends javax.swing.JFrame {
 
     private Sesion sesion;
+    private Crupier crupier;
+    private Mesa mesa;
     int apuestaRojo = 0;
 
     /**
@@ -17,12 +30,37 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
     public VentanaMesaCrupier(Sesion sesionActual) {
         initComponents();
         this.sesion = sesionActual;
+        this.crupier = (Crupier) sesionActual.getUsuario();
+        this.mesa = crupier.getMesa();
         inicializar();
         // Escuchador para el caso de jugador
         escuchador();
     }
     
     private void inicializar() {
+        r.desaparecerBotones();
+        popularComboEfectos();
+        habilitarTiposApuesta();
+    }
+    
+    private void habilitarTiposApuesta() {
+        for (TipoApuesta tipoApuesta : this.mesa.getTiposApuesta()) {
+            this.habilitarBotones(tipoApuesta.getUniversalCellCodes());
+        }
+    }
+    
+    private void habilitarBotones(List<Integer> listaCellCodes) {
+        for (int cellCode : listaCellCodes) {
+            r.setVisible(cellCode, true);
+        }
+    }
+    
+    private void popularComboEfectos() {
+        List<Efecto> efectos = Fachada.getInstancia().getEfectos();
+        for (Efecto efecto : efectos) {
+            comboEfectos.addItem(efecto);
+        }
+        comboEfectos.setRenderer(new EfectoRenderer());
     }
     
     private void escuchador() {
@@ -34,6 +72,19 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
 //                    r.setApuesta(universalCellCode, apuesta);
 //                }
 //            });
+    }
+    
+    private class EfectoRenderer implements ListCellRenderer<Efecto> {
+        
+        private DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
+
+        @Override
+        public Component getListCellRendererComponent(JList list, Efecto efecto, int index, boolean isSelected, boolean cellHasFocus) {
+            JLabel efect = new JLabel();
+            efect.setText((efecto.getNombreEfecto()));
+            return efect;
+        }
+        
     }
 
     /**
@@ -49,18 +100,18 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
         r = new componentes.PanelRuleta();
         labelNroRuleta = new javax.swing.JLabel();
         btnCerrarMesa = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
+        btnLanzar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        labelUltimoNro = new javax.swing.JTextPane();
         labelCantApuestas = new javax.swing.JLabel();
-        labelValorApuestas = new javax.swing.JLabel();
-        comboEfectos = new javax.swing.JComboBox<>();
+        labelValorTotalApuestas = new javax.swing.JLabel();
+        comboEfectos = new javax.swing.JComboBox();
         jSeparator1 = new javax.swing.JSeparator();
         labelBalanceCasa = new javax.swing.JLabel();
         labelRonda = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         listaJugadores = new javax.swing.JList<>();
-        labelLanzamientos = new javax.swing.JLabel();
+        labelUltimosLanzamientos = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         listaRondas = new javax.swing.JList<>();
 
@@ -70,15 +121,15 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
 
         btnCerrarMesa.setText("Cerrar mesa");
 
-        jButton11.setText("jButton1");
+        btnLanzar.setText("Lanzar/Pagar");
 
-        jScrollPane1.setViewportView(jTextPane1);
+        jScrollPane1.setViewportView(labelUltimoNro);
 
         labelCantApuestas.setText("jLabel1");
 
-        labelValorApuestas.setText("jLabel1");
+        labelValorTotalApuestas.setText("jLabel1");
 
-        comboEfectos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<<Efecto>>" }));
+        comboEfectos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         labelBalanceCasa.setText("jLabel1");
 
@@ -91,7 +142,7 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(listaJugadores);
 
-        labelLanzamientos.setText("jLabel1");
+        labelUltimosLanzamientos.setText("jLabel1");
 
         listaRondas.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -113,11 +164,11 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(labelCantApuestas, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
-                        .addComponent(labelValorApuestas, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelValorTotalApuestas, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(148, 148, 148)
                         .addComponent(comboEfectos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton11)
+                        .addComponent(btnLanzar)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -130,7 +181,7 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
                         .addComponent(btnCerrarMesa))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelLanzamientos)
+                            .addComponent(labelUltimosLanzamientos)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -153,16 +204,16 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(labelCantApuestas)
-                        .addComponent(labelValorApuestas)
+                        .addComponent(labelValorTotalApuestas)
                         .addComponent(comboEfectos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton11))
+                        .addComponent(btnLanzar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(r, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelLanzamientos)
+                .addComponent(labelUltimosLanzamientos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -175,20 +226,20 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarMesa;
-    private javax.swing.JComboBox<String> comboEfectos;
-    private javax.swing.JButton jButton11;
+    private javax.swing.JButton btnLanzar;
+    private javax.swing.JComboBox comboEfectos;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JLabel labelBalanceCasa;
     private javax.swing.JLabel labelCantApuestas;
-    private javax.swing.JLabel labelLanzamientos;
     private javax.swing.JLabel labelNroRuleta;
     private javax.swing.JLabel labelRonda;
-    private javax.swing.JLabel labelValorApuestas;
+    private javax.swing.JTextPane labelUltimoNro;
+    private javax.swing.JLabel labelUltimosLanzamientos;
+    private javax.swing.JLabel labelValorTotalApuestas;
     private javax.swing.JList<String> listaJugadores;
     private javax.swing.JList<String> listaRondas;
     private componentes.PanelRuleta r;

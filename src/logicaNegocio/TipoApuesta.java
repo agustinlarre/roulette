@@ -4,18 +4,21 @@
  */
 package logicaNegocio;
 
+import java.util.List;
+
 /**
  *
  * @author agust
  */
 public abstract class TipoApuesta {
-    protected String nombreTipo;
     protected int factorPago;
-
-    public String getNombreTipo() {
-        return this.nombreTipo;
+    
+    public int getFactorPago() {
+        return this.factorPago;
     }
     
-    public abstract int getFactorPago();
+    public abstract List<Integer> getUniversalCellCodes();
+    
+    public abstract String getNombreTipo();
 
 }

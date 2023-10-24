@@ -10,13 +10,17 @@ package logicaNegocio;
  */
 public class ModoSimulador extends Efecto {
     
-    public ModoSimulador(String nombre) {
-        this.nombre = nombre;
+    public ModoSimulador() {
     }
 
     @Override
     public void habilitarEfecto() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String getNombreEfecto() {
+        return "Modo simulador";
     }
     
 }

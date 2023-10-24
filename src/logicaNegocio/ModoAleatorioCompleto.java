@@ -10,13 +10,17 @@ package logicaNegocio;
  */
 public class ModoAleatorioCompleto extends Efecto {
     
-    public ModoAleatorioCompleto(String nombre) {
-        this.nombre = nombre;
+    public ModoAleatorioCompleto() {
     }
 
     @Override
     public void habilitarEfecto() {
         
+    }
+
+    @Override
+    public String getNombreEfecto() {
+        return "Modo aleatorio completo";
     }
     
 }

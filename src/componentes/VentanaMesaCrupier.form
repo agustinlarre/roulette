@@ -32,11 +32,11 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="labelCantApuestas" min="-2" pref="65" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="labelValorApuestas" min="-2" pref="65" max="-2" attributes="0"/>
+                      <Component id="labelValorTotalApuestas" min="-2" pref="65" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="148" max="-2" attributes="0"/>
                       <Component id="comboEfectos" min="-2" pref="150" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButton11" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnLanzar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="90" max="-2" attributes="0"/>
                   </Group>
@@ -51,7 +51,7 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="labelLanzamientos" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelUltimosLanzamientos" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="jScrollPane2" min="-2" pref="350" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -81,9 +81,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                       <Component id="labelCantApuestas" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelValorApuestas" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelValorTotalApuestas" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="comboEfectos" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton11" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnLanzar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane1" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -92,7 +92,7 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="labelLanzamientos" min="-2" max="-2" attributes="0"/>
+              <Component id="labelUltimosLanzamientos" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane2" min="-2" pref="101" max="-2" attributes="0"/>
@@ -118,9 +118,9 @@
         <Property name="text" type="java.lang.String" value="Cerrar mesa"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton11">
+    <Component class="javax.swing.JButton" name="btnLanzar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jButton1"/>
+        <Property name="text" type="java.lang.String" value="Lanzar/Pagar"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -130,7 +130,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextPane" name="jTextPane1">
+        <Component class="javax.swing.JTextPane" name="labelUltimoNro">
         </Component>
       </SubComponents>
     </Container>
@@ -139,7 +139,7 @@
         <Property name="text" type="java.lang.String" value="jLabel1"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="labelValorApuestas">
+    <Component class="javax.swing.JLabel" name="labelValorTotalApuestas">
       <Properties>
         <Property name="text" type="java.lang.String" value="jLabel1"/>
       </Properties>
@@ -147,13 +147,14 @@
     <Component class="javax.swing.JComboBox" name="comboEfectos">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="1">
-            <StringItem index="0" value="&lt;&lt;Efecto&gt;&gt;"/>
-          </StringArray>
+          <StringArray count="0"/>
+        </Property>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Default Cursor"/>
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
@@ -193,7 +194,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="labelLanzamientos">
+    <Component class="javax.swing.JLabel" name="labelUltimosLanzamientos">
       <Properties>
         <Property name="text" type="java.lang.String" value="jLabel1"/>
       </Properties>

@@ -1,6 +1,7 @@
 package componentes;
 
-import logicaNegocio.Sesion;
+import logicaNegocio.Participante;
+
 
 /**
  *
@@ -8,15 +9,15 @@ import logicaNegocio.Sesion;
  */
 public class VentanaMesaJugador extends javax.swing.JFrame {
 
-    private Sesion sesion;
+    private Participante participante;
     int apuestaRojo = 0;
 
     /**
      * Creates new form NewJFrame
      */
-    public VentanaMesaJugador(Sesion sesionActual) {
+    public VentanaMesaJugador(Participante participanteActual) {
         initComponents();
-        this.sesion = sesionActual;
+        this.participante = participanteActual;
         inicializar();
         // Escuchador para el caso de jugador
         escuchador();

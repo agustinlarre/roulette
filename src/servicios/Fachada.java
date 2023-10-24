@@ -38,7 +38,7 @@ public class Fachada {
         return this.servicioUsuarios.getJugadores();
     }
     
-    public void addNotificable(Notificable notificable) {
+    public void addNotificable(MesaNotificable notificable) {
         this.servicioMesas.addNotificable(notificable);
     }
     
@@ -52,6 +52,14 @@ public class Fachada {
     
     public Sesion loginCrupier(String cedula, String contrasenia) throws UsuarioException {
         return this.servicioUsuarios.loginCrupier(cedula, contrasenia);
+    }
+    
+    public void addParticipante(Participante participante) throws MesaException {
+        this.servicioUsuarios.addParticipante(participante);
+    }
+    
+    public void removeParticipante(Participante participante) {
+        this.servicioUsuarios.removeParticipante(participante);
     }
     
     public void logout(Sesion sesion) {

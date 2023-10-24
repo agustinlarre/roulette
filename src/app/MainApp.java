@@ -54,9 +54,9 @@ public class MainApp {
         Fachada.getInstancia().addTipoApuesta(apuestaDocena);
         
         // Efectos
-        Efecto aleatorioCompleto = new ModoAleatorioCompleto("Aleatorio completo");
-        Efecto aleatorioParcial = new ModoAleatorioParcial("Aleatorio parcial");
-        Efecto simulador = new ModoSimulador("Simulador");
+        Efecto aleatorioCompleto = new ModoAleatorioCompleto();
+        Efecto aleatorioParcial = new ModoAleatorioParcial();
+        Efecto simulador = new ModoSimulador();
         Fachada.getInstancia().addEfecto(aleatorioCompleto);
         Fachada.getInstancia().addEfecto(aleatorioParcial);
         Fachada.getInstancia().addEfecto(simulador);

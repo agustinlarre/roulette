@@ -41,10 +41,10 @@ public class Mesa {
     }
     
     public void validar() throws TipoApuestaObligatoriaException, TiposApuestaVaciaException {
-        boolean esValido = false;
         if (this.tiposApuesta.isEmpty()) {
             throw new TiposApuestaVaciaException();
         } else {
+            boolean esValido = false;
             for (TipoApuesta tipo : tiposApuesta) {
                 if (tipo.getNombreTipo().equals("Apuesta directa")) esValido = true;
             }

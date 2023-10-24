@@ -1793,6 +1793,12 @@ public class PanelRuleta extends javax.swing.JPanel {
             this.setCoinValue(cells.get(i).coin, 0);
         }
     }
+    
+    public void desaparecerBotones() {
+        for (int i = 0; i < cells.size(); i++) {
+            this.cells.get(i).button.setVisible(false);
+        }
+    }
 
     public void pausar() {
         for (int i = 0; i < cells.size(); i++) {

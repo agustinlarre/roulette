@@ -10,13 +10,17 @@ package logicaNegocio;
  */
 public class ModoAleatorioParcial extends Efecto {
 
-    public ModoAleatorioParcial(String nombre) {
-        this.nombre = nombre;
+    public ModoAleatorioParcial() {
     }
 
     @Override
     public void habilitarEfecto() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String getNombreEfecto() {
+        return "Modo aleatorio parcial";
     }
     
 }

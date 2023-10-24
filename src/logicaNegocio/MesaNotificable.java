@@ -8,7 +8,7 @@ package logicaNegocio;
  *
  * @author Agustin
  */
-public interface Notificable {
+public interface MesaNotificable {
     
     public void notificarMesaAbierta(Mesa mesa);
     
