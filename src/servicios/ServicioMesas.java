@@ -15,12 +15,13 @@ import logicaNegocio.Casillero;
 import logicaNegocio.Efecto;
 import logicaNegocio.Jugador;
 import logicaNegocio.MesaNotificable;
+import logicaNegocio.Observable;
 
 /**
  *
  * @author agust
  */
-public class ServicioMesas {
+public class ServicioMesas extends Observable {
     private List<Mesa> listaMesas;
     private List<TipoApuesta> tiposApuesta;
     private List<Casillero> listaCasilleros;
@@ -39,6 +40,7 @@ public class ServicioMesas {
         try {
             mesa.validar();
             listaMesas.add(mesa);
+            // Cambiar para el jueves 26/10
             this.recibirNoticiaMesaAbierta(mesa);
         } catch(TiposApuestaVaciaException ex1) {
             throw new MesaException("Debe seleccionar al menos un tipo de apuesta, recuerde que el tipo de apuesta 'Directa' es obligatorio.");
