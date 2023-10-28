@@ -13,17 +13,11 @@ import java.util.List;
 public class Casillero {
     
     private List<Integer> numerosVinculados;
-    private String nombre;
     private int cellCode;
 
-    public Casillero(String nombre) {
-        this.nombre = nombre;
+    public Casillero(int cellCode) {
+        this.cellCode = cellCode;
         this.setNumerosVinculados();
-        
-    }
-
-    public String getNombre() {
-        return nombre;
     }
 
     public int getCellCode() {
@@ -33,7 +27,6 @@ public class Casillero {
     private void setNumerosVinculados() {
         switch (cellCode) {
             case 40: 
-                
                 break;
             default: 
                 break;

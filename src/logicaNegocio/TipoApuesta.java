@@ -4,6 +4,7 @@
  */
 package logicaNegocio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,13 +12,22 @@ import java.util.List;
  * @author agust
  */
 public abstract class TipoApuesta {
+    protected List<Casillero> listaCasilleros;
     protected int factorPago;
+
+    public TipoApuesta() {
+        this.listaCasilleros = new ArrayList();
+    }
     
     public int getFactorPago() {
         return this.factorPago;
     }
     
-    public abstract List<Integer> getUniversalCellCodes();
+    public List<Casillero> getCasillerosDisponibles() {
+        return this.listaCasilleros;
+    }
+    
+    protected abstract void setCasillerosDisponibles();
     
     public abstract String getNombreTipo();
 

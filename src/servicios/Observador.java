@@ -12,6 +12,7 @@ public interface Observador {
     
     public enum Evento {
         MESA_AGREGADA,
+        MESA_ELIMINADA,
     }
     
     public void actualizar(Observable origen, Object evento);

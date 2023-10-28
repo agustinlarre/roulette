@@ -66,6 +66,10 @@ public class Fachada extends Observable {
         this.servicioMesas.addMesa(mesa);
     }
     
+    public void removeMesa(Mesa mesa) {
+        this.servicioMesas.removeMesa(mesa);
+    }
+    
     public List<Mesa> getMesas() {
         return this.servicioMesas.getMesas();
     }

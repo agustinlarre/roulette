@@ -43,6 +43,12 @@ public class ServicioMesas {
         }
     }
     
+    public void removeMesa(Mesa mesa) {
+        //Camino feliz -implementar cambios con excepciones-
+        listaMesas.remove(mesa);
+        Fachada.getInstancia().notificar(Observador.Evento.MESA_ELIMINADA);
+    }
+    
     public List<Mesa> getMesas() {
         return this.listaMesas;
     }

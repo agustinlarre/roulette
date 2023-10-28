@@ -6,6 +6,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
+import logicaNegocio.Casillero;
 import logicaNegocio.Crupier;
 import logicaNegocio.Efecto;
 import logicaNegocio.Mesa;
@@ -45,13 +46,13 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
     
     private void habilitarTiposApuesta() {
         for (TipoApuesta tipoApuesta : this.mesa.getTiposApuesta()) {
-            this.habilitarBotones(tipoApuesta.getUniversalCellCodes());
+            this.habilitarCasilleros(tipoApuesta.getCasillerosDisponibles());
         }
     }
     
-    private void habilitarBotones(List<Integer> listaCellCodes) {
-        for (int cellCode : listaCellCodes) {
-            r.setVisible(cellCode, true);
+    private void habilitarCasilleros(List<Casillero> listaCasilleros) {
+        for (Casillero casillero : listaCasilleros) {
+            r.setVisible(casillero.getCellCode(), true);
         }
     }
     
@@ -120,6 +121,11 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
         labelNroRuleta.setText("jLabel1");
 
         btnCerrarMesa.setText("Cerrar mesa");
+        btnCerrarMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarMesaActionPerformed(evt);
+            }
+        });
 
         btnLanzar.setText("Lanzar/Pagar");
 
@@ -223,6 +229,10 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCerrarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarMesaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCerrarMesaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarMesa;

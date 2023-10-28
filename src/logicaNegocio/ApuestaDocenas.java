@@ -4,31 +4,27 @@
  */
 package logicaNegocio;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  *
  * @author Agustin
  */
-public class ApuestaDocenas extends TipoApuesta {
+public final class ApuestaDocenas extends TipoApuesta {
     
     public ApuestaDocenas() {
         this.factorPago = 3;
-    }
-
-    @Override
-    public List<Integer> getUniversalCellCodes() {
-        List<Integer> listaCellCodes = new ArrayList();
-        listaCellCodes.add(40);
-        listaCellCodes.add(41);
-        listaCellCodes.add(42);
-        return listaCellCodes;
+        setCasillerosDisponibles();
     }
 
     @Override
     public String getNombreTipo() {
         return "Apuesta por docenas";
+    }
+
+    @Override
+    protected void setCasillerosDisponibles() {
+        this.listaCasilleros.add(new Casillero(40));
+        this.listaCasilleros.add(new Casillero(41));
+        this.listaCasilleros.add(new Casillero(42));
     }
     
 }
