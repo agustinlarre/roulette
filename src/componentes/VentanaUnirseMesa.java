@@ -17,14 +17,15 @@ import logicaNegocio.Jugador;
 import logicaNegocio.Mesa;
 import logicaNegocio.Sesion;
 import servicios.Fachada;
-import logicaNegocio.MesaNotificable;
 import logicaNegocio.Participante;
+import servicios.Observable;
+import servicios.Observador;
 
 /**
  *
  * @author agust
  */
-public class VentanaUnirseMesa extends javax.swing.JFrame implements MesaNotificable {
+public class VentanaUnirseMesa extends javax.swing.JFrame implements Observador {
     
     private Sesion sesion;
     private Jugador jugador;
@@ -37,11 +38,11 @@ public class VentanaUnirseMesa extends javax.swing.JFrame implements MesaNotific
         inicializar();
         this.sesion = sesionActual;
         this.jugador = (Jugador) sesionActual.getUsuario();
+        Fachada.getInstancia().subscribir(this);
         this.setTitle("Aplicación Jugador - Unirse a mesa");
     }
     
     private void inicializar() {
-        Fachada.getInstancia().addNotificable(this);
         hidratarListaMesas();
     }
     
@@ -50,6 +51,13 @@ public class VentanaUnirseMesa extends javax.swing.JFrame implements MesaNotific
         listaMesasAbiertas.setListData(mesasAbiertas.toArray());
         listaMesasAbiertas.setCellRenderer(new MesaAbiertaCellRenderer());
         listaMesasAbiertas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
+    @Override
+    public void actualizar(Observable origen, Object evento) {
+        if (evento.equals(Evento.MESA_AGREGADA)) {
+            hidratarListaMesas();
+        }
     }
     
     private class MesaAbiertaCellRenderer implements ListCellRenderer<Mesa> {
@@ -63,11 +71,6 @@ public class VentanaUnirseMesa extends javax.swing.JFrame implements MesaNotific
             return ta;
         }
         
-    }
-    
-    @Override
-    public void notificarMesaAbierta(Mesa mesa) {
-        hidratarListaMesas();
     }
 
     /**

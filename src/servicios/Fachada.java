@@ -13,7 +13,7 @@ import logicaNegocio.*;
  *
  * @author agust
  */
-public class Fachada {
+public class Fachada extends Observable {
     private static Fachada instancia;
     private ServicioMesas servicioMesas;
     private ServicioUsuarios servicioUsuarios;
@@ -36,10 +36,6 @@ public class Fachada {
     
     public List<Jugador> getJugadores() {
         return this.servicioUsuarios.getJugadores();
-    }
-    
-    public void addNotificable(MesaNotificable notificable) {
-        this.servicioMesas.addNotificable(notificable);
     }
     
     public void addCrupier(Crupier crupier) {

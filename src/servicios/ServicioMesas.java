@@ -13,35 +13,29 @@ import logicaNegocio.Mesa;
 import logicaNegocio.TipoApuesta;
 import logicaNegocio.Casillero;
 import logicaNegocio.Efecto;
-import logicaNegocio.Jugador;
-import logicaNegocio.MesaNotificable;
-import logicaNegocio.Observable;
 
 /**
  *
  * @author agust
  */
-public class ServicioMesas extends Observable {
+public class ServicioMesas {
     private List<Mesa> listaMesas;
     private List<TipoApuesta> tiposApuesta;
     private List<Casillero> listaCasilleros;
     private List<Efecto> listaEfectos;
-    private List<MesaNotificable> notificables;
 
     public ServicioMesas() {
         listaMesas = new ArrayList();
         tiposApuesta = new ArrayList();
         listaEfectos = new ArrayList();
         listaCasilleros = new ArrayList();
-        notificables = new ArrayList();
     }
     
     public void addMesa(Mesa mesa) throws MesaException {
         try {
             mesa.validar();
             listaMesas.add(mesa);
-            // Cambiar para el jueves 26/10
-            this.recibirNoticiaMesaAbierta(mesa);
+            Fachada.getInstancia().notificar(Observador.Evento.MESA_AGREGADA);
         } catch(TiposApuestaVaciaException ex1) {
             throw new MesaException("Debe seleccionar al menos un tipo de apuesta, recuerde que el tipo de apuesta 'Directa' es obligatorio.");
         } catch(TipoApuestaObligatoriaException ex2) {
@@ -51,10 +45,6 @@ public class ServicioMesas extends Observable {
     
     public List<Mesa> getMesas() {
         return this.listaMesas;
-    }
-    
-    public void addNotificable(MesaNotificable notificable) {
-        this.notificables.add(notificable);
     }
     
     public void addTipoApuesta(TipoApuesta tipoApuesta) {
@@ -79,11 +69,5 @@ public class ServicioMesas extends Observable {
     
     public List<Casillero> getCasilleros() {
         return this.listaCasilleros;
-    }
-    
-    private void recibirNoticiaMesaAbierta(Mesa mesa) {
-        for (MesaNotificable notificable : notificables) {
-            notificable.notificarMesaAbierta(mesa);
-        }
     }
 }

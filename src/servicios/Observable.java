@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package logicaNegocio;
+package servicios;
 
+import java.util.ArrayList;
 import java.util.List;
-import logicaNegocio.Observador.Evento;
+import servicios.Observador.Evento;
 
 /**
  *
@@ -13,6 +14,10 @@ import logicaNegocio.Observador.Evento;
  */
 public abstract class Observable {
     private List<Observador> subscriptores;
+    
+    public Observable() {
+        subscriptores = new ArrayList();
+    }
     
     public void subscribir(Observador e) {
         subscriptores.add(e);

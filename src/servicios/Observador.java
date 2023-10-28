@@ -2,14 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package logicaNegocio;
+package servicios;
 
 /**
  *
  * @author Agustin
  */
-public interface MesaNotificable {
+public interface Observador {
     
-    public void notificarMesaAbierta(Mesa mesa);
+    public enum Evento {
+        MESA_AGREGADA,
+    }
     
+    public void actualizar(Observable origen, Object evento);
+
 }

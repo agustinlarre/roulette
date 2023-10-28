@@ -4,6 +4,7 @@
  */
 package logicaNegocio;
 
+import excepcionesSistema.SaldoInvalidoException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,34 +16,21 @@ public class Jugador extends Usuario {
     private String cedula;
     private String password;
     private int saldoInicial;
-    private List<Mesa> mesas;
+    private List<Participante> participaciones;
 
     public Jugador(String cedula, String password) {
         super(cedula, password);
-        this.mesas = new ArrayList();
+        this.participaciones = new ArrayList();
     }
 
     public int getSaldoInicial() {
         return saldoInicial;
     }
 
-    public void setSaldoInicial(int saldoInicial) {
+    public void setSaldoInicial(int saldoInicial) throws SaldoInvalidoException {
+        if (saldoInicial <= 0) {
+            throw new SaldoInvalidoException("El saldo debe ser mayor a cero.");
+        }
         this.saldoInicial = saldoInicial;
-    }
-    
-    public void setMesa(Mesa mesa) {
-        boolean mesaEncontrada = false;
-        for (Mesa m : mesas) {
-            if (m.equals(mesa)) mesaEncontrada = true;
-        }
-        if (mesaEncontrada) {
-            // Mostrar en panel "El jugador ya participa de esta mesa."
-        } else {
-            mesas.add(mesa);
-        }
-    }
-    
-    public void jugar() {
-        
     }
 }
