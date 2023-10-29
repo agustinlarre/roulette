@@ -4,13 +4,15 @@
  */
 package logicaNegocio;
 
+import java.util.List;
+
 /**
  *
  * @author agust
  */
 public abstract class Efecto {
-
-    public abstract void habilitarEfecto();
     
     public abstract String getNombreEfecto();
+    
+    public abstract int sortear(List<Casillero> listaCasillerosNumeros, List<Integer> listaNumerosSorteados, List<Integer> listaNumerosApostados);
 }

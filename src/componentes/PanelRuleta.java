@@ -1794,9 +1794,9 @@ public class PanelRuleta extends javax.swing.JPanel {
         }
     }
     
-    public void desaparecerBotones() {
+    public void desactivarBotones() {
         for (int i = 0; i < cells.size(); i++) {
-            this.cells.get(i).button.setVisible(false);
+            habilitar(i, false);
         }
     }
 

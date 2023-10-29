@@ -26,7 +26,7 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="r" alignment="0" pref="789" max="32767" attributes="0"/>
+                  <Component id="r" alignment="0" pref="788" max="32767" attributes="0"/>
                   <Component id="jSeparator2" alignment="1" max="32767" attributes="0"/>
                   <Component id="jSeparator1" alignment="1" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
@@ -36,22 +36,23 @@
                       <EmptySpace min="-2" pref="148" max="-2" attributes="0"/>
                       <Component id="comboEfectos" min="-2" pref="150" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnLanzar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="90" max="-2" attributes="0"/>
+                      <Component id="btnLanzarPagar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="labelUltimoNro" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="labelBalanceCasa" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="labelRonda" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="232" max="-2" attributes="0"/>
-                      <Component id="labelNroRuleta" min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="182" max="-2" attributes="0"/>
+                      <Component id="labelNroRuleta" min="-2" pref="100" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnCerrarMesa" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="labelUltimosLanzamientos" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="labelUltimosLanzamientos" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="jScrollPane2" min="-2" pref="350" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -78,14 +79,12 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                      <Component id="labelCantApuestas" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelValorTotalApuestas" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="comboEfectos" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnLanzar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="jScrollPane1" alignment="1" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelCantApuestas" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelValorTotalApuestas" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="comboEfectos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnLanzarPagar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelUltimoNro" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="r" min="-2" max="-2" attributes="0"/>
@@ -121,22 +120,14 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCerrarMesaActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnLanzar">
+    <Component class="javax.swing.JButton" name="btnLanzarPagar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Lanzar/Pagar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLanzarPagarActionPerformed"/>
+      </Events>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-      <AuxValues>
-        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-      </AuxValues>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-      <SubComponents>
-        <Component class="javax.swing.JTextPane" name="labelUltimoNro">
-        </Component>
-      </SubComponents>
-    </Container>
     <Component class="javax.swing.JLabel" name="labelCantApuestas">
       <Properties>
         <Property name="text" type="java.lang.String" value="jLabel1"/>
@@ -156,6 +147,9 @@
           <Color id="Default Cursor"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboEfectosActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
       </AuxValues>
@@ -199,7 +193,7 @@
     </Container>
     <Component class="javax.swing.JLabel" name="labelUltimosLanzamientos">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel1"/>
+        <Property name="text" type="java.lang.String" value="Ultimos lanzamientos:"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -227,5 +221,10 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="labelUltimoNro">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ultimo n&#xb0; sorteado"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

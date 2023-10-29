@@ -20,7 +20,7 @@ public class VentanaMesaJugador extends javax.swing.JFrame {
         this.participante = participanteActual;
         inicializar();
         // Escuchador para el caso de jugador
-        escuchador();
+        //escuchador();
     }
     
     private void inicializar() {

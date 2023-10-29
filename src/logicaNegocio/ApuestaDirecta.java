@@ -4,6 +4,9 @@
  */
 package logicaNegocio;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Agustin
@@ -23,7 +26,9 @@ public final class ApuestaDirecta extends TipoApuesta {
     @Override
     protected void setCasillerosDisponibles() {
         for (int i = 0; i <= 36; i++) {
-            listaCasilleros.add(new Casillero(i));
+            List<Integer> lista = new ArrayList();
+            lista.add(i);
+            listaCasilleros.add(new Casillero(i, lista));
         }
     }
     

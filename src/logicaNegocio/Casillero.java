@@ -15,22 +15,16 @@ public class Casillero {
     private List<Integer> numerosVinculados;
     private int cellCode;
 
-    public Casillero(int cellCode) {
+    public Casillero(int cellCode, List<Integer> numerosVinculados) {
         this.cellCode = cellCode;
-        this.setNumerosVinculados();
+        this.numerosVinculados = numerosVinculados;
     }
 
     public int getCellCode() {
         return cellCode;
     }
-    
-    private void setNumerosVinculados() {
-        switch (cellCode) {
-            case 40: 
-                break;
-            default: 
-                break;
-        } 
-    }
 
+    public List<Integer> getNumerosVinculados() {
+        return numerosVinculados;
+    }
 }

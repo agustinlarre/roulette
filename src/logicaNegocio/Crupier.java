@@ -23,8 +23,6 @@ public class Crupier extends Usuario {
         this.mesa = mesa;
     }
     
-    
-    
     public void setTipoApuesta(TipoApuesta tipo) {
         this.mesa.setTipoApuesta(tipo);
     }

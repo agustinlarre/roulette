@@ -13,12 +13,14 @@ import logicaNegocio.Mesa;
 import logicaNegocio.Sesion;
 import logicaNegocio.TipoApuesta;
 import servicios.Fachada;
+import servicios.Observable;
+import servicios.Observador;
 
 /**
  *
  * @author digregor
  */
-public class VentanaMesaCrupier extends javax.swing.JFrame {
+public class VentanaMesaCrupier extends javax.swing.JFrame implements Observador {
 
     private Sesion sesion;
     private Crupier crupier;
@@ -33,15 +35,17 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
         this.sesion = sesionActual;
         this.crupier = (Crupier) sesionActual.getUsuario();
         this.mesa = crupier.getMesa();
+        mesa.subscribir(this);
         inicializar();
         // Escuchador para el caso de jugador
-        escuchador();
+        //escuchador();
     }
     
     private void inicializar() {
-        r.desaparecerBotones();
+        r.desactivarBotones();
         popularComboEfectos();
         habilitarTiposApuesta();
+        this.labelNroRuleta.setText("Ruleta #" + mesa.getNroMesa());
     }
     
     private void habilitarTiposApuesta() {
@@ -52,7 +56,7 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
     
     private void habilitarCasilleros(List<Casillero> listaCasilleros) {
         for (Casillero casillero : listaCasilleros) {
-            r.setVisible(casillero.getCellCode(), true);
+            r.habilitar(casillero.getCellCode(), true);
         }
     }
     
@@ -73,6 +77,16 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
 //                    r.setApuesta(universalCellCode, apuesta);
 //                }
 //            });
+    }
+
+    @Override
+    public void actualizar(Observable origen, Object evento) {
+        if (evento.equals(Evento.MESA_PAUSADA)) {
+            r.pausar();
+            labelUltimoNro.setText(String.valueOf(mesa.getUltimoNumeroSorteado()));
+        } else if (evento.equals(Evento.RONDA_LIQUIDADA)) {
+            r.reanudar();
+        }
     }
     
     private class EfectoRenderer implements ListCellRenderer<Efecto> {
@@ -101,9 +115,7 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
         r = new componentes.PanelRuleta();
         labelNroRuleta = new javax.swing.JLabel();
         btnCerrarMesa = new javax.swing.JButton();
-        btnLanzar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        labelUltimoNro = new javax.swing.JTextPane();
+        btnLanzarPagar = new javax.swing.JButton();
         labelCantApuestas = new javax.swing.JLabel();
         labelValorTotalApuestas = new javax.swing.JLabel();
         comboEfectos = new javax.swing.JComboBox();
@@ -115,6 +127,7 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
         labelUltimosLanzamientos = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         listaRondas = new javax.swing.JList<>();
+        labelUltimoNro = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -127,15 +140,23 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
             }
         });
 
-        btnLanzar.setText("Lanzar/Pagar");
-
-        jScrollPane1.setViewportView(labelUltimoNro);
+        btnLanzarPagar.setText("Lanzar/Pagar");
+        btnLanzarPagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLanzarPagarActionPerformed(evt);
+            }
+        });
 
         labelCantApuestas.setText("jLabel1");
 
         labelValorTotalApuestas.setText("jLabel1");
 
         comboEfectos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        comboEfectos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboEfectosActionPerformed(evt);
+            }
+        });
 
         labelBalanceCasa.setText("jLabel1");
 
@@ -148,7 +169,7 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(listaJugadores);
 
-        labelUltimosLanzamientos.setText("jLabel1");
+        labelUltimosLanzamientos.setText("Ultimos lanzamientos:");
 
         listaRondas.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -157,6 +178,8 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(listaRondas);
 
+        labelUltimoNro.setText("Ultimo n° sorteado");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -164,7 +187,7 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(r, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
+                    .addComponent(r, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -174,20 +197,21 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
                         .addGap(148, 148, 148)
                         .addComponent(comboEfectos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLanzar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnLanzarPagar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelUltimoNro, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(labelBalanceCasa)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(labelRonda)
-                        .addGap(232, 232, 232)
-                        .addComponent(labelNroRuleta, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(182, 182, 182)
+                        .addComponent(labelNroRuleta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnCerrarMesa))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelUltimosLanzamientos)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(labelUltimosLanzamientos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -207,13 +231,12 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelCantApuestas)
-                        .addComponent(labelValorTotalApuestas)
-                        .addComponent(comboEfectos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnLanzar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelCantApuestas)
+                    .addComponent(labelValorTotalApuestas)
+                    .addComponent(comboEfectos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLanzarPagar)
+                    .addComponent(labelUltimoNro))
                 .addGap(18, 18, 18)
                 .addComponent(r, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -234,11 +257,20 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCerrarMesaActionPerformed
 
+    private void btnLanzarPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLanzarPagarActionPerformed
+        // Llamar a un metodo y no implementarlo dentro del boton
+        Efecto efectoSeleccionado = (Efecto) comboEfectos.getSelectedItem();
+        this.mesa.accionarMesa(efectoSeleccionado);
+    }//GEN-LAST:event_btnLanzarPagarActionPerformed
+
+    private void comboEfectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEfectosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboEfectosActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarMesa;
-    private javax.swing.JButton btnLanzar;
+    private javax.swing.JButton btnLanzarPagar;
     private javax.swing.JComboBox comboEfectos;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
@@ -247,7 +279,7 @@ public class VentanaMesaCrupier extends javax.swing.JFrame {
     private javax.swing.JLabel labelCantApuestas;
     private javax.swing.JLabel labelNroRuleta;
     private javax.swing.JLabel labelRonda;
-    private javax.swing.JTextPane labelUltimoNro;
+    private javax.swing.JLabel labelUltimoNro;
     private javax.swing.JLabel labelUltimosLanzamientos;
     private javax.swing.JLabel labelValorTotalApuestas;
     private javax.swing.JList<String> listaJugadores;

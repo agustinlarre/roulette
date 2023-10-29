@@ -4,6 +4,10 @@
  */
 package logicaNegocio;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 /**
  *
  * @author Agustin
@@ -12,15 +16,24 @@ public class ModoSimulador extends Efecto {
     
     public ModoSimulador() {
     }
-
-    @Override
-    public void habilitarEfecto() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
+    
     @Override
     public String getNombreEfecto() {
         return "Modo simulador";
     }
+
+    @Override
+    public int sortear(List<Casillero> listaCasillerosNumeros, List<Integer> listaNumerosSorteados, List<Integer> listaNumerosApostados) {
+        List<Integer> listaNumeros = new ArrayList();
+        listaNumeros.add(0);
+        for (int num : listaNumerosApostados) {
+            listaNumeros.add(num);
+        }
+        Random random = new Random();
+        int randomNum = listaNumeros.get(random.nextInt(listaNumeros.size()));
+        return randomNum;
+    }
+    
+    
     
 }
