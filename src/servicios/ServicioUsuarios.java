@@ -4,8 +4,6 @@
  */
 package servicios;
 
-import excepcionesSistema.MesaException;
-import excepcionesSistema.MesaNoSeleccionadaException;
 import excepcionesSistema.UsuarioException;
 import excepcionesSistema.UsuarioLogueadoException;
 import excepcionesSistema.UsuarioNoEncontradoException;
@@ -21,13 +19,11 @@ public class ServicioUsuarios {
     private List<Jugador> listaJugadores;
     private List<Crupier> listaCrupieres;
     private List<Sesion> sesionesActivas;
-    private List<Participante> listaParticipantes;
 
     public ServicioUsuarios() {
         this.listaJugadores = new ArrayList();
         this.listaCrupieres = new ArrayList();
         this.sesionesActivas = new ArrayList();
-        this.listaParticipantes = new ArrayList();
     }
     
     public void addJugador(Jugador jugador) {
@@ -52,19 +48,6 @@ public class ServicioUsuarios {
     
     public void logout(Sesion sesion) {
         this.sesionesActivas.remove(sesion);
-    }
-    
-    public void addParticipante(Participante participante) throws MesaException {
-        try {
-            participante.validar();
-            this.listaParticipantes.add(participante);
-        } catch(MesaNoSeleccionadaException ex1) {
-            throw new MesaException("Debe seleccionar una mesa.");
-        }
-    }
-    
-    public void removeParticipante(Participante participante) {
-        this.listaParticipantes.remove(participante);
     }
     
     private Sesion login(String cedula, String contrasenia, List<Usuario> listaUsuarios) throws UsuarioException {

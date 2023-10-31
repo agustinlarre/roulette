@@ -50,14 +50,6 @@ public class Fachada extends Observable {
         return this.servicioUsuarios.loginCrupier(cedula, contrasenia);
     }
     
-    public void addParticipante(Participante participante) throws MesaException {
-        this.servicioUsuarios.addParticipante(participante);
-    }
-    
-    public void removeParticipante(Participante participante) {
-        this.servicioUsuarios.removeParticipante(participante);
-    }
-    
     public void logout(Sesion sesion) {
         this.servicioUsuarios.logout(sesion);
     }

@@ -4,9 +4,12 @@
  */
 package logicaNegocio;
 
+import excepcionesSistema.MesaException;
+import excepcionesSistema.MesaNoSeleccionadaException;
 import excepcionesSistema.SaldoInvalidoException;
 import java.util.ArrayList;
 import java.util.List;
+import servicios.Observador;
 
 /**
  *
@@ -32,5 +35,20 @@ public class Jugador extends Usuario {
             throw new SaldoInvalidoException("El saldo debe ser mayor a cero.");
         }
         this.saldoInicial = saldoInicial;
+    }
+    
+    public void participar(Participante participante) throws MesaException {
+        try {
+            participante.validar();
+            this.participaciones.add(participante);
+            // AVISAR A MESA QUE SE UNIO UN PARTICIPANTE
+        } catch (MesaNoSeleccionadaException ex1) {
+            throw new MesaException("Debe seleccionar una mesa.");
+        }
+        
+    }
+    
+    public void abandonarParticipacion(Participante participante) {
+        this.participaciones.remove(participante);
     }
 }

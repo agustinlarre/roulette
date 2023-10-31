@@ -19,22 +19,9 @@ public class VentanaMesaJugador extends javax.swing.JFrame {
         initComponents();
         this.participante = participanteActual;
         inicializar();
-        // Escuchador para el caso de jugador
-        //escuchador();
     }
     
     private void inicializar() {
-    }
-    
-    private void escuchador() {
-//        r.agregar(new PanelRuleta.Escuchador() {
-//                @Override
-//                public void celdaSeleccionada(int universalCellCode) {
-//                    int apuesta = Integer.valueOf(jTextField1.getText());
-//                    System.out.println("Id de celda seleccionada: " + universalCellCode + ". Apuesta anterior: " + r.getApuesta(universalCellCode) + ". Apuesta nueva:" + apuesta);
-//                    r.setApuesta(universalCellCode, apuesta);
-//                }
-//            });
     }
 
     /**
@@ -99,14 +86,19 @@ public class VentanaMesaJugador extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(listaValorOcurrencia);
 
+        btnFicha1.setBackground(new java.awt.Color(204, 204, 204));
         btnFicha1.setText("1");
 
+        btnFicha5.setBackground(new java.awt.Color(0, 204, 0));
         btnFicha5.setText("5");
 
+        btnFicha10.setBackground(new java.awt.Color(0, 102, 204));
         btnFicha10.setText("10");
 
+        btnFicha50.setBackground(new java.awt.Color(255, 153, 102));
         btnFicha50.setText("50");
 
+        btnFicha100.setBackground(new java.awt.Color(255, 51, 51));
         btnFicha100.setText("100");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -25,5 +25,7 @@ public class Participante {
     
     public void validar() throws MesaNoSeleccionadaException {
         if (this.mesa == null) throw new MesaNoSeleccionadaException();
+        // Contemplar posibles excepciones
+        mesa.addParticipante(this);
     }
 }

@@ -19,6 +19,8 @@ public class Mesa extends Observable {
     private List<TipoApuesta> tiposApuesta;
     private List<Casillero> listaCasilleros;
     private List<Ronda> listaRondas;
+    // PREGUNTAR POSIBLE BIDIRECCION MESA <--> PARTICIPANTE
+    private List<Participante> listaParticipantes;
     private Ronda rondaActual;
     private boolean hayPausa;
     private boolean hayLiquidacion;
@@ -54,22 +56,30 @@ public class Mesa extends Observable {
     }
     
     public void addApuesta(Apuesta apuesta) {
-        //Excepciones
+        //Atajar excepciones
         this.rondaActual.recibirApuesta(apuesta);
     }
     
     public void accionarMesa(Efecto efecto) {
-        /*if (this.hayLiquidacion) {
-            this.hayPausa = false;
-            this.hayLiquidacion = false;
-        } else */if (this.hayPausa) {
-            this.hayPausa = false;
-            agregarRonda(efecto);
-            // Evaluar si es necesario el evento RONDA_LIQUIDADA ???
-            this.notificar(Observador.Evento.RONDA_LIQUIDADA);
-        } else {
-            generarSorteo(efecto);
+        if (efecto != null) {
+            if (this.hayPausa) {
+                this.hayPausa = false;
+                // Evaluar si es necesario el evento RONDA_LIQUIDADA ???
+                this.notificar(Observador.Evento.RONDA_LIQUIDADA);
+            } else {
+                generarSorteo(efecto);
+            }
         }
+    }
+    
+    public int getNroRondaActual() {
+        // La ronda se agregará una vez lanzada la bola
+        return listaRondas.size() +1;
+    }
+    
+    public void addParticipante(Participante participante) {
+        this.listaParticipantes.add(participante);
+        this.notificar(Observador.Evento.PARTICIPANTE_AGREGADO);
     }
     
     private void generarSorteo(Efecto efecto) {
@@ -77,6 +87,7 @@ public class Mesa extends Observable {
         TipoApuesta apuestaDirecta = (ApuestaDirecta) getTipoApuestaByNombre("Apuesta directa");
         this.rondaActual.setEfecto(efecto);
         this.rondaActual.sortearNumero(apuestaDirecta.getCasillerosDisponibles(), listaHistoricoNumerosSorteados());
+        this.listaRondas.add(rondaActual);
         this.hayPausa = true;
         this.notificar(Observador.Evento.MESA_PAUSADA);
     }
@@ -86,17 +97,13 @@ public class Mesa extends Observable {
         return rondaActual.getNumeroSorteado();
     }
     
-    private void agregarRonda(Efecto efecto) {
-        this.rondaActual = new Ronda(efecto);
-        this.listaRondas.add(rondaActual);
-    }
-    
     private void inicializarMesa(List<TipoApuesta> tiposApuesta) {
         this.tiposApuesta = tiposApuesta;
         this.nroMesa = nro;
         nro++;
         this.hayPausa = false;
         this.hayLiquidacion = false;
+        this.listaParticipantes = new ArrayList();
         this.listaRondas = new ArrayList();
         this.rondaActual = new Ronda(null);
     }

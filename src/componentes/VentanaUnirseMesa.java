@@ -150,7 +150,7 @@ public class VentanaUnirseMesa extends javax.swing.JFrame implements Observador 
         try {
             Mesa mesaElegida = (Mesa) listaMesasAbiertas.getSelectedValue();
             Participante participante = new Participante(this.jugador, mesaElegida);
-            Fachada.getInstancia().addParticipante(participante);
+            jugador.participar(participante);
             new VentanaMesaJugador(participante).setVisible(true);
         } catch(MesaException mesaEx) {
             JOptionPane.showMessageDialog(this, mesaEx.getMessage());

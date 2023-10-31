@@ -37,14 +37,29 @@ public class VentanaMesaCrupier extends javax.swing.JFrame implements Observador
         this.mesa = crupier.getMesa();
         mesa.subscribir(this);
         inicializar();
-        // Escuchador para el caso de jugador
-        //escuchador();
+    }
+    
+    @Override
+    public void actualizar(Observable origen, Object evento) {
+        // Cambiar condiciones anidadas
+        if (evento.equals(Evento.MESA_PAUSADA)) {
+            r.pausar();
+            actualizarLabelsHistorico();
+        } else if (evento.equals(Evento.RONDA_LIQUIDADA)) {
+            r.reanudar();
+            actualizarLabelNroRonda();
+        } else if (evento.equals(Evento.PARTICIPANTE_AGREGADO)) {
+            // Implementar actualizacion frame participantes
+            System.out.print("PARTICIPANTE AGREGADO");
+        }
+           
     }
     
     private void inicializar() {
         r.desactivarBotones();
         popularComboEfectos();
         habilitarTiposApuesta();
+        actualizarLabelNroRonda();
         this.labelNroRuleta.setText("Ruleta #" + mesa.getNroMesa());
     }
     
@@ -68,27 +83,6 @@ public class VentanaMesaCrupier extends javax.swing.JFrame implements Observador
         comboEfectos.setRenderer(new EfectoRenderer());
     }
     
-    private void escuchador() {
-//        r.agregar(new PanelRuleta.Escuchador() {
-//                @Override
-//                public void celdaSeleccionada(int universalCellCode) {
-//                    int apuesta = Integer.valueOf(jTextField1.getText());
-//                    System.out.println("Id de celda seleccionada: " + universalCellCode + ". Apuesta anterior: " + r.getApuesta(universalCellCode) + ". Apuesta nueva:" + apuesta);
-//                    r.setApuesta(universalCellCode, apuesta);
-//                }
-//            });
-    }
-
-    @Override
-    public void actualizar(Observable origen, Object evento) {
-        if (evento.equals(Evento.MESA_PAUSADA)) {
-            r.pausar();
-            labelUltimoNro.setText(String.valueOf(mesa.getUltimoNumeroSorteado()));
-        } else if (evento.equals(Evento.RONDA_LIQUIDADA)) {
-            r.reanudar();
-        }
-    }
-    
     private class EfectoRenderer implements ListCellRenderer<Efecto> {
         
         private DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
@@ -100,6 +94,15 @@ public class VentanaMesaCrupier extends javax.swing.JFrame implements Observador
             return efect;
         }
         
+    }
+    
+    private void actualizarLabelsHistorico() {
+        labelUltimoNro.setText(String.valueOf(mesa.getUltimoNumeroSorteado()));
+        labelUltimosLanzamientos.setText(labelUltimosLanzamientos.getText() + " " + String.valueOf(mesa.getUltimoNumeroSorteado()));
+    }
+    
+    private void actualizarLabelNroRonda() {
+        labelRonda.setText("Ronda #" + String.valueOf(mesa.getNroRondaActual()));
     }
 
     /**

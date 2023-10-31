@@ -4,6 +4,8 @@
  */
 package logicaNegocio;
 
+import servicios.Observable;
+
 /**
  *
  * @author agust
