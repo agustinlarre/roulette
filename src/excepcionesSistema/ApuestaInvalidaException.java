@@ -8,6 +8,6 @@ package excepcionesSistema;
  *
  * @author micar
  */
-public class ApuestInvalidaException extends Exception {
+public class ApuestaInvalidaException extends Exception {
     
 }

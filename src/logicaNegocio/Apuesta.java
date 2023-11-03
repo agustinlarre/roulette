@@ -4,6 +4,9 @@
  */
 package logicaNegocio;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author agust
@@ -11,21 +14,23 @@ package logicaNegocio;
 public class Apuesta {
     private int monto;
     private Casillero casillero;
-    private Ficha ficha;
+    private List<Ficha> fichas;
 
     public Apuesta() {
+        this.fichas = new ArrayList();
     }
 
-    public void setMonto(int monto) {
-        this.monto = monto;
+    public int getMonto() {
+        return monto;
     }
 
-    public Ficha getFicha() {
-        return ficha;
+    public List<Ficha> getFichas() {
+        return fichas;
     }
 
-    public void setFicha(Ficha ficha) {
-        this.ficha = ficha;
+    public void addFicha(Ficha ficha) {
+        this.fichas.add(ficha);
+        this.monto += ficha.getValor();
     }
 
     public Casillero getCasillero() {
@@ -35,6 +40,4 @@ public class Apuesta {
     public void setCasillero(Casillero casillero) {
         this.casillero = casillero;
     }
-    
-    
 }

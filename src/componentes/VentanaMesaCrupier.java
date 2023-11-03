@@ -25,7 +25,6 @@ public class VentanaMesaCrupier extends javax.swing.JFrame implements Observador
     private Sesion sesion;
     private Crupier crupier;
     private Mesa mesa;
-    int apuestaRojo = 0;
 
     /**
      * Creates new form NewJFrame

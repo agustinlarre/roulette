@@ -16,7 +16,8 @@ public interface Observador {
         MESA_PAUSADA,
         RONDA_LIQUIDADA,
         PARTICIPANTE_AGREGADO,
-        SALDO_JUGADOR_MODIFICADO,
+        APUESTA_REALIZADA,
+        FICHA_AGREGADA
     }
     
     public void actualizar(Observable origen, Object evento);

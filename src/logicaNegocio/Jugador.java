@@ -18,23 +18,21 @@ import servicios.Observador;
 public class Jugador extends Usuario {
     private String cedula;
     private String password;
-    private int saldoInicial;
+    private int saldo;
     private List<Participante> participaciones;
 
-    public Jugador(String cedula, String password) {
+    public Jugador(String cedula, String password, int saldoInicial) {
         super(cedula, password);
         this.participaciones = new ArrayList();
+        this.saldo = saldoInicial;
     }
 
-    public int getSaldoInicial() {
-        return saldoInicial;
+    public int getSaldo() {
+        return saldo;
     }
 
-    public void setSaldoInicial(int saldoInicial) throws SaldoInvalidoException {
-        if (saldoInicial <= 0) {
-            throw new SaldoInvalidoException("El saldo debe ser mayor a cero.");
-        }
-        this.saldoInicial = saldoInicial;
+    public void setSaldo(int saldo) {
+        this.saldo = saldo;
     }
     
     public void participar(Participante participante) throws MesaException {
@@ -42,6 +40,7 @@ public class Jugador extends Usuario {
             participante.validar();
             this.participaciones.add(participante);
             // AVISAR A MESA QUE SE UNIO UN PARTICIPANTE
+            participante.getMesa().addParticipante(participante);
         } catch (MesaNoSeleccionadaException ex1) {
             throw new MesaException("Debe seleccionar una mesa.");
         }

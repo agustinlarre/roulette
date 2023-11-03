@@ -25,6 +25,6 @@ public class VentanaLoginJugador extends VentanaLogin {
 
     @Override
     protected void proximoCU(Sesion sesionActual) {
-        new VentanaCargarSaldoInicial(sesionActual).setVisible(true);
+        new VentanaUnirseMesa(sesionActual).setVisible(true);
     }
 }

@@ -17,10 +17,12 @@ import servicios.Observador;
  */
 public class Mesa extends Observable {
     private List<TipoApuesta> tiposApuesta;
-    private List<Casillero> listaCasilleros;
+    // Necesario? ya contamos con la lista de casilleros a traves de los tipos de apuesta de la mesa
+    //private List<Casillero> listaCasilleros;
     private List<Ronda> listaRondas;
     // PREGUNTAR POSIBLE BIDIRECCION MESA <--> PARTICIPANTE
     private List<Participante> listaParticipantes;
+    private int balance;
     private Ronda rondaActual;
     private boolean hayPausa;
     private boolean hayLiquidacion;
@@ -61,15 +63,21 @@ public class Mesa extends Observable {
     }
     
     public void accionarMesa(Efecto efecto) {
+        //Necesario? ya que al inicializar la ventana mesa, el primer select queda seleccionado por defecto, nunca van a existir valores nulos
         if (efecto != null) {
             if (this.hayPausa) {
                 this.hayPausa = false;
+                realizarLiquidacion();
                 // Evaluar si es necesario el evento RONDA_LIQUIDADA ???
                 this.notificar(Observador.Evento.RONDA_LIQUIDADA);
             } else {
                 generarSorteo(efecto);
             }
         }
+    }
+    
+    public Ronda getRondaActual() {
+        return this.rondaActual;
     }
     
     public int getNroRondaActual() {
@@ -80,6 +88,34 @@ public class Mesa extends Observable {
     public void addParticipante(Participante participante) {
         this.listaParticipantes.add(participante);
         this.notificar(Observador.Evento.PARTICIPANTE_AGREGADO);
+    }
+        
+    private void realizarLiquidacion() {
+        List<Apuesta> listaApuestasGanadoras = this.rondaActual.getApuestasGanadoras();
+        if (!listaApuestasGanadoras.isEmpty()) {
+            for (Participante participante : listaParticipantes) {
+                // Contemplamos las apuestas que hizo el participante en esa ronda, ya que este podría apostar a múltiples casilleros
+                for (Apuesta apuesta : participante.getApuestas()) {
+                    if (listaApuestasGanadoras.contains(apuesta)) {
+                        pagarParticipanteSegunApuesta(participante, apuesta);
+                        // Se notifica al jugador que su saldo fue modificado, posible evento???
+                    }
+                }
+            }
+        }
+    }
+    
+    private void pagarParticipanteSegunApuesta(Participante participante, Apuesta apuesta) {
+        // Recorremos los casilleros de cada tipo de apuesta
+        int saldo = participante.getJugador().getSaldo();
+        for (TipoApuesta tipoApuesta : tiposApuesta) {
+            if (tipoApuesta.getCasillerosDisponibles().contains(apuesta.getCasillero())) {
+                participante.getJugador().setSaldo(saldo + (tipoApuesta.getFactorPago() * apuesta.getMonto()));
+                // Se modifica el balance de la mesa, ya que en caso de que el jugador gane, esta pierde
+                this.balance -= apuesta.getMonto();
+                break;
+            }
+        }
     }
     
     private void generarSorteo(Efecto efecto) {
@@ -99,6 +135,7 @@ public class Mesa extends Observable {
     
     private void inicializarMesa(List<TipoApuesta> tiposApuesta) {
         this.tiposApuesta = tiposApuesta;
+        this.balance = 0;
         this.nroMesa = nro;
         nro++;
         this.hayPausa = false;

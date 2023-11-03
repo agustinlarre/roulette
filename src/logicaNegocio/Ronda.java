@@ -4,6 +4,8 @@
  */
 package logicaNegocio;
 
+import excepcionesSistema.ApuestaInvalidaException;
+import excepcionesSistema.SaldoInsuficienteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,13 +46,35 @@ public class Ronda {
     
     // Apuesta llegada desde el manejo de eventos de la MesaCrupier
     public void recibirApuesta(Apuesta apuesta) {
-        // Excepciones
+        // Excepciones???
         this.listaApuestas.add(apuesta);
+    }
+    
+    public void agregarNuevoValorApuesta(Apuesta apuesta, Ficha ficha) throws ApuestaInvalidaException {
+        boolean existeApuesta = false;
+        for (int i = 0; i < listaApuestas.size(); i++) {
+            if (listaApuestas.get(i).equals(apuesta)) {
+                listaApuestas.get(i).addFicha(ficha);
+            }
+        }
+        if (!existeApuesta) throw new ApuestaInvalidaException();
+        
+    }
+    
+    public List<Apuesta> getApuestasGanadoras() {
+        List<Apuesta> listaApuestasGanadoras = new ArrayList();
+        // Excepcion para el caso de que no haya un número sorteado
+        for (Apuesta apuesta : this.listaApuestas) {
+            if (apuesta.getCasillero().getNumerosVinculados().contains(numeroSorteado)) {
+                listaApuestasGanadoras.add(apuesta);
+            }
+        }
+        return listaApuestasGanadoras;
     }
     
     private List<Integer> getTotalNumerosApostados() {
         List<Integer> listaNum = new ArrayList();
-        for (Apuesta apuesta : listaApuestas) {
+        for (Apuesta apuesta : this.listaApuestas) {
             for (int num : apuesta.getCasillero().getNumerosVinculados()) {
                 // Se verifica que el número no haya sido agregado anteriormente
                 if (!listaNum.contains(num)) {
