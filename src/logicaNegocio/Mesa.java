@@ -89,82 +89,55 @@ public class Mesa extends Observable {
         this.listaParticipantes.add(participante);
         this.notificar(Observador.Evento.PARTICIPANTE_AGREGADO);
     }
-        
+    
     private void realizarLiquidacion() {
         List<Apuesta> listaApuestasGanadoras = this.rondaActual.getApuestasGanadoras();
         if (!listaApuestasGanadoras.isEmpty()) {
             for (Participante participante : listaParticipantes) {
-                // Contemplamos las apuestas que hizo el participante en esa ronda, ya que este podría apostar a múltiples casilleros
-                for (Apuesta apuesta : participante.getApuestas()) {
-                    if (listaApuestasGanadoras.contains(apuesta)) {
-                        pagarParticipanteSegunApuesta(participante, apuesta);
-                        // Se notifica al jugador que su saldo fue modificado, posible evento???
-                    }
-                }
+                procesarApuestas(participante, listaApuestasGanadoras);
+            }
+        }
+    }
+    private void procesarApuestas(Participante participante, List<Apuesta> apuestasGanadoras) {
+        for (Apuesta apuesta : participante.getApuestas()) {
+            if (apuestasGanadoras.contains(apuesta)) {
+                procesarPagoApuesta(participante, apuesta);
+                //Se notifica al jugador que su saldo fue modificado, posible evento???
+            } else {
+                modificarBalanceMesa(apuesta.getMonto(), true);
             }
         }
     }
     
-    //posible cambio
-//    private void realizarLiquidacion() {
-//        List<Apuesta> listaApuestasGanadoras = this.rondaActual.getApuestasGanadoras();
-//        if (!listaApuestasGanadoras.isEmpty()) {
-//        for (Participante participante : listaParticipantes) {
-//            procesarApuestasGanadoras(participante, listaApuestasGanadoras);
-//          }
-//        }
-//    }
-//    private void procesarApuestasGanadoras(Participante participante, List<Apuesta> apuestasGanadoras) {
-//        for (Apuesta apuesta : participante.getApuestas()) {
-//            if (apuestasGanadoras.contains(apuesta)) {
-//                pagarParticipanteSegunApuesta(participante, apuesta);
-                  // Se notifica al jugador que su saldo fue modificado, posible evento???
-//                
-//            }
-//        }
-//    }
-
+    private void procesarPagoApuesta(Participante participante, Apuesta apuesta) {
+        Jugador jugador = participante.getJugador();
+        int saldo = jugador.getSaldo();
+        int montoGanado = calcularMontoGanado(apuesta, saldo);
+        actualizarSaldoJugador(jugador, montoGanado);
+        modificarBalanceMesa(apuesta.getMonto(), false);
+    }
     
-    private void pagarParticipanteSegunApuesta(Participante participante, Apuesta apuesta) {
-        // Recorremos los casilleros de cada tipo de apuesta
-        int saldo = participante.getJugador().getSaldo();
+    private int calcularMontoGanado(Apuesta apuesta, int saldo) {
         for (TipoApuesta tipoApuesta : tiposApuesta) {
             if (tipoApuesta.getCasillerosDisponibles().contains(apuesta.getCasillero())) {
-                participante.getJugador().setSaldo(saldo + (tipoApuesta.getFactorPago() * apuesta.getMonto()));
-                // Se modifica el balance de la mesa, ya que en caso de que el jugador gane, esta pierde
-                this.balance -= apuesta.getMonto();
-                break;
+                return tipoApuesta.getFactorPago() * apuesta.getMonto();
             }
         }
+        return 0;
     }
     
-    
-    //posible cambio
-//    private void procesarPagoApuesta(Participante participante, Apuesta apuesta) {
-//        Jugador jugador = participante.getJugador();
-//        int saldo = jugador.getSaldo();
-//        int montoGanado = calcularMontoGanado(apuesta, saldo);
-//        actualizarSaldoJugador(jugador, montoGanado);
-//        modificarBalanceMesa(apuesta.getMonto());
-//    }
-    
-//    private int calcularMontoGanado(Apuesta apuesta, int saldo) {
-//        for (TipoApuesta tipoApuesta : tiposApuesta) {
-//            if (tipoApuesta.getCasillerosDisponibles().contains(apuesta.getCasillero())) {
-//                return tipoApuesta.getFactorPago() * apuesta.getMonto();
-//            }
-//        }
-//        return 0;
-//    }
-    
-//    private void actualizarSaldoJugador(Jugador jugador, int montoGanado) {
-//        int nuevoSaldo = jugador.getSaldo() + montoGanado;
-//        jugador.setSaldo(nuevoSaldo);
-//    }
+    private void actualizarSaldoJugador(Jugador jugador, int montoGanado) {
+        int nuevoSaldo = jugador.getSaldo() + montoGanado;
+        jugador.setSaldo(nuevoSaldo);
+    }
 
-//    private void modificarBalanceMesa(int montoApostado) {
-//        this.balance -= montoApostado;
-//    }
+    private void modificarBalanceMesa(int montoApostado, boolean laCasaGana) {
+        if (laCasaGana) {
+            this.balance += montoApostado;
+        } else {
+            this.balance -= montoApostado;
+        }
+    }
     
     
     private void generarSorteo(Efecto efecto) {

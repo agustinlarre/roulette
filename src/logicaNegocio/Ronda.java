@@ -63,13 +63,15 @@ public class Ronda {
     
     public List<Apuesta> getApuestasGanadoras() {
         List<Apuesta> listaApuestasGanadoras = new ArrayList();
-        // Excepcion para el caso de que no haya un número sorteado
+        // Excepcion para el caso de que no haya un número sorteado???
         for (Apuesta apuesta : this.listaApuestas) {
-            if (apuesta.getCasillero().getNumerosVinculados().contains(numeroSorteado)) {
-                listaApuestasGanadoras.add(apuesta);
-            }
+            if (esApuestaGanadora(apuesta)) listaApuestasGanadoras.add(apuesta);
         }
         return listaApuestasGanadoras;
+    }
+    
+    private boolean esApuestaGanadora(Apuesta apuesta) {
+        return apuesta.getCasillero().getNumerosVinculados().contains(numeroSorteado);
     }
     
     private List<Integer> getTotalNumerosApostados() {
