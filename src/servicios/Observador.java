@@ -12,7 +12,7 @@ public interface Observador {
     
     public enum Evento {
         MESA_AGREGADA,
-        MESA_ELIMINADA,
+        MESA_CERRADA,
         MESA_PAUSADA,
         RONDA_LIQUIDADA,
         PARTICIPANTE_AGREGADO,

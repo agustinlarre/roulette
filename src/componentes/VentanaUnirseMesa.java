@@ -55,7 +55,7 @@ public class VentanaUnirseMesa extends javax.swing.JFrame implements Observador 
 
     @Override
     public void actualizar(Observable origen, Object evento) {
-        if (evento.equals(Evento.MESA_AGREGADA) || evento.equals(Evento.MESA_ELIMINADA)) {
+        if (evento.equals(Evento.MESA_AGREGADA) || evento.equals(Evento.MESA_CERRADA)) {
             hidratarListaMesas();
         }
     }

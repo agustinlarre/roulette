@@ -13,6 +13,7 @@ import logicaNegocio.Mesa;
 import logicaNegocio.TipoApuesta;
 import logicaNegocio.Casillero;
 import logicaNegocio.Efecto;
+import logicaNegocio.Jugador;
 
 /**
  *
@@ -46,7 +47,7 @@ public class ServicioMesas {
     public void removeMesa(Mesa mesa) {
         //Camino feliz -implementar cambios con excepciones-
         listaMesas.remove(mesa);
-        Fachada.getInstancia().notificar(Observador.Evento.MESA_ELIMINADA);
+        Fachada.getInstancia().notificar(Observador.Evento.MESA_CERRADA);
     }
     
     public List<Mesa> getMesas() {

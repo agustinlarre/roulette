@@ -50,15 +50,28 @@ public class Ronda {
         this.listaApuestas.add(apuesta);
     }
     
-    public void agregarNuevoValorApuesta(Apuesta apuesta, Ficha ficha) throws ApuestaInvalidaException {
+    public void agregarNuevoValorApuesta(Apuesta unaApuesta, Ficha ficha) throws ApuestaInvalidaException {
         boolean existeApuesta = false;
-        for (int i = 0; i < listaApuestas.size(); i++) {
-            if (listaApuestas.get(i).equals(apuesta)) {
-                listaApuestas.get(i).addFicha(ficha);
+        for (Apuesta apuesta : listaApuestas) {
+            if (apuesta.equals(unaApuesta)) {
+                existeApuesta = true;
+                apuesta.addFicha(ficha);
             }
         }
         if (!existeApuesta) throw new ApuestaInvalidaException();
         
+    }
+    
+    public int getCantTotalApuestas() {
+        return this.listaApuestas.size();
+    }
+    
+    public int getMontoTotalApostado() {
+        int montoTotal = 0;
+        for (Apuesta apuesta : this.listaApuestas) {
+            montoTotal += apuesta.getMonto();
+        }
+        return montoTotal;
     }
     
     public List<Apuesta> getApuestasGanadoras() {
@@ -68,6 +81,13 @@ public class Ronda {
             if (esApuestaGanadora(apuesta)) listaApuestasGanadoras.add(apuesta);
         }
         return listaApuestasGanadoras;
+    }
+    
+    public boolean existenApuestasDeParticipante(Participante participante) {
+        for (Apuesta apuesta : this.listaApuestas) {
+            if (participante.getApuestas().contains(apuesta)) return true;
+        }
+        return false;
     }
     
     private boolean esApuestaGanadora(Apuesta apuesta) {

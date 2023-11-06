@@ -145,9 +145,18 @@ public class MainApp {
         apuesta1.addFicha(ficha5);
         apuesta1.setCasillero(casilleroColoresRojo);
         
+        // Caso de uso, realizo una apuesta
         try {
             participanteJ1.realizarApuesta(apuesta1);
             System.out.println("El participante " + participanteJ1.getJugador().getCedula() + " ha apostado $" + participanteJ1.getApuestas().get(participanteJ1.getApuestas().size()-1).getMonto());
+        } catch (ApuestaException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        // Caso de uso, modifico una apuesta ya realizada, agregando una nueva ficha
+        try {
+            participanteJ1.modificarApuestaDeParticipante(apuesta1, ficha1);
+            System.out.println("El participante " + participanteJ1.getJugador().getCedula() + " ahora ha apostado $" + participanteJ1.getApuestas().get(participanteJ1.getApuestas().size()-1).getMonto());
         } catch (ApuestaException ex) {
             System.out.println(ex.getMessage());
         }

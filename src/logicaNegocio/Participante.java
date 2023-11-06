@@ -4,15 +4,15 @@
  */
 package logicaNegocio;
 
+import excepcionesSistema.AbandonarMesaEnPausaException;
 import excepcionesSistema.ApuestaException;
 import excepcionesSistema.ApuestaInvalidaException;
+import excepcionesSistema.ApuestasEnProgresoException;
+import excepcionesSistema.MesaException;
 import excepcionesSistema.MesaNoSeleccionadaException;
-import excepcionesSistema.SaldoInsuficienteException;
 import excepcionesSistema.SaldoInvalidoException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import servicios.Observable;
 import servicios.Observador;
 
@@ -63,11 +63,22 @@ public class Participante extends Observable {
       
     }
     
-    public void modificarApuesta(Apuesta apuesta, Ficha ficha) throws ApuestaException {
+    public void modificarApuestaDeParticipante(Apuesta apuesta, Ficha ficha) throws ApuestaException {
         try {
             this.mesa.getRondaActual().agregarNuevoValorApuesta(apuesta, ficha);
         } catch (ApuestaInvalidaException ex1) {
             throw new ApuestaException("La apuesta que intenta modificar no existe.");
+        }
+    }
+    
+    public void abandonarMesa() throws MesaException {
+        // Preguntar si es necesario enviar una UsuarioException en el caso de que se quiera borrar un usuario inexistente
+        try {
+            this.mesa.removeParticipante(this);
+        } catch(AbandonarMesaEnPausaException ex1) {
+            throw new MesaException("No se puede abandonar la mesa mientras esté pausada.");
+        } catch (ApuestasEnProgresoException ex2) {
+            throw new MesaException("No se puede abandonar la mesa mientras tengas apuestas en curso.");
         }
     }
     

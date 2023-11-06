@@ -6,8 +6,8 @@ package excepcionesSistema;
 
 /**
  *
- * @author micar
+ * @author Agustin
  */
-public class ApuestasEnProgresoException extends Exception {
+public class MartingalaException extends Exception {
     
 }

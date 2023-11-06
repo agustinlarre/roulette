@@ -4,10 +4,17 @@
  */
 package logicaNegocio;
 
+import excepcionesSistema.AbandonarMesaEnPausaException;
+import excepcionesSistema.ApuestaException;
+import excepcionesSistema.ApuestasEnProgresoException;
+import excepcionesSistema.MartingalaException;
+import excepcionesSistema.MesaException;
+import excepcionesSistema.MesaPausadaException;
 import excepcionesSistema.TipoApuestaObligatoriaException;
 import excepcionesSistema.TiposApuestaVaciaException;
 import java.util.ArrayList;
 import java.util.List;
+import servicios.Fachada;
 import servicios.Observable;
 import servicios.Observador;
 
@@ -45,6 +52,20 @@ public class Mesa extends Observable {
         this.tiposApuesta.add(tipo);
     }
     
+    public List<Participante> getParticipantes() {
+        return this.listaParticipantes;
+    }
+    
+    public void removeParticipante(Participante participante) throws AbandonarMesaEnPausaException, ApuestasEnProgresoException {
+        if (this.hayPausa) {
+            throw new AbandonarMesaEnPausaException();
+        }
+        if (this.rondaActual.existenApuestasDeParticipante(participante)) {
+            throw new ApuestasEnProgresoException();
+        }
+        this.listaParticipantes.remove(participante);
+    }
+    
     public void validar() throws TipoApuestaObligatoriaException, TiposApuestaVaciaException {
         if (this.tiposApuesta.isEmpty()) {
             throw new TiposApuestaVaciaException();
@@ -57,9 +78,14 @@ public class Mesa extends Observable {
         }
     }
     
-    public void addApuesta(Apuesta apuesta) {
-        //Atajar excepciones
-        this.rondaActual.recibirApuesta(apuesta);
+    public void apostar(Apuesta apuesta) throws ApuestaException {
+        try {
+            addApuesta(apuesta);
+        } catch (MesaPausadaException ex1) {
+            throw new ApuestaException("No puede realizar apuestas mientras la mesa se encuentre pausada.");
+        } catch (MartingalaException ex2) {
+            throw new ApuestaException("No puede recurrir a la estrategia de martingala.");
+        }
     }
     
     public void accionarMesa(Efecto efecto) {
@@ -90,6 +116,27 @@ public class Mesa extends Observable {
         this.notificar(Observador.Evento.PARTICIPANTE_AGREGADO);
     }
     
+    public void cerrarMesa() throws MesaException {
+        // Si bien la mesa se borra de la lista de mesas de la fachada, la instancia sigue presente, es necesario hacer otro borrado???
+        if (this.hayPausa) {
+            realizarLiquidacion();
+            eliminarParticipantes();
+            Fachada.getInstancia().removeMesa(this);
+        } else {
+            throw new MesaException("Solamente puede cerrar la mesa en caso de que esta se encuentre pausada.");
+        }
+    }
+    
+    private void addApuesta(Apuesta apuesta) throws MesaPausadaException, MartingalaException {
+        // Posible excepción -> si bien visualmente los casilleros estarán inhabilitados, se agrega restricción
+        if (!this.hayPausa) {
+            validarMartingala(apuesta);
+            this.rondaActual.recibirApuesta(apuesta);
+        } else {
+            throw new MesaPausadaException();
+        }
+    }
+    
     private void realizarLiquidacion() {
         List<Apuesta> listaApuestasGanadoras = this.rondaActual.getApuestasGanadoras();
         if (!listaApuestasGanadoras.isEmpty()) {
@@ -98,6 +145,7 @@ public class Mesa extends Observable {
             }
         }
     }
+    
     private void procesarApuestas(Participante participante, List<Apuesta> apuestasGanadoras) {
         for (Apuesta apuesta : participante.getApuestas()) {
             if (apuestasGanadoras.contains(apuesta)) {
@@ -139,6 +187,23 @@ public class Mesa extends Observable {
         }
     }
     
+    private void validarMartingala(Apuesta apuesta) throws MartingalaException {
+        Participante participante = getParticipanteSegunApuesta(apuesta);
+        List<Apuesta> apuestasParticipante = participante.getApuestas();
+        if (!apuestasParticipante.isEmpty()) {
+            Apuesta ultimaApuesta = apuestasParticipante.get(participante.getApuestas().size()-1);
+            if (ultimaApuesta.getCasillero().equals(apuesta.getCasillero()) && ultimaApuesta.getMonto() == (apuesta.getMonto()*2)) {
+                throw new MartingalaException();
+            }
+        }
+    }
+    
+    private Participante getParticipanteSegunApuesta(Apuesta apuesta) {
+        for (Participante participante : this.listaParticipantes) {
+            if (participante.getApuestas().contains(apuesta)) return participante;
+        }
+        return null;
+    }
     
     private void generarSorteo(Efecto efecto) {
         // Se trae a la instancia de apuesta directa para obtener los números 1 - 36
@@ -155,18 +220,6 @@ public class Mesa extends Observable {
         return rondaActual.getNumeroSorteado();
     }
     
-    private void inicializarMesa(List<TipoApuesta> tiposApuesta) {
-        this.tiposApuesta = tiposApuesta;
-        this.balance = 0;
-        this.nroMesa = nro;
-        nro++;
-        this.hayPausa = false;
-        this.hayLiquidacion = false;
-        this.listaParticipantes = new ArrayList();
-        this.listaRondas = new ArrayList();
-        this.rondaActual = new Ronda(null);
-    }
-    
     private TipoApuesta getTipoApuestaByNombre(String nombre) {
         for (TipoApuesta tipo : tiposApuesta) {
             if (tipo.getNombreTipo().equals(nombre)) return tipo;
@@ -181,5 +234,25 @@ public class Mesa extends Observable {
             listaNum.add(ronda.getNumeroSorteado());
         }
         return listaNum;
+    }
+    
+    private void eliminarParticipantes() {
+        // Preguntar, ya que para poder borrar al participante de la lista del jugador, debemos pasar por el propio participante para acceder a este ultimo
+        for (Participante participante : this.listaParticipantes) {
+            participante.getJugador().abandonarParticipacion(participante);
+        }
+        this.listaParticipantes = null;
+    }
+    
+    private void inicializarMesa(List<TipoApuesta> tiposApuesta) {
+        this.tiposApuesta = tiposApuesta;
+        this.balance = 0;
+        this.nroMesa = nro;
+        nro++;
+        this.hayPausa = false;
+        this.hayLiquidacion = false;
+        this.listaParticipantes = new ArrayList();
+        this.listaRondas = new ArrayList();
+        this.rondaActual = new Ronda(null);
     }
 }

@@ -35,6 +35,10 @@ public class Jugador extends Usuario {
         this.saldo = saldo;
     }
     
+    public List<Participante> getParticipaciones() {
+        return this.participaciones;
+    }
+    
     public void participar(Participante participante) throws MesaException {
         try {
             participante.validar();
