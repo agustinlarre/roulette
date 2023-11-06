@@ -39,6 +39,7 @@ public class Jugador extends Usuario {
         return this.participaciones;
     }
     
+    // HARDCODEO!!! el participante se creará dentro de este método, no se pasa como argumento
     public void participar(Participante participante) throws MesaException {
         try {
             participante.validar();

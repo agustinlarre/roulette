@@ -5,7 +5,6 @@
 package logicaNegocio;
 
 import excepcionesSistema.ApuestaInvalidaException;
-import excepcionesSistema.SaldoInsuficienteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +44,7 @@ public class Ronda {
     }
     
     // Apuesta llegada desde el manejo de eventos de la MesaCrupier
-    public void recibirApuesta(Apuesta apuesta) {
+    public void addApuesta(Apuesta apuesta) {
         // Excepciones???
         this.listaApuestas.add(apuesta);
     }

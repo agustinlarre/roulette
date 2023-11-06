@@ -144,6 +144,12 @@ public class MainApp {
         Apuesta apuesta1 = new Apuesta();
         apuesta1.addFicha(ficha5);
         apuesta1.setCasillero(casilleroColoresRojo);
+        Apuesta apuesta2 = new Apuesta();
+        apuesta2.setCasillero(casilleroColoresRojo);
+        apuesta2.addFicha(ficha5);
+        apuesta2.addFicha(ficha1);
+        apuesta2.addFicha(ficha5);
+        apuesta2.addFicha(ficha1);
         
         // Caso de uso, realizo una apuesta
         try {
@@ -170,5 +176,12 @@ public class MainApp {
         System.out.println("Ronda n°" + mesa.getNroRondaActual() + " - Efecto seleccionado: " + efectoSeleccionado.getNombreEfecto() + " - Número sorteado: " + mesa.getRondaActual().getNumeroSorteado());
         mesa.accionarMesa(efectoSeleccionado);
         
+        // ---------- JUGADOR ----------
+        // Caso de uso, pierdo apuesta e intento hacer martingala
+        try {
+            participanteJ1.realizarApuesta(apuesta2);
+        } catch (ApuestaException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }

@@ -10,6 +10,7 @@ import excepcionesSistema.ApuestasEnProgresoException;
 import excepcionesSistema.MartingalaException;
 import excepcionesSistema.MesaException;
 import excepcionesSistema.MesaPausadaException;
+import excepcionesSistema.ParticipanteInvalidoException;
 import excepcionesSistema.TipoApuestaObligatoriaException;
 import excepcionesSistema.TiposApuestaVaciaException;
 import java.util.ArrayList;
@@ -78,13 +79,11 @@ public class Mesa extends Observable {
         }
     }
     
-    public void apostar(Apuesta apuesta) throws ApuestaException {
-        try {
-            addApuesta(apuesta);
-        } catch (MesaPausadaException ex1) {
-            throw new ApuestaException("No puede realizar apuestas mientras la mesa se encuentre pausada.");
-        } catch (MartingalaException ex2) {
-            throw new ApuestaException("No puede recurrir a la estrategia de martingala.");
+    public void recibirApuesta(Apuesta apuesta) throws MesaPausadaException {
+        if (!this.hayPausa) {
+            this.rondaActual.addApuesta(apuesta);
+        } else {
+            throw new MesaPausadaException();
         }
     }
     
@@ -124,16 +123,6 @@ public class Mesa extends Observable {
             Fachada.getInstancia().removeMesa(this);
         } else {
             throw new MesaException("Solamente puede cerrar la mesa en caso de que esta se encuentre pausada.");
-        }
-    }
-    
-    private void addApuesta(Apuesta apuesta) throws MesaPausadaException, MartingalaException {
-        // Posible excepción -> si bien visualmente los casilleros estarán inhabilitados, se agrega restricción
-        if (!this.hayPausa) {
-            validarMartingala(apuesta);
-            this.rondaActual.recibirApuesta(apuesta);
-        } else {
-            throw new MesaPausadaException();
         }
     }
     
@@ -185,24 +174,6 @@ public class Mesa extends Observable {
         } else {
             this.balance -= montoApostado;
         }
-    }
-    
-    private void validarMartingala(Apuesta apuesta) throws MartingalaException {
-        Participante participante = getParticipanteSegunApuesta(apuesta);
-        List<Apuesta> apuestasParticipante = participante.getApuestas();
-        if (!apuestasParticipante.isEmpty()) {
-            Apuesta ultimaApuesta = apuestasParticipante.get(participante.getApuestas().size()-1);
-            if (ultimaApuesta.getCasillero().equals(apuesta.getCasillero()) && ultimaApuesta.getMonto() == (apuesta.getMonto()*2)) {
-                throw new MartingalaException();
-            }
-        }
-    }
-    
-    private Participante getParticipanteSegunApuesta(Apuesta apuesta) {
-        for (Participante participante : this.listaParticipantes) {
-            if (participante.getApuestas().contains(apuesta)) return participante;
-        }
-        return null;
     }
     
     private void generarSorteo(Efecto efecto) {
