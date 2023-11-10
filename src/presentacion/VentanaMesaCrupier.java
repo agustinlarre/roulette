@@ -1,85 +1,120 @@
-package componentes;
+package presentacion;
 
 import java.awt.Component;
-import java.util.List;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
-import logicaNegocio.Casillero;
-import logicaNegocio.Crupier;
 import logicaNegocio.Efecto;
-import logicaNegocio.Mesa;
 import logicaNegocio.Sesion;
-import logicaNegocio.TipoApuesta;
-import servicios.Fachada;
-import servicios.Observable;
-import servicios.Observador;
+import presentacion.controladores.MesaCrupierControlador;
+import presentacion.vistas.VistaMesaCrupier;
 
 /**
  *
  * @author digregor
  */
-public class VentanaMesaCrupier extends javax.swing.JFrame implements Observador {
+public class VentanaMesaCrupier extends javax.swing.JFrame implements VistaMesaCrupier {
 
-    private Sesion sesion;
-    private Crupier crupier;
-    private Mesa mesa;
+//    private Sesion sesion;
+//    private Crupier crupier;
+//    private Mesa mesa;
+    private MesaCrupierControlador controlador;
 
     /**
      * Creates new form NewJFrame
      */
     public VentanaMesaCrupier(Sesion sesionActual) {
         initComponents();
-        this.sesion = sesionActual;
-        this.crupier = (Crupier) sesionActual.getUsuario();
-        this.mesa = crupier.getMesa();
-        mesa.subscribir(this);
-        inicializar();
+        comboEfectos.setRenderer(new EfectoRenderer());
+        controlador = new MesaCrupierControlador(sesionActual, this);
+//        this.sesion = sesionActual;
+//        this.crupier = (Crupier) sesionActual.getUsuario();
+//        this.mesa = crupier.getMesa();
+//        mesa.subscribir(this);
+//        inicializar();
+    }
+    
+//    @Override
+//    public void actualizar(Observable origen, Object evento) {
+//        // Cambiar condiciones anidadas
+//        if (evento.equals(Evento.MESA_PAUSADA)) {
+//            
+//        } else if (evento.equals(Evento.RONDA_LIQUIDADA)) {
+//            r.reanudar();
+//            actualizarLabelNroRonda();
+//        } else if (evento.equals(Evento.PARTICIPANTE_AGREGADO)) {
+//            // Implementar actualizacion frame participantes
+//            System.out.print("PARTICIPANTE AGREGADO");
+//        }
+//           
+//    }
+    
+//    @Override
+//    private void inicializarMesa() {
+//        r.desactivarBotones();
+//        popularComboEfectos();
+//        habilitarTiposApuesta();
+//        actualizarLabelNroRonda();
+//        this.labelNroRuleta.setText("Ruleta #" + mesa.getNroMesa());
+//    }
+    
+    @Override
+    public void mostrarUltimoNroSorteado(int ultimoNum) {
+        labelUltimoNro.setText(String.valueOf(ultimoNum));
     }
     
     @Override
-    public void actualizar(Observable origen, Object evento) {
-        // Cambiar condiciones anidadas
-        if (evento.equals(Evento.MESA_PAUSADA)) {
-            r.pausar();
-            actualizarLabelsHistorico();
-        } else if (evento.equals(Evento.RONDA_LIQUIDADA)) {
-            r.reanudar();
-            actualizarLabelNroRonda();
-        } else if (evento.equals(Evento.PARTICIPANTE_AGREGADO)) {
-            // Implementar actualizacion frame participantes
-            System.out.print("PARTICIPANTE AGREGADO");
-        }
-           
+    public void mostrarUltimosLanzamientos(String ultimosLanzamientos) {
+        labelUltimosLanzamientos.setText(ultimosLanzamientos);
+    }
+
+    @Override
+    public void inhabilitarPantallaMesa() {
+        r.pausar();
     }
     
-    private void inicializar() {
+    @Override
+    public void habilitarPantallaMesa() {
+        r.reanudar();
+    }
+    
+    @Override
+    public void actualizarListaParticipantes() {
+        //IMPLEMENTAR...
+        System.out.print("PARTICIPANTE AGREGADO");
+    }
+    
+//    private void habilitarTiposApuesta() {
+//        for (TipoApuesta tipoApuesta : this.mesa.getTiposApuesta()) {
+//            this.habilitarCasilleros(tipoApuesta.getCasillerosDisponibles());
+//        }
+//    }
+    
+    @Override 
+    public void deshabilitarCasilleros() {
         r.desactivarBotones();
-        popularComboEfectos();
-        habilitarTiposApuesta();
-        actualizarLabelNroRonda();
-        this.labelNroRuleta.setText("Ruleta #" + mesa.getNroMesa());
     }
     
-    private void habilitarTiposApuesta() {
-        for (TipoApuesta tipoApuesta : this.mesa.getTiposApuesta()) {
-            this.habilitarCasilleros(tipoApuesta.getCasillerosDisponibles());
-        }
+    @Override
+    public void habilitarCasillero(int cellCode) {
+        r.habilitar(cellCode, true);
     }
     
-    private void habilitarCasilleros(List<Casillero> listaCasilleros) {
-        for (Casillero casillero : listaCasilleros) {
-            r.habilitar(casillero.getCellCode(), true);
-        }
+    @Override
+    public void agregarEfecto(Efecto efecto) {
+        comboEfectos.addItem(efecto);
+//        comboEfectos.setRenderer(new EfectoRenderer());
     }
     
-    private void popularComboEfectos() {
-        List<Efecto> efectos = Fachada.getInstancia().getEfectos();
-        for (Efecto efecto : efectos) {
-            comboEfectos.addItem(efecto);
-        }
-        comboEfectos.setRenderer(new EfectoRenderer());
+    @Override
+    public void actualizarNroRonda(int nroRonda) {
+        labelRonda.setText("Ronda #" + String.valueOf(nroRonda));
+    }
+    
+    @Override
+    public void mostrarNroMesa(int nroMesa) {
+        this.labelNroRuleta.setText("Ruleta #" + nroMesa);
     }
     
     private class EfectoRenderer implements ListCellRenderer<Efecto> {
@@ -95,13 +130,19 @@ public class VentanaMesaCrupier extends javax.swing.JFrame implements Observador
         
     }
     
-    private void actualizarLabelsHistorico() {
-        labelUltimoNro.setText(String.valueOf(mesa.getUltimoNumeroSorteado()));
-        labelUltimosLanzamientos.setText(labelUltimosLanzamientos.getText() + " " + String.valueOf(mesa.getUltimoNumeroSorteado()));
-    }
+//    private void actualizarLabelsHistorico() {
+//        labelUltimoNro.setText(String.valueOf(mesa.getUltimoNumeroSorteado()));
+//        labelUltimosLanzamientos.setText(labelUltimosLanzamientos.getText() + " " + String.valueOf(mesa.getUltimoNumeroSorteado()));
+//    }
     
-    private void actualizarLabelNroRonda() {
-        labelRonda.setText("Ronda #" + String.valueOf(mesa.getNroRondaActual()));
+//    private void actualizarLabelNroRonda() {
+//        labelRonda.setText("Ronda #" + String.valueOf(mesa.getNroRondaActual()));
+//    }
+    
+    private void nuevaAccionMesa() {
+        Efecto efectoSeleccionado = (Efecto) comboEfectos.getSelectedItem();
+        controlador.nuevaAccionMesa(efectoSeleccionado);
+//        this.mesa.accionarMesa(efectoSeleccionado);
     }
 
     /**
@@ -114,7 +155,7 @@ public class VentanaMesaCrupier extends javax.swing.JFrame implements Observador
     private void initComponents() {
 
         jSeparator2 = new javax.swing.JSeparator();
-        r = new componentes.PanelRuleta();
+        r = new presentacion.PanelRuleta();
         labelNroRuleta = new javax.swing.JLabel();
         btnCerrarMesa = new javax.swing.JButton();
         btnLanzarPagar = new javax.swing.JButton();
@@ -261,8 +302,7 @@ public class VentanaMesaCrupier extends javax.swing.JFrame implements Observador
 
     private void btnLanzarPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLanzarPagarActionPerformed
         // Llamar a un metodo y no implementarlo dentro del boton
-        Efecto efectoSeleccionado = (Efecto) comboEfectos.getSelectedItem();
-        this.mesa.accionarMesa(efectoSeleccionado);
+        nuevaAccionMesa();
     }//GEN-LAST:event_btnLanzarPagarActionPerformed
 
     private void comboEfectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEfectosActionPerformed
@@ -286,6 +326,6 @@ public class VentanaMesaCrupier extends javax.swing.JFrame implements Observador
     private javax.swing.JLabel labelValorTotalApuestas;
     private javax.swing.JList<String> listaJugadores;
     private javax.swing.JList<String> listaRondas;
-    private componentes.PanelRuleta r;
+    private presentacion.PanelRuleta r;
     // End of variables declaration//GEN-END:variables
 }

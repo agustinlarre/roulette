@@ -1,4 +1,4 @@
-package componentes;
+package presentacion;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -889,7 +889,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(b_compuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 262, 70, 30));
 
         c3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c3.setLabelFor(c0);
         c3.setText("500");
         c3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -900,7 +900,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c3, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 24, 40, 40));
 
         c6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c6.setLabelFor(c0);
         c6.setText("500");
         c6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -911,7 +911,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c6, new org.netbeans.lib.awtextra.AbsoluteConstraints(118, 24, 40, 40));
 
         c9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c9.setLabelFor(c0);
         c9.setText("500");
         c9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -922,7 +922,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c9, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 24, 40, 40));
 
         c4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c4.setLabelFor(c0);
         c4.setText("500");
         c4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -933,7 +933,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c4, new org.netbeans.lib.awtextra.AbsoluteConstraints(118, 152, 40, 40));
 
         c5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c5.setLabelFor(c0);
         c5.setText("500");
         c5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -944,7 +944,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c5, new org.netbeans.lib.awtextra.AbsoluteConstraints(118, 88, 40, 40));
 
         c7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c7.setLabelFor(c0);
         c7.setText("500");
         c7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -955,7 +955,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c7, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 152, 40, 40));
 
         c8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c8.setLabelFor(c0);
         c8.setText("500");
         c8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -966,7 +966,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c8, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 88, 40, 40));
 
         c10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c10.setLabelFor(c0);
         c10.setText("500");
         c10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -977,7 +977,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c10, new org.netbeans.lib.awtextra.AbsoluteConstraints(218, 152, 40, 40));
 
         c11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c11.setLabelFor(c0);
         c11.setText("500");
         c11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -988,7 +988,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c11, new org.netbeans.lib.awtextra.AbsoluteConstraints(218, 88, 40, 40));
 
         c12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c12.setLabelFor(c0);
         c12.setText("500");
         c12.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -999,7 +999,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c12, new org.netbeans.lib.awtextra.AbsoluteConstraints(218, 24, 40, 40));
 
         c13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c13.setLabelFor(c0);
         c13.setText("500");
         c13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1010,7 +1010,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c13, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 152, 40, 40));
 
         c14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c14.setLabelFor(c0);
         c14.setText("500");
         c14.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1021,7 +1021,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c14, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 88, 40, 40));
 
         c15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c15.setLabelFor(c0);
         c15.setText("500");
         c15.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1032,7 +1032,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c15, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 24, 40, 40));
 
         c16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c16.setLabelFor(c0);
         c16.setText("500");
         c16.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1043,7 +1043,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c16, new org.netbeans.lib.awtextra.AbsoluteConstraints(328, 152, 40, 40));
 
         c17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c17.setLabelFor(c0);
         c17.setText("500");
         c17.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1054,7 +1054,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c17, new org.netbeans.lib.awtextra.AbsoluteConstraints(328, 88, 40, 40));
 
         c18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c18.setLabelFor(c0);
         c18.setText("500");
         c18.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1065,7 +1065,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c18, new org.netbeans.lib.awtextra.AbsoluteConstraints(328, 24, 40, 40));
 
         c19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c19.setLabelFor(c0);
         c19.setText("500");
         c19.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1076,7 +1076,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c19, new org.netbeans.lib.awtextra.AbsoluteConstraints(378, 152, 40, 40));
 
         c20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c20.setLabelFor(c0);
         c20.setText("500");
         c20.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1087,7 +1087,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c20, new org.netbeans.lib.awtextra.AbsoluteConstraints(378, 88, 40, 40));
 
         c21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c21.setLabelFor(c0);
         c21.setText("500");
         c21.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1098,7 +1098,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c21, new org.netbeans.lib.awtextra.AbsoluteConstraints(378, 24, 40, 40));
 
         c22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c22.setLabelFor(c0);
         c22.setText("500");
         c22.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1109,7 +1109,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c22, new org.netbeans.lib.awtextra.AbsoluteConstraints(428, 152, 40, 40));
 
         c23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c23.setLabelFor(c0);
         c23.setText("500");
         c23.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1120,7 +1120,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c23, new org.netbeans.lib.awtextra.AbsoluteConstraints(428, 88, 40, 40));
 
         c24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c24.setLabelFor(c0);
         c24.setText("500");
         c24.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1131,7 +1131,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c24, new org.netbeans.lib.awtextra.AbsoluteConstraints(428, 24, 40, 40));
 
         c25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c25.setLabelFor(c0);
         c25.setText("500");
         c25.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1142,7 +1142,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c25, new org.netbeans.lib.awtextra.AbsoluteConstraints(488, 152, 40, 40));
 
         c26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c26.setLabelFor(c0);
         c26.setText("500");
         c26.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1153,7 +1153,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c26, new org.netbeans.lib.awtextra.AbsoluteConstraints(488, 88, 40, 40));
 
         c27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c27.setLabelFor(c0);
         c27.setText("500");
         c27.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1164,7 +1164,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c27, new org.netbeans.lib.awtextra.AbsoluteConstraints(488, 24, 40, 40));
 
         c28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c28.setLabelFor(c0);
         c28.setText("500");
         c28.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1175,7 +1175,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c28, new org.netbeans.lib.awtextra.AbsoluteConstraints(538, 152, 40, 40));
 
         c29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c29.setLabelFor(c0);
         c29.setText("500");
         c29.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1186,7 +1186,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c29, new org.netbeans.lib.awtextra.AbsoluteConstraints(538, 88, 40, 40));
 
         c30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c30.setLabelFor(c0);
         c30.setText("500");
         c30.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1197,7 +1197,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c30, new org.netbeans.lib.awtextra.AbsoluteConstraints(538, 24, 40, 40));
 
         c31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c31.setLabelFor(c0);
         c31.setText("500");
         c31.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1208,7 +1208,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c31, new org.netbeans.lib.awtextra.AbsoluteConstraints(588, 152, 40, 40));
 
         c32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c32.setLabelFor(c0);
         c32.setText("500");
         c32.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1219,7 +1219,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c32, new org.netbeans.lib.awtextra.AbsoluteConstraints(588, 88, 40, 40));
 
         c33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c33.setLabelFor(c0);
         c33.setText("500");
         c33.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1230,7 +1230,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c33, new org.netbeans.lib.awtextra.AbsoluteConstraints(588, 24, 40, 40));
 
         c34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c34.setLabelFor(c0);
         c34.setText("500");
         c34.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1241,7 +1241,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c34, new org.netbeans.lib.awtextra.AbsoluteConstraints(638, 152, 40, 40));
 
         c35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c35.setLabelFor(c0);
         c35.setText("500");
         c35.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1252,7 +1252,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c35, new org.netbeans.lib.awtextra.AbsoluteConstraints(638, 88, 40, 40));
 
         c36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c36.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c36.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c36.setLabelFor(c0);
         c36.setText("500");
         c36.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1263,7 +1263,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c36, new org.netbeans.lib.awtextra.AbsoluteConstraints(638, 24, 40, 40));
 
         c1d.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c1d.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c1d.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c1d.setLabelFor(c0);
         c1d.setText("500");
         c1d.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1274,7 +1274,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c1d, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 216, 40, 40));
 
         c2d.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c2d.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c2d.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c2d.setLabelFor(c0);
         c2d.setText("500");
         c2d.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1285,7 +1285,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c2d, new org.netbeans.lib.awtextra.AbsoluteConstraints(345, 216, 40, 40));
 
         c3d.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c3d.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c3d.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c3d.setLabelFor(c0);
         c3d.setText("500");
         c3d.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1296,7 +1296,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c3d, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 216, 40, 40));
 
         cp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        cp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        cp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         cp.setLabelFor(c0);
         cp.setText("500");
         cp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1307,7 +1307,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(cp, new org.netbeans.lib.awtextra.AbsoluteConstraints(605, 280, 40, 40));
 
         ci.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ci.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        ci.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         ci.setLabelFor(c0);
         ci.setText("500");
         ci.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1318,7 +1318,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(ci, new org.netbeans.lib.awtextra.AbsoluteConstraints(505, 280, 40, 40));
 
         cmen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        cmen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        cmen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         cmen.setLabelFor(c0);
         cmen.setText("500");
         cmen.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1329,7 +1329,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(cmen, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 280, 40, 40));
 
         cmay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        cmay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        cmay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         cmay.setLabelFor(c0);
         cmay.setText("500");
         cmay.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1340,7 +1340,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(cmay, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 280, 40, 40));
 
         cn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        cn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        cn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         cn.setLabelFor(c0);
         cn.setText("500");
         cn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1351,7 +1351,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(cn, new org.netbeans.lib.awtextra.AbsoluteConstraints(295, 280, 40, 40));
 
         cr.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        cr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        cr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         cr.setLabelFor(c0);
         cr.setText("500");
         cr.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1362,7 +1362,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(cr, new org.netbeans.lib.awtextra.AbsoluteConstraints(395, 280, 40, 40));
 
         c1c.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c1c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c1c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c1c.setLabelFor(c0);
         c1c.setText("500");
         c1c.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1373,7 +1373,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c1c, new org.netbeans.lib.awtextra.AbsoluteConstraints(705, 152, 40, 40));
 
         c2c.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c2c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c2c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c2c.setLabelFor(c0);
         c2c.setText("500");
         c2c.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1384,7 +1384,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c2c, new org.netbeans.lib.awtextra.AbsoluteConstraints(705, 88, 40, 40));
 
         c3c.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c3c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c3c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c3c.setLabelFor(c0);
         c3c.setText("500");
         c3c.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1395,7 +1395,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c3c, new org.netbeans.lib.awtextra.AbsoluteConstraints(705, 24, 40, 40));
 
         cprimo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        cprimo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        cprimo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         cprimo.setLabelFor(c0);
         cprimo.setText("500");
         cprimo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1406,7 +1406,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(cprimo, new org.netbeans.lib.awtextra.AbsoluteConstraints(705, 216, 40, 40));
 
         ccompuesto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ccompuesto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        ccompuesto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         ccompuesto.setLabelFor(c0);
         ccompuesto.setText("500");
         ccompuesto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1417,7 +1417,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(ccompuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(705, 280, 40, 40));
 
         c2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c2.setLabelFor(c0);
         c2.setText("500");
         c2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1428,7 +1428,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c2, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 88, 40, 40));
 
         c1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c1.setLabelFor(c0);
         c1.setText("500");
         c1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1439,7 +1439,7 @@ public class PanelRuleta extends javax.swing.JPanel {
         add(c1, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 152, 40, 40));
 
         c0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c0.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/coin.gif"))); // NOI18N
+        c0.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/coin.gif"))); // NOI18N
         c0.setLabelFor(c0);
         c0.setText("500");
         c0.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

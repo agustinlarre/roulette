@@ -30,6 +30,7 @@ public class Mesa extends Observable {
     private List<Ronda> listaRondas;
     // PREGUNTAR POSIBLE BIDIRECCION MESA <--> PARTICIPANTE
     private List<Participante> listaParticipantes;
+    private List<Integer> listaNumerosSorteados;
     private int balance;
     private Ronda rondaActual;
     private boolean hayPausa;
@@ -126,6 +127,10 @@ public class Mesa extends Observable {
         }
     }
     
+    public List<Integer> getlistaNumerosSorteados() {
+        return this.listaNumerosSorteados;
+    }
+    
     private void realizarLiquidacion() {
         List<Apuesta> listaApuestasGanadoras = this.rondaActual.getApuestasGanadoras();
         if (!listaApuestasGanadoras.isEmpty()) {
@@ -182,6 +187,7 @@ public class Mesa extends Observable {
         this.rondaActual.setEfecto(efecto);
         this.rondaActual.sortearNumero(apuestaDirecta.getCasillerosDisponibles(), listaHistoricoNumerosSorteados());
         this.listaRondas.add(rondaActual);
+        this.listaNumerosSorteados.add(rondaActual.getNumeroSorteado());
         this.hayPausa = true;
         this.notificar(Observador.Evento.MESA_PAUSADA);
     }
@@ -223,6 +229,7 @@ public class Mesa extends Observable {
         this.hayPausa = false;
         this.hayLiquidacion = false;
         this.listaParticipantes = new ArrayList();
+        this.listaNumerosSorteados = new ArrayList();
         this.listaRondas = new ArrayList();
         this.rondaActual = new Ronda(null);
     }

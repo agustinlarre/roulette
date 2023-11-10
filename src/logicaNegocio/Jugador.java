@@ -49,7 +49,7 @@ public class Jugador extends Usuario {
         } catch (MesaNoSeleccionadaException ex1) {
             throw new MesaException("Debe seleccionar una mesa.");
         }
-        
+        // Deberia haber otra excepcion que no permita participar en una mesa dos veces
     }
     
     public void abandonarParticipacion(Participante participante) {

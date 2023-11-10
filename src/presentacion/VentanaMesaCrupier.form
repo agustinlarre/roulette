@@ -105,7 +105,7 @@
   <SubComponents>
     <Component class="javax.swing.JSeparator" name="jSeparator2">
     </Component>
-    <Component class="componentes.PanelRuleta" name="r">
+    <Component class="presentacion.PanelRuleta" name="r">
     </Component>
     <Component class="javax.swing.JLabel" name="labelNroRuleta">
       <Properties>

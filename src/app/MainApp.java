@@ -4,7 +4,7 @@
  */
 package app;
 
-import componentes.VentanaInicio;
+import presentacion.VentanaInicio;
 import excepcionesSistema.ApuestaException;
 import excepcionesSistema.MesaException;
 import excepcionesSistema.SaldoInvalidoException;

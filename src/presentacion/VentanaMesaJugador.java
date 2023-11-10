@@ -1,4 +1,4 @@
-package componentes;
+package presentacion;
 
 import logicaNegocio.Participante;
 
@@ -34,7 +34,7 @@ public class VentanaMesaJugador extends javax.swing.JFrame {
     private void initComponents() {
 
         jSeparator2 = new javax.swing.JSeparator();
-        r = new componentes.PanelRuleta();
+        r = new presentacion.PanelRuleta();
         labelSaldoJugador = new javax.swing.JLabel();
         labelRonda = new javax.swing.JLabel();
         labelNombreJugador = new javax.swing.JLabel();
@@ -210,6 +210,6 @@ public class VentanaMesaJugador extends javax.swing.JFrame {
     private javax.swing.JLabel labelValorOcurrencia;
     private javax.swing.JList<String> listaRondasJugador;
     private javax.swing.JList<String> listaValorOcurrencia;
-    private componentes.PanelRuleta r;
+    private presentacion.PanelRuleta r;
     // End of variables declaration//GEN-END:variables
 }
