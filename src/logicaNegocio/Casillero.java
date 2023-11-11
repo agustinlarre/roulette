@@ -14,10 +14,12 @@ public class Casillero {
     
     private List<Integer> numerosVinculados;
     private int cellCode;
+    private TipoApuesta tipoApuesta;
 
-    public Casillero(int cellCode, List<Integer> numerosVinculados) {
+    public Casillero(int cellCode, List<Integer> numerosVinculados, TipoApuesta tipoApuesta) {
         this.cellCode = cellCode;
         this.numerosVinculados = numerosVinculados;
+        this.tipoApuesta = tipoApuesta;
     }
 
     public int getCellCode() {
@@ -26,5 +28,9 @@ public class Casillero {
 
     public List<Integer> getNumerosVinculados() {
         return numerosVinculados;
+    }
+
+    public TipoApuesta getTipoApuesta() {
+        return tipoApuesta;
     }
 }

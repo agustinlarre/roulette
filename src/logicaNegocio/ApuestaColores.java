@@ -4,6 +4,7 @@
  */
 package logicaNegocio;
 
+import excepcionesSistema.RestriccionTipoApuestaException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +26,8 @@ public final class ApuestaColores extends TipoApuesta {
 
     @Override
     protected void setCasillerosDisponibles() {
-        this.listaCasilleros.add(new Casillero(43, this.listaNumerosRojo()));
-        this.listaCasilleros.add(new Casillero(44, this.listaNumerosNegro()));
+        this.listaCasilleros.add(new Casillero(43, this.listaNumerosRojo(), this));
+        this.listaCasilleros.add(new Casillero(44, this.listaNumerosNegro(), this));
     }
     
     private List<Integer> listaNumerosRojo() {
@@ -73,5 +74,57 @@ public final class ApuestaColores extends TipoApuesta {
         lista.add(33);
         lista.add(35);
         return lista;
+    }
+
+    
+    
+//Apuesta Colores: Apostar a números rojos o negros. Pago: 2 a 1.
+//Restricciones: si un jugador pierde una apuesta por valor N a un color, 
+//no podrá volver a apostar  un monto superior a N en la siguiente ronda
+//en el mismo color. Si un jugador apuesta montos a los dos colores en la misma ronda, 
+//la restricción anterior no aplica,salvo que haya salido el cero
+
+    
+    @Override
+    public void validarApuestaSegunTipo(Participante participante, Apuesta apuestaActual) throws RestriccionTipoApuestaException {
+        Ronda ultimaRonda = participante.getMesa().getUltimaRonda();
+        List<Apuesta> apuestasPerdedoras = participante.getApuestasPerdedorasUltimaRonda();
+        List<Apuesta> apuestasActivas = participante.getApuestasEnCurso();
+        
+        if (ultimaRonda.getNumeroSorteado() == 0) {
+            int montoApuestasColoresAnterior = getMontoApuestasEnAmbosColores(apuestasPerdedoras);
+            int montoApuestasColoresActual = getMontoApuestasEnAmbosColores(apuestasActivas);
+            if (montoApuestasColoresAnterior > 0 && (montoApuestasColoresActual > montoApuestasColoresAnterior)) {
+                throw new RestriccionTipoApuestaException("No puede apostar a ambos casilleros si el resultado anterior fue cero.");
+            }
+        }
+        
+        
+        // Evaluamos si alguna de las apuestas perdedoras de la ultima ronda pertenece al participante, y si alguna de las mismas es igual a alguno de los casilleros de color en el cual se está apostando
+        for (Apuesta apuesta : apuestasPerdedoras) {
+            int cellCode = apuesta.getCasillero().getCellCode();
+            if (cellCode == apuestaActual.getCasillero().getCellCode() && participante.getApuestas().contains(apuesta)) {
+                if (apuestaActual.getMonto() > apuesta.getMonto()) {
+                    throw new RestriccionTipoApuestaException("No puede apostar una cantidad mayor en el mismo casillero de color.");
+                }
+            }
+        }
+//        if (!ultimaApuesta.esGanadora() && apuestaActual.getCasillero().equals(ultimaApuesta.getCasillero()) && apuestaActual.getMonto() > ultimaApuesta.getMonto()) {
+//            throw new RestriccionTipoApuestaException("");
+//        }
+    }
+    
+    private int getMontoApuestasEnAmbosColores(List<Apuesta> listaApuestas) {
+        int montoAlRojo = 0;
+        int montoAlNegro = 0;
+        for (Apuesta apuesta : listaApuestas) {
+            if (apuesta.getCasillero().getCellCode() == 43) montoAlRojo = apuesta.getMonto();
+            if (apuesta.getCasillero().getCellCode() == 44) montoAlNegro = apuesta.getMonto();
+        }
+        if (montoAlRojo > 0 && montoAlNegro > 0) {
+            return montoAlRojo + montoAlNegro;
+        } else {
+            return 0;
+        }
     }
 }

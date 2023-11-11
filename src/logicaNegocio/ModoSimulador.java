@@ -23,8 +23,9 @@ public class ModoSimulador extends Efecto {
     }
 
     @Override
-    public int sortear(List<Casillero> listaCasillerosNumeros, List<Integer> listaNumerosSorteados, List<Integer> listaNumerosApostados) {
+    public int sortear(Mesa mesa) {
         List<Integer> listaNumeros = new ArrayList();
+        List<Integer> listaNumerosApostados = mesa.getRondaActual().getTotalNumerosApostados();
         listaNumeros.add(0);
         for (int num : listaNumerosApostados) {
             listaNumeros.add(num);

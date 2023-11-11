@@ -4,6 +4,8 @@
  */
 package logicaNegocio;
 
+import excepcionesSistema.ApuestaException;
+import excepcionesSistema.RestriccionTipoApuestaException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,4 +42,9 @@ public class Apuesta {
     public void setCasillero(Casillero casillero) {
         this.casillero = casillero;
     }
+    
+    public void validarRestriccionesApuesta(Participante participante) throws RestriccionTipoApuestaException {
+        this.casillero.getTipoApuesta().validarApuestaSegunTipo(participante, this);
+    }
+    
 }

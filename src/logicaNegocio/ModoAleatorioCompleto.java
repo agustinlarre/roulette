@@ -23,8 +23,9 @@ public class ModoAleatorioCompleto extends Efecto {
     }
 
     @Override
-    public int sortear(List<Casillero> listaCasillerosNumeros, List<Integer> listaNumerosSorteados, List<Integer> listaNumerosApostados) {
+    public int sortear(Mesa mesa) {
         List<Integer> listaNumeros = new ArrayList();
+        List<Casillero> listaCasillerosNumeros = mesa.getCasillerosNumericos();
         listaNumeros.add(0);
         for (Casillero casillero : listaCasillerosNumeros) {
             // Se asume que al ser un único número vinculado, se obtiene la posición 0

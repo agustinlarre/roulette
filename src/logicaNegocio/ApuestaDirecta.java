@@ -4,6 +4,7 @@
  */
 package logicaNegocio;
 
+import excepcionesSistema.RestriccionTipoApuestaException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +29,17 @@ public final class ApuestaDirecta extends TipoApuesta {
         for (int i = 0; i <= 36; i++) {
             List<Integer> lista = new ArrayList();
             lista.add(i);
-            listaCasilleros.add(new Casillero(i, lista));
+            listaCasilleros.add(new Casillero(i, lista, this));
         }
+    }
+
+//Apuesta Directa: Apostar a un número específico (incluyendo el cero).
+//Pago: 36 a 1. No hay límites ni restricciones
+//de apuestas.
+
+    @Override
+    public void validarApuestaSegunTipo(Participante participante, Apuesta apuestaActual) throws RestriccionTipoApuestaException {
+        //
     }
     
 }

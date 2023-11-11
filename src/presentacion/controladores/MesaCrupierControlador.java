@@ -27,11 +27,11 @@ public class MesaCrupierControlador implements Observador {
     private Mesa mesa;
     private VistaMesaCrupier vista;
 
-    public MesaCrupierControlador(Sesion sesion, VistaMesaCrupier vistaMesaCrupier) {
+    public MesaCrupierControlador(Sesion sesion, VistaMesaCrupier vista) {
         this.sesion = sesion;
         this.crupier = (Crupier) sesion.getUsuario();
         this.mesa = crupier.getMesa();
-        this.vista = vistaMesaCrupier;
+        this.vista = vista;
         
         this.inicializarMesa();
     }

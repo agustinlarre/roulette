@@ -8,6 +8,8 @@ package excepcionesSistema;
  *
  * @author Agustin
  */
-public class MartingalaException extends Exception {
-    
+public class RestriccionTipoApuestaException extends Exception {
+    public RestriccionTipoApuestaException(String mensaje) {
+        super(mensaje);
+    }
 }

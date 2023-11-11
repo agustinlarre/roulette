@@ -1,27 +1,24 @@
 package presentacion;
 
 import logicaNegocio.Participante;
+import presentacion.controladores.MesaJugadorControlador;
+import presentacion.vistas.VistaMesaJugador;
 
 
 /**
  *
  * @author digregor
  */
-public class VentanaMesaJugador extends javax.swing.JFrame {
+public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJugador {
 
-    private Participante participante;
-    int apuestaRojo = 0;
+    private MesaJugadorControlador controlador;
 
     /**
      * Creates new form NewJFrame
      */
     public VentanaMesaJugador(Participante participanteActual) {
         initComponents();
-        this.participante = participanteActual;
-        inicializar();
-    }
-    
-    private void inicializar() {
+        controlador = new MesaJugadorControlador(participanteActual, this);
     }
 
     /**
@@ -212,4 +209,9 @@ public class VentanaMesaJugador extends javax.swing.JFrame {
     private javax.swing.JList<String> listaValorOcurrencia;
     private presentacion.PanelRuleta r;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void mostrarMensajeError(String mensaje) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

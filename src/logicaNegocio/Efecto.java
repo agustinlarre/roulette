@@ -14,5 +14,5 @@ public abstract class Efecto {
     
     public abstract String getNombreEfecto();
     
-    public abstract int sortear(List<Casillero> listaCasillerosNumeros, List<Integer> listaNumerosSorteados, List<Integer> listaNumerosApostados);
+    public abstract int sortear(Mesa mesa);
 }

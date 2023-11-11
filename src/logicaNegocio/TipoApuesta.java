@@ -4,6 +4,7 @@
  */
 package logicaNegocio;
 
+import excepcionesSistema.RestriccionTipoApuestaException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,5 +31,6 @@ public abstract class TipoApuesta {
     protected abstract void setCasillerosDisponibles();
     
     public abstract String getNombreTipo();
-
+    
+    public abstract void validarApuestaSegunTipo(Participante participante, Apuesta apuestaActual) throws RestriccionTipoApuestaException;
 }

@@ -23,9 +23,10 @@ public class ModoAleatorioParcial extends Efecto {
     }
 
     @Override
-    public int sortear(List<Casillero> listaCasillerosNumeros, List<Integer> listaNumerosSorteados, List<Integer> listaNumerosApostados) {
+    public int sortear(Mesa mesa) {
         List<Integer> listaNumeros = new ArrayList();
-        listaNumeros.add(0);
+        List<Casillero> listaCasillerosNumeros = mesa.getCasillerosNumericos();
+        List<Integer> listaNumerosSorteados = mesa.getlistaNumerosSorteados();
         for (Casillero casillero : listaCasillerosNumeros) {
             // Se asume que al ser un único número vinculado, se obtiene la posición 0
             listaNumeros.add(casillero.getNumerosVinculados().get(0));

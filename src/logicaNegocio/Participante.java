@@ -8,7 +8,7 @@ import excepcionesSistema.AbandonarMesaEnPausaException;
 import excepcionesSistema.ApuestaException;
 import excepcionesSistema.ApuestaInvalidaException;
 import excepcionesSistema.ApuestasEnProgresoException;
-import excepcionesSistema.MartingalaException;
+import excepcionesSistema.RestriccionTipoApuestaException;
 import excepcionesSistema.MesaException;
 import excepcionesSistema.MesaNoSeleccionadaException;
 import excepcionesSistema.MesaPausadaException;
@@ -43,6 +43,7 @@ public class Participante extends Observable {
     public List<Apuesta> getApuestas() {
         return apuestas;
     }
+    
 
     public Jugador getJugador() {
         return jugador;
@@ -66,8 +67,9 @@ public class Participante extends Observable {
             throw new ApuestaException("No se han ingresado fichas.");
         } catch (SaldoInsuficienteException ex3) {
             throw new ApuestaException("No tiene saldo suficiente para realizar esta apuesta.");
-        } catch (MartingalaException ex4) {
-            throw new ApuestaException("No puede recurrir a la estrategia martingala.");
+        } catch (RestriccionTipoApuestaException ex4) {
+            // Como se recurre a un método de validación polimórfico, el mensaje puede variar dependiendo de la subclase (TipoApuesta)
+            throw new ApuestaException(ex4.getMessage());
         }
     }
     
@@ -77,6 +79,24 @@ public class Participante extends Observable {
         } catch (ApuestaInvalidaException ex1) {
             throw new ApuestaException("La apuesta que intenta modificar no existe.");
         }
+    }
+    
+    public List<Apuesta> getApuestasPerdedorasUltimaRonda() {
+        List<Apuesta> listaApuestas = new ArrayList();
+        List<Apuesta> apuestasPerdedorasRondaAnterior = this.mesa.getUltimaRonda().getApuestasPerdedoras();
+        for (Apuesta apuesta : apuestasPerdedorasRondaAnterior) {
+            if (this.apuestas.contains(apuesta)) listaApuestas.add(apuesta);
+        }
+        return listaApuestas;
+    }
+    
+    public List<Apuesta> getApuestasEnCurso() {
+        List<Apuesta> listaApuestas = new ArrayList();
+        List<Apuesta> listaApuestasRondaActual = this.mesa.getRondaActual().getListaApuestas();
+        for (Apuesta apuesta : listaApuestasRondaActual) {
+            if (this.apuestas.contains(apuesta)) listaApuestas.add(apuesta);
+        }
+        return listaApuestas;
     }
     
     public void abandonarMesa() throws MesaException {
@@ -90,20 +110,10 @@ public class Participante extends Observable {
         }
     }
     
-    private void checkApuestaParticipante(Apuesta apuesta) throws SaldoInvalidoException, SaldoInsuficienteException, MartingalaException {
+    private void checkApuestaParticipante(Apuesta apuesta) throws SaldoInvalidoException, SaldoInsuficienteException, RestriccionTipoApuestaException {
         validarExistenciaFichas(apuesta);
         validarSaldoParaApuesta(apuesta);
-        validarMartingala(apuesta);
-    }
-    
-    private void validarMartingala(Apuesta apuesta) throws MartingalaException {
-        List<Apuesta> apuestasParticipante = this.apuestas;
-        if (!apuestasParticipante.isEmpty()) {
-            Apuesta ultimaApuesta = apuestasParticipante.get(this.apuestas.size()-1);
-            if (ultimaApuesta.getCasillero().equals(apuesta.getCasillero()) && apuesta.getMonto() == (ultimaApuesta.getMonto()*2)) {
-                throw new MartingalaException();
-            }
-        }
+        apuesta.validarRestriccionesApuesta(this);
     }
     
     private void validarSaldoParaApuesta(Apuesta apuesta) throws SaldoInsuficienteException {

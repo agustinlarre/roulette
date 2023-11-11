@@ -4,6 +4,7 @@
  */
 package logicaNegocio;
 
+import excepcionesSistema.RestriccionTipoApuestaException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +26,9 @@ public final class ApuestaDocenas extends TipoApuesta {
 
     @Override
     protected void setCasillerosDisponibles() {
-        this.listaCasilleros.add(new Casillero(40, this.listaNumerosPrimeraDocena()));
-        this.listaCasilleros.add(new Casillero(41, this.listaNumerosSegundaDocena()));
-        this.listaCasilleros.add(new Casillero(42, this.listaNumerosTerceraDocena()));
+        this.listaCasilleros.add(new Casillero(40, this.listaNumerosPrimeraDocena(), this));
+        this.listaCasilleros.add(new Casillero(41, this.listaNumerosSegundaDocena(), this));
+        this.listaCasilleros.add(new Casillero(42, this.listaNumerosTerceraDocena(), this));
     }
     
     private List<Integer> listaNumerosPrimeraDocena() {
@@ -79,5 +80,15 @@ public final class ApuestaDocenas extends TipoApuesta {
         lista.add(35);
         lista.add(36);
         return lista;
+    }
+
+    
+    
+//Apuesta de Docena: Apostar a un grupo de 12 números (1-12, 13-24, 25-36).
+//Pago: 3 a 1.
+//    Restricciones: no se puede apostar a más de una docena por ronda.
+    @Override
+    public void validarApuestaSegunTipo(Participante participante, Apuesta apuestaActual) throws RestriccionTipoApuestaException {
+        
     }
 }

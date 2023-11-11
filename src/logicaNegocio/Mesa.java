@@ -7,7 +7,7 @@ package logicaNegocio;
 import excepcionesSistema.AbandonarMesaEnPausaException;
 import excepcionesSistema.ApuestaException;
 import excepcionesSistema.ApuestasEnProgresoException;
-import excepcionesSistema.MartingalaException;
+import excepcionesSistema.RestriccionTipoApuestaException;
 import excepcionesSistema.MesaException;
 import excepcionesSistema.MesaPausadaException;
 import excepcionesSistema.ParticipanteInvalidoException;
@@ -62,7 +62,7 @@ public class Mesa extends Observable {
         if (this.hayPausa) {
             throw new AbandonarMesaEnPausaException();
         }
-        if (this.rondaActual.existenApuestasDeParticipante(participante)) {
+        if (!this.rondaActual.getApuestasSegunParticipante(participante).isEmpty()) {
             throw new ApuestasEnProgresoException();
         }
         this.listaParticipantes.remove(participante);
@@ -131,6 +131,16 @@ public class Mesa extends Observable {
         return this.listaNumerosSorteados;
     }
     
+    public Casillero getCasilleroSegunCellCode(int cellCode) {
+        // Alternativa -> if (tipo.contieneCasillero(cellCode)) ???
+        for (TipoApuesta tipo : this.getTiposApuesta()) {
+            for (Casillero cas : tipo.getCasillerosDisponibles()) {
+                if (cas.getCellCode() == cellCode) return cas;
+            }
+        }
+        return null;
+    }
+    
     private void realizarLiquidacion() {
         List<Apuesta> listaApuestasGanadoras = this.rondaActual.getApuestasGanadoras();
         if (!listaApuestasGanadoras.isEmpty()) {
@@ -183,9 +193,9 @@ public class Mesa extends Observable {
     
     private void generarSorteo(Efecto efecto) {
         // Se trae a la instancia de apuesta directa para obtener los números 1 - 36
-        TipoApuesta apuestaDirecta = (ApuestaDirecta) getTipoApuestaByNombre("Apuesta directa");
         this.rondaActual.setEfecto(efecto);
-        this.rondaActual.sortearNumero(apuestaDirecta.getCasillerosDisponibles(), listaHistoricoNumerosSorteados());
+        // Pasaje de mesa por parámetro, ya que es esta quien es la responsable de conocer los casilleros que se encuentran actualmente disponibles
+        this.rondaActual.sortearNumero(this);
         this.listaRondas.add(rondaActual);
         this.listaNumerosSorteados.add(rondaActual.getNumeroSorteado());
         this.hayPausa = true;
@@ -197,11 +207,17 @@ public class Mesa extends Observable {
         return rondaActual.getNumeroSorteado();
     }
     
-    private TipoApuesta getTipoApuestaByNombre(String nombre) {
+    public List<Casillero> getCasillerosNumericos() {
         for (TipoApuesta tipo : tiposApuesta) {
-            if (tipo.getNombreTipo().equals(nombre)) return tipo;
+            if (tipo.getNombreTipo().equals("Apuesta directa")) {
+                return tipo.getCasillerosDisponibles();
+            }
         }
         return null;
+    }
+    
+    public Ronda getUltimaRonda() {
+        return listaRondas.get(listaRondas.size()-1);
     }
     
     private List<Integer> listaHistoricoNumerosSorteados() {
