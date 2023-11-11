@@ -40,13 +40,11 @@ public class Jugador extends Usuario {
         return this.participaciones;
     }
     
-    // HARDCODEO!!! el participante se creará dentro de este método, no se pasa como argumento
     public void participar(Participante participante) throws MesaException {
         try {
             participante.validar();
             validarParticipacionEnMesa(participante);
             this.participaciones.add(participante);
-            participante.getMesa().addParticipante(participante);
         } catch (MesaNoSeleccionadaException ex1) {
             throw new MesaException("Debe seleccionar una mesa.");
         } catch (ParticipacionYaExistenteException ex2) {

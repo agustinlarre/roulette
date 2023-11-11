@@ -17,4 +17,5 @@ public interface VistaMesaJugador {
     public void mostrarUltimoNroSorteado(int ultimoNum);
     public void mostrarSaldoActual(int saldo);
     public void mostrarValorApostado(int cellCode, int monto);
+    public void limpiarValoresApostados();
 }

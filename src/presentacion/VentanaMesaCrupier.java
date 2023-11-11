@@ -28,36 +28,7 @@ public class VentanaMesaCrupier extends javax.swing.JFrame implements VistaMesaC
         initComponents();
         comboEfectos.setRenderer(new EfectoRenderer());
         controlador = new MesaCrupierControlador(sesionActual, this);
-//        this.sesion = sesionActual;
-//        this.crupier = (Crupier) sesionActual.getUsuario();
-//        this.mesa = crupier.getMesa();
-//        mesa.subscribir(this);
-//        inicializar();
     }
-    
-//    @Override
-//    public void actualizar(Observable origen, Object evento) {
-//        // Cambiar condiciones anidadas
-//        if (evento.equals(Evento.MESA_PAUSADA)) {
-//            
-//        } else if (evento.equals(Evento.RONDA_LIQUIDADA)) {
-//            r.reanudar();
-//            actualizarLabelNroRonda();
-//        } else if (evento.equals(Evento.PARTICIPANTE_AGREGADO)) {
-//            // Implementar actualizacion frame participantes
-//            System.out.print("PARTICIPANTE AGREGADO");
-//        }
-//           
-//    }
-    
-//    @Override
-//    private void inicializarMesa() {
-//        r.desactivarBotones();
-//        popularComboEfectos();
-//        habilitarTiposApuesta();
-//        actualizarLabelNroRonda();
-//        this.labelNroRuleta.setText("Ruleta #" + mesa.getNroMesa());
-//    }
     
     @Override
     public void mostrarUltimoNroSorteado(int ultimoNum) {
@@ -84,12 +55,6 @@ public class VentanaMesaCrupier extends javax.swing.JFrame implements VistaMesaC
         //IMPLEMENTAR...
         System.out.print("PARTICIPANTE AGREGADO");
     }
-    
-//    private void habilitarTiposApuesta() {
-//        for (TipoApuesta tipoApuesta : this.mesa.getTiposApuesta()) {
-//            this.habilitarCasilleros(tipoApuesta.getCasillerosDisponibles());
-//        }
-//    }
     
     @Override 
     public void deshabilitarCasilleros() {
@@ -134,20 +99,10 @@ public class VentanaMesaCrupier extends javax.swing.JFrame implements VistaMesaC
         }
         
     }
-    
-//    private void actualizarLabelsHistorico() {
-//        labelUltimoNro.setText(String.valueOf(mesa.getUltimoNumeroSorteado()));
-//        labelUltimosLanzamientos.setText(labelUltimosLanzamientos.getText() + " " + String.valueOf(mesa.getUltimoNumeroSorteado()));
-//    }
-    
-//    private void actualizarLabelNroRonda() {
-//        labelRonda.setText("Ronda #" + String.valueOf(mesa.getNroRondaActual()));
-//    }
-    
+
     private void nuevaAccionMesa() {
         Efecto efectoSeleccionado = (Efecto) comboEfectos.getSelectedItem();
         controlador.nuevaAccionMesa(efectoSeleccionado);
-//        this.mesa.accionarMesa(efectoSeleccionado);
     }
 
     /**

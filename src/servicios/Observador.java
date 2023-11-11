@@ -17,6 +17,7 @@ public interface Observador {
         RONDA_LIQUIDADA,
         PARTICIPANTE_AGREGADO,
         APUESTA_REALIZADA,
+        APUESTA_MODIFICADA,
         FICHA_AGREGADA
     }
     

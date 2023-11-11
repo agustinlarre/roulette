@@ -23,7 +23,7 @@ import servicios.Observador;
  *
  * @author Agustin
  */
-public class Participante extends Observable {
+public class Participante {
     private Jugador jugador;
     private Mesa mesa;
     private List<Apuesta> apuestas;
@@ -63,13 +63,14 @@ public class Participante extends Observable {
                 apuesta.addFicha(ficha);
                 apuesta.setCasillero(casillero);
                 this.apuestas.add(apuesta);
+                checkApuestaParticipante(apuesta, ficha);
+                actualizarSaldoDuranteApuesta(ficha);
+                this.mesa.recibirApuesta(apuesta);
             } else {
-                this.modificarApuestaDeParticipante(apuesta, ficha);
+                checkApuestaParticipante(apuesta, ficha);
+                actualizarSaldoDuranteApuesta(ficha);
+                this.mesa.modificarApuesta(apuesta, ficha);
             }
-            checkApuestaParticipante(apuesta, ficha);
-            actualizarSaldoDuranteApuesta(ficha);
-            this.mesa.recibirApuesta(apuesta);
-            this.notificar(Observador.Evento.APUESTA_REALIZADA);
         } catch (MesaPausadaException ex1) {
             throw new ApuestaException("No puede realizar apuestas mientras la mesa se encuentre pausada.");
         } catch (SaldoInvalidoException ex2) {
@@ -82,9 +83,9 @@ public class Participante extends Observable {
         }
     }
     
-    private void modificarApuestaDeParticipante(Apuesta apuesta, Ficha ficha) {
-        this.mesa.getRondaActual().agregarNuevoValorApuesta(apuesta, ficha);
-    }
+//    private void modificarApuestaDeParticipante(Apuesta apuesta, Ficha ficha) {
+//        this.mesa.getRondaActual().agregarNuevoValorApuesta(apuesta, ficha);
+//    }
     
     public List<Apuesta> getApuestasPerdedorasUltimaRonda() {
         if (mesa.tieneLanzamientos()) {

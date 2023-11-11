@@ -32,6 +32,7 @@ public class MesaJugadorControlador implements Observador {
         this.vista = vista;
         this.fichaSeleccionada = null;
         mesa.subscribir(this);
+        Fachada.getInstancia().subscribir(this);
         
         this.inicializarMesa();
     }
@@ -43,6 +44,8 @@ public class MesaJugadorControlador implements Observador {
             this.pausar();
         } else if (evento.equals(Evento.RONDA_LIQUIDADA)) {
             this.reanudar();
+        } else if (evento.equals(Evento.APUESTA_REALIZADA) || evento.equals(Evento.APUESTA_MODIFICADA)) {
+            this.mostrarSaldoActual();
         }
     }
     
@@ -51,7 +54,6 @@ public class MesaJugadorControlador implements Observador {
         Casillero casillero = this.mesa.getCasilleroSegunCellCode(cellCode);
         try {
             participante.realizarApuesta(casillero, fichaSeleccionada);
-            this.mostrarSaldoActual();
             this.establecerMontoSegunCasillero(casillero);
             // Mostrar en ventana la ficha ingresada en el casillero
         } catch (ApuestaException ex) {
@@ -67,9 +69,11 @@ public class MesaJugadorControlador implements Observador {
         this.mostrarUltimoNumeroSorteado();
         this.mostrarSaldoActual();
         vista.inhabilitarPantallaMesa();
+        vista.limpiarValoresApostados();
     }
     
     private void reanudar() {
+        this.mostrarSaldoActual();
         vista.actualizarNroRonda(mesa.getNroRondaActual());
         vista.habilitarPantallaMesa();
     }

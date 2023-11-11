@@ -327,4 +327,9 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
     public void mostrarValorApostado(int cellCode, int monto) {
         r.setApuesta(cellCode, monto);
     }
+
+    @Override
+    public void limpiarValoresApostados() {
+        r.limpiar();
+    }
 }

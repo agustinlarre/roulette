@@ -34,7 +34,6 @@ public class Mesa extends Observable {
     private int balance;
     private Ronda rondaActual;
     private boolean hayPausa;
-    private boolean hayLiquidacion;
     private int nroMesa;
     private static int nro = 1;
 
@@ -86,12 +85,17 @@ public class Mesa extends Observable {
     
     public void recibirApuesta(Apuesta apuesta) throws MesaPausadaException {
         if (!this.hayPausa) {
-            if (!rondaActual.getListaApuestas().contains(apuesta)) {
-                this.rondaActual.addApuesta(apuesta);
-            }
+            this.rondaActual.addApuesta(apuesta);
+            // Se le avisa a a la fachada, ya que si el jugador se une a otras mesas, sus ventanas estaran pendientes del saldo modificado
+            Fachada.getInstancia().notificar(Observador.Evento.APUESTA_REALIZADA);
         } else {
             throw new MesaPausadaException();
         }
+    }
+    
+    public void modificarApuesta(Apuesta apuesta, Ficha nuevoValorFicha) {
+        this.rondaActual.agregarNuevoValorApuesta(apuesta, nuevoValorFicha);
+        Fachada.getInstancia().notificar(Observador.Evento.APUESTA_MODIFICADA);
     }
     
     public void accionarMesa(Efecto efecto) {
@@ -100,6 +104,7 @@ public class Mesa extends Observable {
             if (this.hayPausa) {
                 this.hayPausa = false;
                 realizarLiquidacion();
+                inicializarNuevaRonda();
                 // Evaluar si es necesario el evento RONDA_LIQUIDADA ???
                 this.notificar(Observador.Evento.RONDA_LIQUIDADA);
             } else {
@@ -251,10 +256,13 @@ public class Mesa extends Observable {
         this.nroMesa = nro;
         nro++;
         this.hayPausa = false;
-        this.hayLiquidacion = false;
         this.listaParticipantes = new ArrayList();
         this.listaNumerosSorteados = new ArrayList();
         this.listaRondas = new ArrayList();
+        inicializarNuevaRonda();
+    }
+    
+    private void inicializarNuevaRonda() {
         this.rondaActual = new Ronda(null);
     }
 }
