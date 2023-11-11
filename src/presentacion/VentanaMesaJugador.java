@@ -1,5 +1,6 @@
 package presentacion;
 
+import javax.swing.JOptionPane;
 import logicaNegocio.Participante;
 import presentacion.controladores.MesaJugadorControlador;
 import presentacion.vistas.VistaMesaJugador;
@@ -18,6 +19,7 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
      */
     public VentanaMesaJugador(Participante participanteActual) {
         initComponents();
+        iniciarEscuchador();
         controlador = new MesaJugadorControlador(participanteActual, this);
     }
 
@@ -50,12 +52,15 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
         btnFicha10 = new javax.swing.JButton();
         btnFicha50 = new javax.swing.JButton();
         btnFicha100 = new javax.swing.JButton();
+        labelNroRonda = new javax.swing.JLabel();
+        labelMesa = new javax.swing.JLabel();
+        labelNroMesa = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         labelSaldoJugador.setText("SaldoJugador");
 
-        labelRonda.setText("Ronda");
+        labelRonda.setText("Ronda:");
 
         labelNombreJugador.setText("NombreJugador");
 
@@ -85,18 +90,50 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
 
         btnFicha1.setBackground(new java.awt.Color(204, 204, 204));
         btnFicha1.setText("1");
+        btnFicha1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFicha1ActionPerformed(evt);
+            }
+        });
 
         btnFicha5.setBackground(new java.awt.Color(0, 204, 0));
         btnFicha5.setText("5");
+        btnFicha5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFicha5ActionPerformed(evt);
+            }
+        });
 
         btnFicha10.setBackground(new java.awt.Color(0, 102, 204));
         btnFicha10.setText("10");
+        btnFicha10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFicha10ActionPerformed(evt);
+            }
+        });
 
         btnFicha50.setBackground(new java.awt.Color(255, 153, 102));
         btnFicha50.setText("50");
+        btnFicha50.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFicha50ActionPerformed(evt);
+            }
+        });
 
         btnFicha100.setBackground(new java.awt.Color(255, 51, 51));
         btnFicha100.setText("100");
+        btnFicha100.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFicha100ActionPerformed(evt);
+            }
+        });
+
+        labelNroRonda.setText(" ");
+
+        labelMesa.setText("Ruleta:");
+
+        labelNroMesa.setText(" ");
+        labelNroMesa.setToolTipText("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,8 +177,14 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(labelSaldoJugador)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelMesa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelNroMesa)
+                        .addGap(45, 45, 45)
                         .addComponent(labelRonda)
-                        .addGap(303, 303, 303)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelNroRonda)
+                        .addGap(245, 245, 245)
                         .addComponent(labelNombreJugador)))
                 .addContainerGap())
         );
@@ -152,8 +195,11 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelRonda)
                     .addComponent(labelSaldoJugador)
-                    .addComponent(labelNombreJugador))
-                .addGap(18, 18, 18)
+                    .addComponent(labelNombreJugador)
+                    .addComponent(labelNroRonda)
+                    .addComponent(labelMesa)
+                    .addComponent(labelNroMesa))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -162,8 +208,8 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
                     .addComponent(btnFicha1)
                     .addComponent(btnFicha50)
                     .addComponent(btnFicha100)
-                    .addComponent(btnFicha5)
-                    .addComponent(btnFicha10))
+                    .addComponent(btnFicha10)
+                    .addComponent(btnFicha5))
                 .addGap(20, 20, 20)
                 .addComponent(r, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -177,7 +223,7 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelValorOcurrencia, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(labelRondasJugador))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -186,6 +232,26 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnFicha1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFicha1ActionPerformed
+        controlador.almacenarFicha(1);
+    }//GEN-LAST:event_btnFicha1ActionPerformed
+
+    private void btnFicha5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFicha5ActionPerformed
+        controlador.almacenarFicha(5);
+    }//GEN-LAST:event_btnFicha5ActionPerformed
+
+    private void btnFicha10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFicha10ActionPerformed
+        controlador.almacenarFicha(10);
+    }//GEN-LAST:event_btnFicha10ActionPerformed
+
+    private void btnFicha50ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFicha50ActionPerformed
+        controlador.almacenarFicha(50);
+    }//GEN-LAST:event_btnFicha50ActionPerformed
+
+    private void btnFicha100ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFicha100ActionPerformed
+        controlador.almacenarFicha(100);
+    }//GEN-LAST:event_btnFicha100ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbandonar;
@@ -198,7 +264,10 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel labelMesa;
     private javax.swing.JLabel labelNombreJugador;
+    private javax.swing.JLabel labelNroMesa;
+    private javax.swing.JLabel labelNroRonda;
     private javax.swing.JLabel labelNumSorteado;
     private javax.swing.JLabel labelRonda;
     private javax.swing.JLabel labelRondasJugador;
@@ -209,9 +278,53 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
     private javax.swing.JList<String> listaValorOcurrencia;
     private presentacion.PanelRuleta r;
     // End of variables declaration//GEN-END:variables
-
+    
     @Override
     public void mostrarMensajeError(String mensaje) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+    
+    private void iniciarEscuchador() {
+        r.agregar(new PanelRuleta.Escuchador() {
+            @Override
+            public void celdaSeleccionada(int universalCellCode) {
+                controlador.apostar(universalCellCode);
+            }
+        });
+    }
+
+    @Override
+    public void actualizarNroRonda(int nro) {
+        labelNroRonda.setText("#" + String.valueOf(nro));
+    }
+
+    @Override
+    public void habilitarPantallaMesa() {
+        r.reanudar();
+    }
+
+    @Override
+    public void inhabilitarPantallaMesa() {
+        r.pausar();
+    }
+
+    @Override
+    public void mostrarNroMesa(int nro) {
+        labelNroMesa.setText("#" + String.valueOf(nro));
+    }
+
+    @Override
+    public void mostrarUltimoNroSorteado(int ultimoNum) {
+        labelUltimoNumSorteado.setText(String.valueOf(ultimoNum));
+    }
+    
+    @Override
+    public void mostrarSaldoActual(int saldo) {
+        labelSaldoJugador.setText("$" + String.valueOf(saldo));
+    }
+
+    @Override
+    public void mostrarValorApostado(int cellCode, int monto) {
+        r.setApuesta(cellCode, monto);
     }
 }

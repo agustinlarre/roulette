@@ -13,6 +13,7 @@ import logicaNegocio.Mesa;
 import logicaNegocio.TipoApuesta;
 import logicaNegocio.Casillero;
 import logicaNegocio.Efecto;
+import logicaNegocio.Ficha;
 import logicaNegocio.Jugador;
 
 /**
@@ -23,12 +24,14 @@ public class ServicioMesas {
     private List<Mesa> listaMesas;
     private List<TipoApuesta> tiposApuesta;
     private List<Casillero> listaCasilleros;
+    List<Ficha> listaFichas;
     private List<Efecto> listaEfectos;
 
     public ServicioMesas() {
         listaMesas = new ArrayList();
         tiposApuesta = new ArrayList();
         listaEfectos = new ArrayList();
+        listaFichas = new ArrayList();
         listaCasilleros = new ArrayList();
     }
     
@@ -76,5 +79,27 @@ public class ServicioMesas {
     
     public List<Casillero> getCasilleros() {
         return this.listaCasilleros;
+    }
+    
+    public Casillero getCasilleroSegunCellCode(int cellCode) {
+        for (Casillero casillero : listaCasilleros) {
+            if (casillero.getCellCode() == cellCode) return casillero;
+        }
+        return null;
+    }
+    
+    public List<Ficha> getFichas() {
+        return this.listaFichas;
+    }
+    
+    public void addFicha(Ficha ficha) {
+        this.listaFichas.add(ficha);
+    }
+    
+    public Ficha getFichaSegunValor(int valor) {
+        for (Ficha ficha : listaFichas) {
+            if (ficha.getValor() == valor) return ficha;
+        }
+        return null;
     }
 }

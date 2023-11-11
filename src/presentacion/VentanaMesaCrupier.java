@@ -117,6 +117,11 @@ public class VentanaMesaCrupier extends javax.swing.JFrame implements VistaMesaC
         this.labelNroRuleta.setText("Ruleta #" + nroMesa);
     }
     
+    @Override
+    public void mostrarBalanceActual(int balance) {
+        labelBalanceCasa.setText("$" + String.valueOf(balance));
+    }
+    
     private class EfectoRenderer implements ListCellRenderer<Efecto> {
         
         private DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();

@@ -41,11 +41,6 @@ public class Ronda {
         // listaNumerosApostados -> lista de numeros que SI se apostaron en esta ronda
         
         this.numeroSorteado = this.efecto.sortear(mesa);
-        for (Apuesta apuesta : listaApuestas) {
-            if (apuesta.getCasillero().getNumerosVinculados().contains(numeroSorteado)) {
-                
-            }
-        }
     }
     
     // Apuesta llegada desde el manejo de eventos de la MesaCrupier
@@ -68,16 +63,12 @@ public class Ronda {
         return listaApuestasParticipante;
     }
     
-    public void agregarNuevoValorApuesta(Apuesta unaApuesta, Ficha ficha) throws ApuestaInvalidaException {
-        boolean existeApuesta = false;
+    public void agregarNuevoValorApuesta(Apuesta unaApuesta, Ficha ficha) {
         for (Apuesta apuesta : listaApuestas) {
             if (apuesta.equals(unaApuesta)) {
-                existeApuesta = true;
                 apuesta.addFicha(ficha);
             }
-        }
-        if (!existeApuesta) throw new ApuestaInvalidaException();
-        
+        }        
     }
     
     public int getCantTotalApuestas() {
@@ -92,6 +83,14 @@ public class Ronda {
         return montoTotal;
     }
     
+    public int getMontoTotalApostadoSegunParticipante(Participante participante) {
+        int montoTotal = 0; 
+        for (Apuesta apuesta : this.getApuestasSegunParticipante(participante)) {
+            montoTotal += apuesta.getMonto();
+        }
+        return montoTotal;
+    }
+    
     public List<Apuesta> getApuestasGanadoras() {
         List<Apuesta> listaApuestasGanadoras = new ArrayList();
         // Excepcion para el caso de que no haya un número sorteado???
@@ -101,6 +100,14 @@ public class Ronda {
         return listaApuestasGanadoras;
     }
     
+    public int getMontoGanadoSegunParticipante(Participante participante) {
+        int montoGanado = 0;
+        for (Apuesta apuesta : this.getApuestasSegunParticipante(participante)) {
+            if (esApuestaGanadora(apuesta)) montoGanado += apuesta.getMonto();
+        }
+        return montoGanado;
+    }
+    
     public List<Apuesta> getApuestasPerdedoras() {
         List<Apuesta> listaApuestasPerdedoras = new ArrayList();
         // Excepcion para el caso de que no haya un número sorteado???
@@ -108,6 +115,18 @@ public class Ronda {
             if (!esApuestaGanadora(apuesta)) listaApuestasPerdedoras.add(apuesta);
         }
         return listaApuestasPerdedoras;
+    }
+    
+    public int getMontoPerdidoSegunParticipante(Participante participante) {
+        int montoPerdido = 0;
+        for (Apuesta apuesta : this.getApuestasSegunParticipante(participante)) {
+            if (!esApuestaGanadora(apuesta)) montoPerdido += apuesta.getMonto();
+        }
+        return montoPerdido;
+    }
+    
+    public int getBalanceSegunParticipante(Participante participante) {
+        return this.getMontoGanadoSegunParticipante(participante) -this.getMontoPerdidoSegunParticipante(participante);
     }
     
     public List<Integer> getTotalNumerosApostados() {
@@ -122,17 +141,6 @@ public class Ronda {
         }
         return listaNum;
     }
-    
-//    public List<Apuesta> getApuestasSegunParticipante(Participante participante) {
-//        List<Apuesta> listaApuestas = new ArrayList();
-//        for (Apuesta apuesta : this.listaApuestas) {
-//            if (participante.getApuestas().contains(apuesta)) {
-//                listaApuestas.add(apuesta);
-//            }
-//        }
-//        return listaApuestas;
-//    }
-    
     
     private boolean esApuestaGanadora(Apuesta apuesta) {
         return apuesta.getCasillero().getNumerosVinculados().contains(numeroSorteado);

@@ -6,6 +6,7 @@ package presentacion;
 
 import excepcionesSistema.UsuarioException;
 import logicaNegocio.Sesion;
+import presentacion.controladores.LoginCrupierControlador;
 import servicios.Fachada;
 
 /**
@@ -13,18 +14,14 @@ import servicios.Fachada;
  * @author agust
  */
 public class VentanaLoginCrupier extends VentanaLogin {
-    @Override
-    public String getTitulo() {
-        return "Iniciar sesión como crupier...";
+    
+    public VentanaLoginCrupier() {
+        this.setControlador(new LoginCrupierControlador(this));
     }
 
     @Override
-    protected Sesion login(String cedula, String contrasenia) throws UsuarioException {
-        return Fachada.getInstancia().loginCrupier(cedula, contrasenia);
-    }
-
-    @Override
-    protected void proximoCU(Sesion sesionActual) {
+    public void proximoCU(Sesion sesionActual) {
         new VentanaIniciarMesa(sesionActual).setVisible(true);
     }
+    
 }

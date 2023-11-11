@@ -89,4 +89,20 @@ public class Fachada extends Observable {
     public List<Casillero> getCasilleros() {
         return this.servicioMesas.getCasilleros();
     }
+    
+    public Casillero getCasilleroSegunCellCode(int cellCode) {
+        return this.servicioMesas.getCasilleroSegunCellCode(cellCode);
+    }
+    
+    public List<Ficha> getFichas() {
+        return this.servicioMesas.getFichas();
+    }
+    
+    public void addFicha(Ficha ficha) {
+        this.servicioMesas.addFicha(ficha);
+    }
+    
+    public Ficha getFichaSegunValor(int valor) {
+        return this.servicioMesas.getFichaSegunValor(valor);
+    }
 }

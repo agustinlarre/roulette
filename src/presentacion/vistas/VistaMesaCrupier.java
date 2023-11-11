@@ -21,7 +21,7 @@ public interface VistaMesaCrupier {
     public void agregarEfecto(Efecto efecto);
     public void actualizarNroRonda(int nroRonda);
     public void actualizarListaParticipantes();
-    //Posible rename
     public void mostrarUltimoNroSorteado(int ultimoNum);
     public void mostrarUltimosLanzamientos(String ultimosLanzamientos);
+    public void mostrarBalanceActual(int balance);
 }

@@ -18,6 +18,8 @@ import logicaNegocio.Mesa;
 import logicaNegocio.Sesion;
 import servicios.Fachada;
 import logicaNegocio.Participante;
+import presentacion.controladores.UnirseMesaControlador;
+import presentacion.vistas.VistaUnirseMesa;
 import servicios.Observable;
 import servicios.Observador;
 
@@ -25,39 +27,37 @@ import servicios.Observador;
  *
  * @author agust
  */
-public class VentanaUnirseMesa extends javax.swing.JFrame implements Observador {
+public class VentanaUnirseMesa extends javax.swing.JFrame implements VistaUnirseMesa {
     
-    private Sesion sesion;
-    private Jugador jugador;
+    private UnirseMesaControlador controlador;
 
     /**
      * Creates new form VentanaUnirseMesa
      */
     public VentanaUnirseMesa(Sesion sesionActual) {
         initComponents();
-        inicializar();
-        this.sesion = sesionActual;
-        this.jugador = (Jugador) sesionActual.getUsuario();
-        Fachada.getInstancia().subscribir(this);
-        this.setTitle("Aplicación Jugador - Unirse a mesa");
-    }
-    
-    private void inicializar() {
-        hidratarListaMesas();
-    }
-    
-    private void hidratarListaMesas() {
-        List<Mesa> mesasAbiertas = Fachada.getInstancia().getMesas();
-        listaMesasAbiertas.setListData(mesasAbiertas.toArray());
-        listaMesasAbiertas.setCellRenderer(new MesaAbiertaCellRenderer());
-        listaMesasAbiertas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        controlador = new UnirseMesaControlador(sesionActual, this);
     }
 
     @Override
-    public void actualizar(Observable origen, Object evento) {
-        if (evento.equals(Evento.MESA_AGREGADA) || evento.equals(Evento.MESA_CERRADA)) {
-            hidratarListaMesas();
-        }
+    public void obtenerMesasDisponibles(List<Mesa> listaMesas) {
+        listaMesasAbiertas.setListData(listaMesas.toArray());
+        listaMesasAbiertas.setCellRenderer(new MesaAbiertaCellRenderer());
+    }
+
+    @Override
+    public void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    @Override
+    public void proximoCU(Participante participante) {
+        new VentanaMesaJugador(participante).setVisible(true);
+    }
+
+    @Override
+    public void cerrarVentana() {
+        dispose();
     }
     
     private class MesaAbiertaCellRenderer implements ListCellRenderer<Mesa> {
@@ -92,6 +92,7 @@ public class VentanaUnirseMesa extends javax.swing.JFrame implements Observador 
 
         jLabel1.setText("Mesas abiertas");
 
+        listaMesasAbiertas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(listaMesasAbiertas);
 
         btnUnirseMesa.setText("Unirse");
@@ -142,20 +143,12 @@ public class VentanaUnirseMesa extends javax.swing.JFrame implements Observador 
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOffActionPerformed
-        Fachada.getInstancia().logout(this.sesion);
-        dispose();
+        controlador.cerrarSesion();
     }//GEN-LAST:event_btnLogOffActionPerformed
 
     private void btnUnirseMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnirseMesaActionPerformed
-        try {
-            Mesa mesaElegida = (Mesa) listaMesasAbiertas.getSelectedValue();
-            Participante participante = new Participante(this.jugador, mesaElegida);
-            jugador.participar(participante);
-            new VentanaMesaJugador(participante).setVisible(true);
-        } catch(MesaException mesaEx) {
-            JOptionPane.showMessageDialog(this, mesaEx.getMessage());
-        }
-        
+        Mesa mesaElegida = (Mesa) listaMesasAbiertas.getSelectedValue();
+        controlador.unirseMesa(mesaElegida);
     }//GEN-LAST:event_btnUnirseMesaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

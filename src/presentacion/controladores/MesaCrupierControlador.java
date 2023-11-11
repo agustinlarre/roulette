@@ -11,7 +11,6 @@ import logicaNegocio.Efecto;
 import logicaNegocio.Mesa;
 import logicaNegocio.Sesion;
 import logicaNegocio.TipoApuesta;
-import presentacion.PanelRuleta;
 import presentacion.vistas.VistaMesaCrupier;
 import servicios.Fachada;
 import servicios.Observable;
@@ -32,6 +31,7 @@ public class MesaCrupierControlador implements Observador {
         this.crupier = (Crupier) sesion.getUsuario();
         this.mesa = crupier.getMesa();
         this.vista = vista;
+        mesa.subscribir(this);
         
         this.inicializarMesa();
     }
@@ -53,7 +53,9 @@ public class MesaCrupierControlador implements Observador {
     }
     
     private void pausar() {
+        this.mostrarUltimoNumeroSorteado();
         this.mostrarHistoricoNumSorteados();
+        this.mostrarBalanceActual();
         vista.inhabilitarPantallaMesa();
     }
     
@@ -67,10 +69,18 @@ public class MesaCrupierControlador implements Observador {
         vista.deshabilitarCasilleros();
         this.popularEfectos();
         this.habilitarTiposApuesta();
+        this.mostrarBalanceActual();
+    }
+    
+    private void mostrarUltimoNumeroSorteado() {
+        vista.mostrarUltimoNroSorteado(mesa.getUltimoNumeroSorteado());
+    }
+    
+    private void mostrarBalanceActual() {
+        vista.mostrarBalanceActual(mesa.getBalance());
     }
     
     private void mostrarHistoricoNumSorteados() {
-        vista.mostrarUltimoNroSorteado(mesa.getUltimoNumeroSorteado());
         String cadenaNumerosSorteados = "";
         for (int num : mesa.getlistaNumerosSorteados()) {
             cadenaNumerosSorteados += String.valueOf(num) + " - ";

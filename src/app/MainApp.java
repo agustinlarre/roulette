@@ -29,9 +29,9 @@ public class MainApp {
         //Precargas
         precarga();
         
-        testPrueba();
+        //testPrueba();
         
-        //new VentanaInicio().setVisible(true);
+        new VentanaInicio().setVisible(true);
     }
     
     private static void precarga() {
@@ -62,6 +62,18 @@ public class MainApp {
         Fachada.getInstancia().addTipoApuesta(apuestaDirecta);
         Fachada.getInstancia().addTipoApuesta(apuestaColores);
         Fachada.getInstancia().addTipoApuesta(apuestaDocena);
+        
+        // Fichas
+        Ficha ficha1 = new Ficha(1);
+        Ficha ficha5 = new Ficha(5);
+        Ficha ficha10 = new Ficha(10);
+        Ficha ficha50 = new Ficha(50);
+        Ficha ficha100 = new Ficha(100);
+        Fachada.getInstancia().addFicha(ficha1);
+        Fachada.getInstancia().addFicha(ficha5);
+        Fachada.getInstancia().addFicha(ficha10);
+        Fachada.getInstancia().addFicha(ficha50);
+        Fachada.getInstancia().addFicha(ficha100);
         
         // Efectos
         Efecto aleatorioCompleto = new ModoAleatorioCompleto();
@@ -151,9 +163,11 @@ public class MainApp {
         apuesta2.addFicha(ficha5);
         apuesta2.addFicha(ficha1);
         
+        System.out.println("Saldo del jugador: " + participanteJ1.getJugador().getSaldo());
+        
         // Caso de uso, realizo una apuesta
         try {
-            participanteJ1.realizarApuesta(apuesta1);
+            participanteJ1.realizarApuesta(casilleroColoresRojo, ficha1);
             System.out.println("El participante " + participanteJ1.getJugador().getCedula() + " ha apostado $" + participanteJ1.getApuestas().get(participanteJ1.getApuestas().size()-1).getMonto());
         } catch (ApuestaException ex) {
             System.out.println(ex.getMessage());
@@ -161,11 +175,13 @@ public class MainApp {
         
         // Caso de uso, modifico una apuesta ya realizada, agregando una nueva ficha
         try {
-            participanteJ1.modificarApuestaDeParticipante(apuesta1, ficha1);
+            participanteJ1.realizarApuesta(casilleroColoresRojo, ficha1);
             System.out.println("El participante " + participanteJ1.getJugador().getCedula() + " ahora ha apostado $" + participanteJ1.getApuestas().get(participanteJ1.getApuestas().size()-1).getMonto());
         } catch (ApuestaException ex) {
             System.out.println(ex.getMessage());
         }
+        
+        System.out.println("Saldo del jugador: " + participanteJ1.getJugador().getSaldo());
         
         // ---------- CRUPIER ----------
         // Mesa CRUPIER -> LANZAR
@@ -176,10 +192,12 @@ public class MainApp {
         System.out.println("Ronda n°" + mesa.getNroRondaActual() + " - Efecto seleccionado: " + efectoSeleccionado.getNombreEfecto() + " - Número sorteado: " + mesa.getRondaActual().getNumeroSorteado());
         mesa.accionarMesa(efectoSeleccionado);
         
+        System.out.println("Saldo del jugador: " + participanteJ1.getJugador().getSaldo());
+        
         // ---------- JUGADOR ----------
         // Caso de uso, pierdo apuesta e intento hacer martingala
         try {
-            participanteJ1.realizarApuesta(apuesta2);
+            participanteJ1.realizarApuesta(casilleroColoresRojo, ficha5);
         } catch (ApuestaException ex) {
             System.out.println(ex.getMessage());
         }

@@ -54,11 +54,20 @@ public class Participante extends Observable {
     }
     
     // Caso de uso en el que el participante elige un casillero
-    public void realizarApuesta(Apuesta apuesta) throws ApuestaException {
+    public void realizarApuesta(Casillero casillero, Ficha ficha) throws ApuestaException {
         // implementar manejo de excepciones (Ej: saldo insuficiente, no se selecciono una ficha, etc.)
         try {
-            checkApuestaParticipante(apuesta);
-            this.apuestas.add(apuesta);
+            Apuesta apuesta = this.getApuestaExistente(casillero);
+            if (apuesta == null) {
+                apuesta = new Apuesta();
+                apuesta.addFicha(ficha);
+                apuesta.setCasillero(casillero);
+                this.apuestas.add(apuesta);
+            } else {
+                this.modificarApuestaDeParticipante(apuesta, ficha);
+            }
+            checkApuestaParticipante(apuesta, ficha);
+            actualizarSaldoDuranteApuesta(ficha);
             this.mesa.recibirApuesta(apuesta);
             this.notificar(Observador.Evento.APUESTA_REALIZADA);
         } catch (MesaPausadaException ex1) {
@@ -73,21 +82,20 @@ public class Participante extends Observable {
         }
     }
     
-    public void modificarApuestaDeParticipante(Apuesta apuesta, Ficha ficha) throws ApuestaException {
-        try {
-            this.mesa.getRondaActual().agregarNuevoValorApuesta(apuesta, ficha);
-        } catch (ApuestaInvalidaException ex1) {
-            throw new ApuestaException("La apuesta que intenta modificar no existe.");
-        }
+    private void modificarApuestaDeParticipante(Apuesta apuesta, Ficha ficha) {
+        this.mesa.getRondaActual().agregarNuevoValorApuesta(apuesta, ficha);
     }
     
     public List<Apuesta> getApuestasPerdedorasUltimaRonda() {
-        List<Apuesta> listaApuestas = new ArrayList();
-        List<Apuesta> apuestasPerdedorasRondaAnterior = this.mesa.getUltimaRonda().getApuestasPerdedoras();
-        for (Apuesta apuesta : apuestasPerdedorasRondaAnterior) {
-            if (this.apuestas.contains(apuesta)) listaApuestas.add(apuesta);
+        if (mesa.tieneLanzamientos()) {
+            List<Apuesta> listaApuestas = new ArrayList();
+            List<Apuesta> apuestasPerdedorasRondaAnterior = this.mesa.getUltimaRonda().getApuestasPerdedoras();
+            for (Apuesta apuesta : apuestasPerdedorasRondaAnterior) {
+                if (this.apuestas.contains(apuesta)) listaApuestas.add(apuesta);
+            }
+            return listaApuestas;
         }
-        return listaApuestas;
+        return null;
     }
     
     public List<Apuesta> getApuestasEnCurso() {
@@ -110,17 +118,36 @@ public class Participante extends Observable {
         }
     }
     
-    private void checkApuestaParticipante(Apuesta apuesta) throws SaldoInvalidoException, SaldoInsuficienteException, RestriccionTipoApuestaException {
-        validarExistenciaFichas(apuesta);
-        validarSaldoParaApuesta(apuesta);
+    public int getMontoApostadoSegunCasillero(Casillero casillero) {
+        for (Apuesta apuesta : apuestas) {
+            if (apuesta.getCasillero().equals(casillero)) return apuesta.getMonto();
+        }
+        return 0;
+    }
+        
+    private void actualizarSaldoDuranteApuesta(Ficha ficha) {
+        this.jugador.setSaldo(jugador.getSaldo() - ficha.getValor());
+    }
+    
+    private Apuesta getApuestaExistente(Casillero casillero) {
+        for (Apuesta apuesta : this.getApuestasEnCurso()) {
+            if (apuesta.getCasillero().equals(casillero)) return apuesta;
+        }
+        return null;
+    }
+    
+    private void checkApuestaParticipante(Apuesta apuesta, Ficha ultimaFicha) throws SaldoInvalidoException, SaldoInsuficienteException, RestriccionTipoApuestaException {
+        Ficha ultimaFichaAgregada = apuesta.getFichas().get(apuesta.getFichas().size()-1);
+        validarExistenciaFicha(ultimaFichaAgregada);
+        validarSaldoParaApuesta(ultimaFicha);
         apuesta.validarRestriccionesApuesta(this);
     }
     
-    private void validarSaldoParaApuesta(Apuesta apuesta) throws SaldoInsuficienteException {
-        if (this.getJugador().getSaldo() - apuesta.getMonto() < 0) throw new SaldoInsuficienteException();
+    private void validarSaldoParaApuesta(Ficha ultimaFicha) throws SaldoInsuficienteException {
+        if (this.getJugador().getSaldo() - ultimaFicha.getValor() < 0) throw new SaldoInsuficienteException();
     }
     
-    private void validarExistenciaFichas(Apuesta apuesta) throws SaldoInvalidoException {
-        if (apuesta.getFichas().isEmpty()) throw new SaldoInvalidoException();
+    private void validarExistenciaFicha(Ficha ficha) throws SaldoInvalidoException {
+        if (ficha == null) throw new SaldoInvalidoException();
     }
 }

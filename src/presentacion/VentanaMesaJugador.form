@@ -67,8 +67,14 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="labelSaldoJugador" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="labelMesa" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="labelNroMesa" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       <Component id="labelRonda" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="303" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="labelNroRonda" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="245" max="-2" attributes="0"/>
                       <Component id="labelNombreJugador" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -84,8 +90,11 @@
                   <Component id="labelRonda" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labelSaldoJugador" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labelNombreJugador" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelNroRonda" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelMesa" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelNroMesa" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -94,8 +103,8 @@
                   <Component id="btnFicha1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnFicha50" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnFicha100" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnFicha5" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnFicha10" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnFicha5" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               <Component id="r" min="-2" max="-2" attributes="0"/>
@@ -112,14 +121,14 @@
                           <Component id="labelValorOcurrencia" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="labelRondasJugador" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="18" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane1" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
                           <Component id="jScrollPane2" alignment="1" min="-2" pref="103" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -136,7 +145,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="labelRonda">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ronda"/>
+        <Property name="text" type="java.lang.String" value="Ronda:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="labelNombreJugador">
@@ -228,6 +237,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="1"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFicha1ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnFicha5">
       <Properties>
@@ -236,6 +248,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="5"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFicha5ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnFicha10">
       <Properties>
@@ -244,6 +259,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="10"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFicha10ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnFicha50">
       <Properties>
@@ -252,6 +270,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="50"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFicha50ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnFicha100">
       <Properties>
@@ -259,6 +280,25 @@
           <Color blue="33" green="33" red="ff" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="100"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFicha100ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelNroRonda">
+      <Properties>
+        <Property name="text" type="java.lang.String" value=" "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelMesa">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ruleta:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelNroMesa">
+      <Properties>
+        <Property name="text" type="java.lang.String" value=" "/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
     </Component>
   </SubComponents>

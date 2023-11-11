@@ -26,7 +26,6 @@ public class ModoAleatorioCompleto extends Efecto {
     public int sortear(Mesa mesa) {
         List<Integer> listaNumeros = new ArrayList();
         List<Casillero> listaCasillerosNumeros = mesa.getCasillerosNumericos();
-        listaNumeros.add(0);
         for (Casillero casillero : listaCasillerosNumeros) {
             // Se asume que al ser un único número vinculado, se obtiene la posición 0
             listaNumeros.add(casillero.getNumerosVinculados().get(0));

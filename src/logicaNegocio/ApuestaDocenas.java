@@ -89,6 +89,11 @@ public final class ApuestaDocenas extends TipoApuesta {
 //    Restricciones: no se puede apostar a más de una docena por ronda.
     @Override
     public void validarApuestaSegunTipo(Participante participante, Apuesta apuestaActual) throws RestriccionTipoApuestaException {
-        
+        int contadorCasillerosDocenas = 0;
+        List<Apuesta> apuestasActivas = participante.getApuestasEnCurso();
+        for (Apuesta apuesta : apuestasActivas) {
+            if (this.listaCasilleros.contains(apuesta.getCasillero())) contadorCasillerosDocenas++;
+        }
+        if (contadorCasillerosDocenas > 1) throw new RestriccionTipoApuestaException("No se puede apostar a mas de una docena.");
     }
 }

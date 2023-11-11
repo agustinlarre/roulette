@@ -57,6 +57,10 @@ public class Mesa extends Observable {
     public List<Participante> getParticipantes() {
         return this.listaParticipantes;
     }
+
+    public int getBalance() {
+        return balance;
+    }
     
     public void removeParticipante(Participante participante) throws AbandonarMesaEnPausaException, ApuestasEnProgresoException {
         if (this.hayPausa) {
@@ -82,7 +86,9 @@ public class Mesa extends Observable {
     
     public void recibirApuesta(Apuesta apuesta) throws MesaPausadaException {
         if (!this.hayPausa) {
-            this.rondaActual.addApuesta(apuesta);
+            if (!rondaActual.getListaApuestas().contains(apuesta)) {
+                this.rondaActual.addApuesta(apuesta);
+            }
         } else {
             throw new MesaPausadaException();
         }
@@ -154,7 +160,6 @@ public class Mesa extends Observable {
         for (Apuesta apuesta : participante.getApuestas()) {
             if (apuestasGanadoras.contains(apuesta)) {
                 procesarPagoApuesta(participante, apuesta);
-                //Se notifica al jugador que su saldo fue modificado, posible evento???
             } else {
                 modificarBalanceMesa(apuesta.getMonto(), true);
             }
@@ -163,13 +168,12 @@ public class Mesa extends Observable {
     
     private void procesarPagoApuesta(Participante participante, Apuesta apuesta) {
         Jugador jugador = participante.getJugador();
-        int saldo = jugador.getSaldo();
-        int montoGanado = calcularMontoGanado(apuesta, saldo);
+        int montoGanado = calcularMontoGanado(apuesta);
         actualizarSaldoJugador(jugador, montoGanado);
         modificarBalanceMesa(apuesta.getMonto(), false);
     }
     
-    private int calcularMontoGanado(Apuesta apuesta, int saldo) {
+    private int calcularMontoGanado(Apuesta apuesta) {
         for (TipoApuesta tipoApuesta : tiposApuesta) {
             if (tipoApuesta.getCasillerosDisponibles().contains(apuesta.getCasillero())) {
                 return tipoApuesta.getFactorPago() * apuesta.getMonto();
@@ -214,6 +218,10 @@ public class Mesa extends Observable {
             }
         }
         return null;
+    }
+    
+    public boolean tieneLanzamientos() {
+        return !listaRondas.isEmpty();
     }
     
     public Ronda getUltimaRonda() {

@@ -6,6 +6,7 @@ package logicaNegocio;
 
 import excepcionesSistema.MesaException;
 import excepcionesSistema.MesaNoSeleccionadaException;
+import excepcionesSistema.ParticipacionYaExistenteException;
 import excepcionesSistema.SaldoInvalidoException;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,16 +44,23 @@ public class Jugador extends Usuario {
     public void participar(Participante participante) throws MesaException {
         try {
             participante.validar();
+            validarParticipacionEnMesa(participante);
             this.participaciones.add(participante);
-            // AVISAR A MESA QUE SE UNIO UN PARTICIPANTE
             participante.getMesa().addParticipante(participante);
         } catch (MesaNoSeleccionadaException ex1) {
             throw new MesaException("Debe seleccionar una mesa.");
+        } catch (ParticipacionYaExistenteException ex2) {
+            throw new MesaException("El usuario ya está participando en la mesa seleccionada.");
         }
-        // Deberia haber otra excepcion que no permita participar en una mesa dos veces
     }
     
     public void abandonarParticipacion(Participante participante) {
         this.participaciones.remove(participante);
+    }
+    
+    private void validarParticipacionEnMesa(Participante participante) throws ParticipacionYaExistenteException {
+        for (Participante par : participaciones) {
+            if (par.getMesa().equals(participante.getMesa())) throw new ParticipacionYaExistenteException();
+        }
     }
 }

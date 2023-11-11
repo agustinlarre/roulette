@@ -4,7 +4,6 @@
  */
 package presentacion;
 
-import excepcionesSistema.MesaException;
 import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -14,31 +13,26 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListCellRenderer;
-import javax.swing.ListSelectionModel;
-import logicaNegocio.Crupier;
-import logicaNegocio.Mesa;
 import logicaNegocio.Sesion;
 import logicaNegocio.TipoApuesta;
+import presentacion.controladores.IniciarMesaControlador;
+import presentacion.vistas.VistaIniciarMesa;
 import servicios.Fachada;
 
 /**
  *
  * @author agust
  */
-public class VentanaIniciarMesa extends javax.swing.JFrame {
+public class VentanaIniciarMesa extends javax.swing.JFrame implements VistaIniciarMesa {
     
-    private Sesion sesion;
-    private Crupier crupier;
+    private IniciarMesaControlador controlador;
 
     /**
      * Creates new form VentanaInicioMesa
      */
     public VentanaIniciarMesa(Sesion sesionActual) {
         initComponents();
-        inicializar();
-        this.sesion = sesionActual;
-        this.crupier = (Crupier) sesionActual.getUsuario();
-        this.setTitle("Aplicación Crupier - Iniciar mesa");
+        controlador = new IniciarMesaControlador(sesionActual, this);
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -47,17 +41,25 @@ public class VentanaIniciarMesa extends javax.swing.JFrame {
         });
     }
     
-    private void inicializar() {
-        hidratarListaTiposApuesta();
-    }
-    
-    private void hidratarListaTiposApuesta() {
-        //Como elegir el tipo de apuesta seleccionado de la lista...
-        List<TipoApuesta> tiposApuesta = Fachada.getInstancia().getTiposApuesta();
+    @Override
+    public void obtenerTiposApuesta(List<TipoApuesta> tiposApuesta) {
         listaTiposApuesta.setListData(tiposApuesta.toArray());
         listaTiposApuesta.setCellRenderer(new TipoApuestaRenderer());
-        //Habilitar seleccion multiple
-        listaTiposApuesta.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    }
+
+    @Override
+    public void proximoCU(Sesion sesionActual) {
+        new VentanaMesaCrupier(sesionActual).setVisible(true);
+    }
+
+    @Override
+    public void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    @Override
+    public void cerrarVentana() {
+        dispose();
     }
     
     private class TipoApuestaRenderer implements ListCellRenderer<TipoApuesta> {
@@ -129,17 +131,7 @@ public class VentanaIniciarMesa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarMesaActionPerformed
-        try {
-            List<TipoApuesta> tiposApuestaElegidos = listaTiposApuesta.getSelectedValuesList();
-            Mesa mesa = new Mesa(tiposApuestaElegidos);
-            this.crupier.setMesa(mesa);
-            Fachada.getInstancia().addMesa(mesa);
-            new VentanaMesaCrupier(this.sesion).setVisible(true);
-            dispose();
-        } catch(MesaException mesaEx) {
-            JOptionPane.showMessageDialog(this, mesaEx.getMessage());
-        }
-        
+        controlador.iniciarMesa(listaTiposApuesta.getSelectedValuesList());        
     }//GEN-LAST:event_btnIniciarMesaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

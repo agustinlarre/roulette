@@ -12,6 +12,7 @@ import logicaNegocio.Mesa;
 import logicaNegocio.Participante;
 import logicaNegocio.Sesion;
 import presentacion.vistas.VistaMesaJugador;
+import servicios.Fachada;
 import servicios.Observable;
 import servicios.Observador;
 
@@ -22,37 +23,71 @@ import servicios.Observador;
 public class MesaJugadorControlador implements Observador {
     private Participante participante;
     private Mesa mesa;
+    private Ficha fichaSeleccionada;
     private VistaMesaJugador vista;
 
     public MesaJugadorControlador(Participante participante, VistaMesaJugador vista) {
         this.participante = participante;
         this.mesa = participante.getMesa();
         this.vista = vista;
+        this.fichaSeleccionada = null;
+        mesa.subscribir(this);
         
         this.inicializarMesa();
     }
     
     @Override
     public void actualizar(Observable origen, Object evento) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // Cambiar condiciones anidadas
+        if (evento.equals(Evento.MESA_PAUSADA)) {
+            this.pausar();
+        } else if (evento.equals(Evento.RONDA_LIQUIDADA)) {
+            this.reanudar();
+        }
     }
     
-    public void apostar(int valorFicha, int cellCode) {
+    public void apostar(int cellCode) {
         //Paso int de valor de ficha o el objeto ficha???
-        Ficha ficha = new Ficha(valorFicha);
         Casillero casillero = this.mesa.getCasilleroSegunCellCode(cellCode);
-        Apuesta apuesta = new Apuesta();
-        apuesta.addFicha(ficha);
-        apuesta.setCasillero(casillero);
         try {
-            participante.realizarApuesta(apuesta);
+            participante.realizarApuesta(casillero, fichaSeleccionada);
+            this.mostrarSaldoActual();
+            this.establecerMontoSegunCasillero(casillero);
             // Mostrar en ventana la ficha ingresada en el casillero
         } catch (ApuestaException ex) {
             vista.mostrarMensajeError(ex.getMessage());
         }
     }
     
+    public void almacenarFicha(int valor) {
+        fichaSeleccionada = Fachada.getInstancia().getFichaSegunValor(valor);
+    }
+    
+    private void pausar() {
+        this.mostrarUltimoNumeroSorteado();
+        this.mostrarSaldoActual();
+        vista.inhabilitarPantallaMesa();
+    }
+    
+    private void reanudar() {
+        vista.actualizarNroRonda(mesa.getNroRondaActual());
+        vista.habilitarPantallaMesa();
+    }
+    
     private void inicializarMesa() {
-        
+        vista.mostrarNroMesa(this.mesa.getNroMesa());
+        this.mostrarSaldoActual();
+    }
+    
+    private void establecerMontoSegunCasillero(Casillero casillero) {
+        vista.mostrarValorApostado(casillero.getCellCode(), participante.getMontoApostadoSegunCasillero(casillero));
+    }
+    
+    private void mostrarUltimoNumeroSorteado() {
+        vista.mostrarUltimoNroSorteado(mesa.getUltimoNumeroSorteado());
+    }
+    
+    private void mostrarSaldoActual() {
+        vista.mostrarSaldoActual(participante.getJugador().getSaldo());
     }
 }

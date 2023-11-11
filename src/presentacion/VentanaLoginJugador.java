@@ -6,6 +6,7 @@ package presentacion;
 
 import excepcionesSistema.UsuarioException;
 import logicaNegocio.Sesion;
+import presentacion.controladores.LoginJugadorControlador;
 import servicios.Fachada;
 
 /**
@@ -13,18 +14,13 @@ import servicios.Fachada;
  * @author agust
  */
 public class VentanaLoginJugador extends VentanaLogin {
-    @Override
-    public String getTitulo() {
-        return "Iniciar sesión como jugador...";
+    
+    public VentanaLoginJugador() {
+        this.setControlador(new LoginJugadorControlador(this));
     }
 
     @Override
-    protected Sesion login(String cedula, String contrasenia) throws UsuarioException {
-        return Fachada.getInstancia().loginJugador(cedula, contrasenia);
-    }
-
-    @Override
-    protected void proximoCU(Sesion sesionActual) {
+    public void proximoCU(Sesion sesionActual) {
         new VentanaUnirseMesa(sesionActual).setVisible(true);
     }
 }

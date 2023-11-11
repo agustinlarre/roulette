@@ -39,7 +39,8 @@ public final class ApuestaDirecta extends TipoApuesta {
 
     @Override
     public void validarApuestaSegunTipo(Participante participante, Apuesta apuestaActual) throws RestriccionTipoApuestaException {
-        //
+        // Este tipo de apuesta no tiene limites ni restricciones
     }
+
     
 }

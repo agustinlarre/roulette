@@ -6,13 +6,16 @@ package presentacion;
 
 import excepcionesSistema.UsuarioException;
 import javax.swing.JOptionPane;
-import logicaNegocio.Sesion;
+import presentacion.controladores.LoginControlador;
+import presentacion.vistas.VistaLogin;
 
 /**
  *
  * @author agust
  */
-public abstract class VentanaLogin extends javax.swing.JFrame {
+public abstract class VentanaLogin extends javax.swing.JFrame implements VistaLogin {
+    
+    private LoginControlador controlador;
 
     /**
      * Creates new form VentanaLogin
@@ -20,10 +23,15 @@ public abstract class VentanaLogin extends javax.swing.JFrame {
     public VentanaLogin() {
         initComponents();
         setLocationRelativeTo(null);
-        this.setTitle(this.getTitulo());
     }
-    
-    public abstract String getTitulo();
+        
+    public LoginControlador getControlador() {
+        return controlador;
+    }
+
+    public void setControlador(LoginControlador controlador) {
+        this.controlador = controlador;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -99,21 +107,31 @@ public abstract class VentanaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        try {
-            this.login();
-        } catch (UsuarioException usuarioEx) {
-            JOptionPane.showMessageDialog(this, usuarioEx.getMessage());
-        }
+        this.login();
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void login() throws UsuarioException {
-        Sesion sesionUsuario = this.login(t_cedula.getText(), new String(t_contrasenia.getPassword()));
-        this.proximoCU(sesionUsuario);
+    private void login() {
+        this.controlador.usuarioIntentaIngresar(t_cedula.getText(), new String(t_contrasenia.getPassword()));
     }
     
-    protected abstract Sesion login(String cedula, String contrasenia) throws UsuarioException;
+    @Override
+    public void setearTitulo(String titulo) {
+        this.setTitle(titulo);
+    }
     
-    protected abstract void proximoCU(Sesion sesionActual);
+    @Override
+    public void mostrarError(String mensaje) {
+       JOptionPane.showMessageDialog(this, mensaje);
+    }
+    
+    @Override
+    public void cerrar() {
+        dispose();
+    }
+
+    private void usuarioClickeaX() {
+        controlador.cerrar();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
