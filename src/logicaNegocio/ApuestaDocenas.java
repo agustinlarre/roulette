@@ -94,6 +94,6 @@ public final class ApuestaDocenas extends TipoApuesta {
         for (Apuesta apuesta : apuestasActivas) {
             if (this.listaCasilleros.contains(apuesta.getCasillero())) contadorCasillerosDocenas++;
         }
-        if (contadorCasillerosDocenas > 1) throw new RestriccionTipoApuestaException("No se puede apostar a mas de una docena.");
+        if (contadorCasillerosDocenas >= 1) throw new RestriccionTipoApuestaException("No se puede apostar a mas de una docena.");
     }
 }

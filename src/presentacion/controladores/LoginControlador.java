@@ -9,20 +9,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import logicaNegocio.Sesion;
 import logicaNegocio.Usuario;
-import presentacion.vistas.VistaLogin;
+import presentacion.vistas.LoginVista;
 
 /**
  *
  * @author Agustin
  */
 public abstract class LoginControlador {
-    private VistaLogin vista;
+    private LoginVista vista;
 
-    public VistaLogin getVista() {
+    public LoginVista getVista() {
         return vista;
     }
     
-    public LoginControlador(VistaLogin vista) {
+    public LoginControlador(LoginVista vista) {
         this.vista = vista;
         this.vista.setearTitulo("");
     }

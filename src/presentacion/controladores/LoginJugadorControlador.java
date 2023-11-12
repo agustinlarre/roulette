@@ -6,8 +6,8 @@ package presentacion.controladores;
 
 import excepcionesSistema.UsuarioException;
 import logicaNegocio.Sesion;
+import presentacion.vistas.LoginVista;
 import servicios.Fachada;
-import presentacion.vistas.VistaLogin;
 
 /**
  *
@@ -15,7 +15,7 @@ import presentacion.vistas.VistaLogin;
  */
 public class LoginJugadorControlador extends LoginControlador {
     
-    public LoginJugadorControlador(VistaLogin vista) {
+    public LoginJugadorControlador(LoginVista vista) {
         super(vista);
         this.getVista().setearTitulo( "Login jugador...");
     }

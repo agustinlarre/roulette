@@ -5,7 +5,7 @@
 package presentacion.controladores;
 
 import excepcionesSistema.ApuestaException;
-import logicaNegocio.Apuesta;
+import logicaNegocio.TipoApuesta;
 import logicaNegocio.Casillero;
 import logicaNegocio.Ficha;
 import logicaNegocio.Mesa;
@@ -42,9 +42,9 @@ public class MesaJugadorControlador implements Observador {
         // Cambiar condiciones anidadas
         if (evento.equals(Evento.MESA_PAUSADA)) {
             this.pausar();
-        } else if (evento.equals(Evento.RONDA_LIQUIDADA)) {
+        } else if (evento.equals(Evento.RONDA_REANUDADA)) {
             this.reanudar();
-        } else if (evento.equals(Evento.APUESTA_REALIZADA) || evento.equals(Evento.APUESTA_MODIFICADA)) {
+        } else if (evento.equals(Evento.APUESTA_REALIZADA) || evento.equals(Evento.APUESTA_MODIFICADA) || evento.equals(Evento.PAGO_REALIZADO)) {
             this.mostrarSaldoActual();
         }
     }
@@ -67,7 +67,6 @@ public class MesaJugadorControlador implements Observador {
     
     private void pausar() {
         this.mostrarUltimoNumeroSorteado();
-        this.mostrarSaldoActual();
         vista.inhabilitarPantallaMesa();
         vista.limpiarValoresApostados();
     }
@@ -80,6 +79,8 @@ public class MesaJugadorControlador implements Observador {
     
     private void inicializarMesa() {
         vista.mostrarNroMesa(this.mesa.getNroMesa());
+        vista.deshabilitarCasilleros();
+        this.habilitarTiposApuesta();
         this.mostrarSaldoActual();
     }
     
@@ -93,5 +94,17 @@ public class MesaJugadorControlador implements Observador {
     
     private void mostrarSaldoActual() {
         vista.mostrarSaldoActual(participante.getJugador().getSaldo());
+    }
+    
+    private void habilitarTiposApuesta() {
+        for (TipoApuesta tipoApuesta : this.mesa.getTiposApuesta()) {
+            this.habilitarCasilleros(tipoApuesta);
+        }
+    }
+    
+    private void habilitarCasilleros(TipoApuesta tipoApuesta) {
+        for (Casillero casillero : tipoApuesta.getCasillerosDisponibles()) {
+            vista.habilitarCasillero(casillero.getCellCode());
+        }
     }
 }

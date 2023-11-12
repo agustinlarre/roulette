@@ -10,7 +10,7 @@ import logicaNegocio.Sesion;
  *
  * @author Agustin
  */
-public interface VistaLogin {
+public interface LoginVista {
     public void setearTitulo(String titulo);
     public void mostrarError(String mensaje);
     public void cerrar();

@@ -9,8 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import logicaNegocio.Sesion;
 import logicaNegocio.Usuario;
+import presentacion.vistas.LoginVista;
 import servicios.Fachada;
-import presentacion.vistas.VistaLogin;
 
 /**
  *
@@ -18,7 +18,7 @@ import presentacion.vistas.VistaLogin;
  */
 public class LoginCrupierControlador extends LoginControlador {
     
-    public LoginCrupierControlador(VistaLogin vista) {
+    public LoginCrupierControlador(LoginVista vista) {
         super(vista);
         this.getVista().setearTitulo( "Login crupier...");
     }

@@ -41,7 +41,7 @@ public class MesaCrupierControlador implements Observador {
         // Cambiar condiciones anidadas
         if (evento.equals(Evento.MESA_PAUSADA)) {
             this.pausar();
-        } else if (evento.equals(Evento.RONDA_LIQUIDADA)) {
+        } else if (evento.equals(Evento.RONDA_REANUDADA)) {
             this.reanudar();
         } else if (evento.equals(Evento.PARTICIPANTE_AGREGADO)) {
             vista.actualizarListaParticipantes();
@@ -55,11 +55,11 @@ public class MesaCrupierControlador implements Observador {
     private void pausar() {
         this.mostrarUltimoNumeroSorteado();
         this.mostrarHistoricoNumSorteados();
-        this.mostrarBalanceActual();
         vista.inhabilitarPantallaMesa();
     }
     
     private void reanudar() {
+        this.mostrarBalanceActual();
         vista.actualizarNroRonda(mesa.getNroRondaActual());
         vista.habilitarPantallaMesa();
     }

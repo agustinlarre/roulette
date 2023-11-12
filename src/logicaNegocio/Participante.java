@@ -16,7 +16,7 @@ import excepcionesSistema.SaldoInsuficienteException;
 import excepcionesSistema.SaldoInvalidoException;
 import java.util.ArrayList;
 import java.util.List;
-import servicios.Observable;
+import servicios.Fachada;
 import servicios.Observador;
 
 /**
@@ -60,16 +60,20 @@ public class Participante {
             Apuesta apuesta = this.getApuestaExistente(casillero);
             if (apuesta == null) {
                 apuesta = new Apuesta();
-                apuesta.addFicha(ficha);
                 apuesta.setCasillero(casillero);
-                this.apuestas.add(apuesta);
-                checkApuestaParticipante(apuesta, ficha);
+                checkFichaParticipante(ficha);
+                apuesta.addFicha(ficha);
+                apuesta.validarRestriccionesApuesta(this);
                 actualizarSaldoDuranteApuesta(ficha);
+                this.apuestas.add(apuesta);
                 this.mesa.recibirApuesta(apuesta);
             } else {
-                checkApuestaParticipante(apuesta, ficha);
+                checkFichaParticipante(ficha);
+                apuesta.addFicha(ficha);
+                apuesta.validarRestriccionesApuesta(this);
                 actualizarSaldoDuranteApuesta(ficha);
-                this.mesa.modificarApuesta(apuesta, ficha);
+                Fachada.getInstancia().notificar(Observador.Evento.APUESTA_MODIFICADA);
+                //this.mesa.modificarApuesta(apuesta, ficha);
             }
         } catch (MesaPausadaException ex1) {
             throw new ApuestaException("No puede realizar apuestas mientras la mesa se encuentre pausada.");
@@ -137,11 +141,9 @@ public class Participante {
         return null;
     }
     
-    private void checkApuestaParticipante(Apuesta apuesta, Ficha ultimaFicha) throws SaldoInvalidoException, SaldoInsuficienteException, RestriccionTipoApuestaException {
-        Ficha ultimaFichaAgregada = apuesta.getFichas().get(apuesta.getFichas().size()-1);
-        validarExistenciaFicha(ultimaFichaAgregada);
+    private void checkFichaParticipante(Ficha ultimaFicha) throws SaldoInvalidoException, SaldoInsuficienteException {
+        validarExistenciaFicha(ultimaFicha);
         validarSaldoParaApuesta(ultimaFicha);
-        apuesta.validarRestriccionesApuesta(this);
     }
     
     private void validarSaldoParaApuesta(Ficha ultimaFicha) throws SaldoInsuficienteException {

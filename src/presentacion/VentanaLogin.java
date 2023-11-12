@@ -7,13 +7,13 @@ package presentacion;
 import excepcionesSistema.UsuarioException;
 import javax.swing.JOptionPane;
 import presentacion.controladores.LoginControlador;
-import presentacion.vistas.VistaLogin;
+import presentacion.vistas.LoginVista;
 
 /**
  *
  * @author agust
  */
-public abstract class VentanaLogin extends javax.swing.JFrame implements VistaLogin {
+public abstract class VentanaLogin extends javax.swing.JFrame implements LoginVista {
     
     private LoginControlador controlador;
 

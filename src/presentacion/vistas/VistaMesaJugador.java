@@ -9,6 +9,8 @@ package presentacion.vistas;
  * @author Agustin
  */
 public interface VistaMesaJugador {
+    public void deshabilitarCasilleros();
+    public void habilitarCasillero(int cellCode);
     public void mostrarMensajeError(String mensaje);
     public void actualizarNroRonda(int nro);
     public void habilitarPantallaMesa();

@@ -318,6 +318,16 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
         labelUltimoNumSorteado.setText(String.valueOf(ultimoNum));
     }
     
+    @Override 
+    public void deshabilitarCasilleros() {
+        r.desactivarBotones();
+    }
+    
+    @Override
+    public void habilitarCasillero(int cellCode) {
+        r.habilitar(cellCode, true);
+    }
+    
     @Override
     public void mostrarSaldoActual(int saldo) {
         labelSaldoJugador.setText("$" + String.valueOf(saldo));

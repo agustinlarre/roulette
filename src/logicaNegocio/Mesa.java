@@ -105,8 +105,9 @@ public class Mesa extends Observable {
                 this.hayPausa = false;
                 realizarLiquidacion();
                 inicializarNuevaRonda();
-                // Evaluar si es necesario el evento RONDA_LIQUIDADA ???
-                this.notificar(Observador.Evento.RONDA_LIQUIDADA);
+                // Doble notificación? (Fachada & mesa) -> se le notifica a la mesa para que el panel deje de estar pausado, pero... actualizarSaldoJugador()
+                // Notificar a la fachada, ya que el participante quiere saber si gano plata en una mesa para poder utilizarla en las otras
+                this.notificar(Observador.Evento.RONDA_REANUDADA);
             } else {
                 generarSorteo(efecto);
             }
@@ -154,9 +155,15 @@ public class Mesa extends Observable {
     
     private void realizarLiquidacion() {
         List<Apuesta> listaApuestasGanadoras = this.rondaActual.getApuestasGanadoras();
+        List<Apuesta> listaApuestasPerdedoras = this.rondaActual.getApuestasPerdedoras();
         if (!listaApuestasGanadoras.isEmpty()) {
             for (Participante participante : listaParticipantes) {
                 procesarApuestas(participante, listaApuestasGanadoras);
+            }
+        }
+        if (!listaApuestasPerdedoras.isEmpty()) {
+            for (Apuesta apuesta : listaApuestasPerdedoras) {
+                modificarBalanceMesa(apuesta.getMonto(), true);
             }
         }
     }
@@ -165,8 +172,6 @@ public class Mesa extends Observable {
         for (Apuesta apuesta : participante.getApuestas()) {
             if (apuestasGanadoras.contains(apuesta)) {
                 procesarPagoApuesta(participante, apuesta);
-            } else {
-                modificarBalanceMesa(apuesta.getMonto(), true);
             }
         }
     }
@@ -175,7 +180,7 @@ public class Mesa extends Observable {
         Jugador jugador = participante.getJugador();
         int montoGanado = calcularMontoGanado(apuesta);
         actualizarSaldoJugador(jugador, montoGanado);
-        modificarBalanceMesa(apuesta.getMonto(), false);
+        modificarBalanceMesa(montoGanado, false);
     }
     
     private int calcularMontoGanado(Apuesta apuesta) {
@@ -190,6 +195,7 @@ public class Mesa extends Observable {
     private void actualizarSaldoJugador(Jugador jugador, int montoGanado) {
         int nuevoSaldo = jugador.getSaldo() + montoGanado;
         jugador.setSaldo(nuevoSaldo);
+        Fachada.getInstancia().notificar(Observador.Evento.PAGO_REALIZADO);
     }
 
     private void modificarBalanceMesa(int montoApostado, boolean laCasaGana) {
