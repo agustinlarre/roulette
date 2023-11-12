@@ -10,7 +10,6 @@ import logicaNegocio.Casillero;
 import logicaNegocio.Ficha;
 import logicaNegocio.Mesa;
 import logicaNegocio.Participante;
-import logicaNegocio.Sesion;
 import presentacion.vistas.VistaMesaJugador;
 import servicios.Fachada;
 import servicios.Observable;
@@ -46,6 +45,8 @@ public class MesaJugadorControlador implements Observador {
             this.reanudar();
         } else if (evento.equals(Evento.APUESTA_REALIZADA) || evento.equals(Evento.APUESTA_MODIFICADA) || evento.equals(Evento.PAGO_REALIZADO)) {
             this.mostrarSaldoActual();
+        } else if (evento.equals(Evento.MESA_CERRADA)) {
+            this.salirDeMesa();
         }
     }
     
@@ -69,6 +70,10 @@ public class MesaJugadorControlador implements Observador {
         this.mostrarUltimoNumeroSorteado();
         vista.inhabilitarPantallaMesa();
         vista.limpiarValoresApostados();
+    }
+    
+    private void salirDeMesa() {
+        vista.cerrarVentanaMesa();
     }
     
     private void reanudar() {

@@ -1,9 +1,12 @@
 package presentacion;
 
 import java.awt.Component;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListCellRenderer;
 import logicaNegocio.Efecto;
 import logicaNegocio.Sesion;
@@ -28,6 +31,12 @@ public class VentanaMesaCrupier extends javax.swing.JFrame implements VistaMesaC
         initComponents();
         comboEfectos.setRenderer(new EfectoRenderer());
         controlador = new MesaCrupierControlador(sesionActual, this);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                controlador.cerrarMesa();
+            }
+        });
     }
     
     @Override
@@ -85,6 +94,16 @@ public class VentanaMesaCrupier extends javax.swing.JFrame implements VistaMesaC
     @Override
     public void mostrarBalanceActual(int balance) {
         labelBalanceCasa.setText("$" + String.valueOf(balance));
+    }
+
+    @Override
+    public void mostrarMensajeError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    @Override
+    public void cerrarVentanaMesa() {
+        dispose();
     }
     
     private class EfectoRenderer implements ListCellRenderer<Efecto> {
@@ -257,7 +276,7 @@ public class VentanaMesaCrupier extends javax.swing.JFrame implements VistaMesaC
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCerrarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarMesaActionPerformed
-        // TODO add your handling code here:
+        controlador.cerrarMesa();
     }//GEN-LAST:event_btnCerrarMesaActionPerformed
 
     private void btnLanzarPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLanzarPagarActionPerformed

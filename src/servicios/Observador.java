@@ -11,7 +11,7 @@ package servicios;
 public interface Observador {
     
     public enum Evento {
-        MESA_AGREGADA,
+        LISTA_MESAS_MODIFICADA,
         MESA_CERRADA,
         MESA_PAUSADA,
         RONDA_REANUDADA,

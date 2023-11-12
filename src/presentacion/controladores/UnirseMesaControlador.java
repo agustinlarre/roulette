@@ -34,7 +34,7 @@ public class UnirseMesaControlador implements Observador {
 
     @Override
     public void actualizar(Observable origen, Object evento) {
-        if (evento.equals(Evento.MESA_AGREGADA)) {
+        if (evento.equals(Evento.LISTA_MESAS_MODIFICADA)) {
             this.hidratarMesas();
         }
     }

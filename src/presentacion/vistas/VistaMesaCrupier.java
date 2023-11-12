@@ -17,6 +17,7 @@ public interface VistaMesaCrupier {
     public void inhabilitarPantallaMesa();
     public void habilitarPantallaMesa();
     public void mostrarNroMesa(int nroMesa);
+    public void mostrarMensajeError(String mensaje);
     public void habilitarCasillero(int cellCode);
     public void agregarEfecto(Efecto efecto);
     public void actualizarNroRonda(int nroRonda);
@@ -24,4 +25,5 @@ public interface VistaMesaCrupier {
     public void mostrarUltimoNroSorteado(int ultimoNum);
     public void mostrarUltimosLanzamientos(String ultimosLanzamientos);
     public void mostrarBalanceActual(int balance);
+    public void cerrarVentanaMesa();
 }

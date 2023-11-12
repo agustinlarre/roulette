@@ -342,4 +342,10 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
     public void limpiarValoresApostados() {
         r.limpiar();
     }
+
+    @Override
+    public void cerrarVentanaMesa() {
+        JOptionPane.showMessageDialog(this, "La mesa se cerrará...");
+        dispose();
+    }
 }

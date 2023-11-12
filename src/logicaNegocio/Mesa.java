@@ -5,12 +5,9 @@
 package logicaNegocio;
 
 import excepcionesSistema.AbandonarMesaEnPausaException;
-import excepcionesSistema.ApuestaException;
 import excepcionesSistema.ApuestasEnProgresoException;
-import excepcionesSistema.RestriccionTipoApuestaException;
 import excepcionesSistema.MesaException;
 import excepcionesSistema.MesaPausadaException;
-import excepcionesSistema.ParticipanteInvalidoException;
 import excepcionesSistema.TipoApuestaObligatoriaException;
 import excepcionesSistema.TiposApuestaVaciaException;
 import java.util.ArrayList;
@@ -132,6 +129,7 @@ public class Mesa extends Observable {
         // Si bien la mesa se borra de la lista de mesas de la fachada, la instancia sigue presente, es necesario hacer otro borrado???
         if (this.hayPausa) {
             realizarLiquidacion();
+            this.notificar(Observador.Evento.MESA_CERRADA);
             eliminarParticipantes();
             Fachada.getInstancia().removeMesa(this);
         } else {
@@ -250,10 +248,11 @@ public class Mesa extends Observable {
     
     private void eliminarParticipantes() {
         // Preguntar, ya que para poder borrar al participante de la lista del jugador, debemos pasar por el propio participante para acceder a este ultimo
-        for (Participante participante : this.listaParticipantes) {
-            participante.getJugador().abandonarParticipacion(participante);
-        }
-        this.listaParticipantes = null;
+        if (!listaParticipantes.isEmpty()) {
+            for (Participante participante : this.listaParticipantes) {
+                participante.getJugador().abandonarParticipacion(participante);
+            }
+        }        
     }
     
     private void inicializarMesa(List<TipoApuesta> tiposApuesta) {

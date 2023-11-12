@@ -20,4 +20,5 @@ public interface VistaMesaJugador {
     public void mostrarSaldoActual(int saldo);
     public void mostrarValorApostado(int cellCode, int monto);
     public void limpiarValoresApostados();
+    public void cerrarVentanaMesa();
 }

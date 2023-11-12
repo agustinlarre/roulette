@@ -39,7 +39,7 @@ public class ServicioMesas {
         try {
             mesa.validar();
             listaMesas.add(mesa);
-            Fachada.getInstancia().notificar(Observador.Evento.MESA_AGREGADA);
+            Fachada.getInstancia().notificar(Observador.Evento.LISTA_MESAS_MODIFICADA);
         } catch(TiposApuestaVaciaException ex1) {
             throw new MesaException("Debe seleccionar al menos un tipo de apuesta, recuerde que el tipo de apuesta 'Directa' es obligatorio.");
         } catch(TipoApuestaObligatoriaException ex2) {
@@ -50,7 +50,7 @@ public class ServicioMesas {
     public void removeMesa(Mesa mesa) {
         //Camino feliz -implementar cambios con excepciones-
         listaMesas.remove(mesa);
-        Fachada.getInstancia().notificar(Observador.Evento.MESA_CERRADA);
+        Fachada.getInstancia().notificar(Observador.Evento.LISTA_MESAS_MODIFICADA);
     }
     
     public List<Mesa> getMesas() {

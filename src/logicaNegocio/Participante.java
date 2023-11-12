@@ -73,7 +73,6 @@ public class Participante {
                 apuesta.validarRestriccionesApuesta(this);
                 actualizarSaldoDuranteApuesta(ficha);
                 Fachada.getInstancia().notificar(Observador.Evento.APUESTA_MODIFICADA);
-                //this.mesa.modificarApuesta(apuesta, ficha);
             }
         } catch (MesaPausadaException ex1) {
             throw new ApuestaException("No puede realizar apuestas mientras la mesa se encuentre pausada.");

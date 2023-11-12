@@ -4,7 +4,10 @@
  */
 package presentacion.controladores;
 
+import excepcionesSistema.MesaException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import logicaNegocio.Casillero;
 import logicaNegocio.Crupier;
 import logicaNegocio.Efecto;
@@ -50,6 +53,15 @@ public class MesaCrupierControlador implements Observador {
     
     public void nuevaAccionMesa(Efecto efectoSeleccionado) {
         this.mesa.accionarMesa(efectoSeleccionado);
+    }
+    
+    public void cerrarMesa() {
+        try {
+            mesa.cerrarMesa();
+            vista.cerrarVentanaMesa();
+        } catch (MesaException ex) {
+            vista.mostrarMensajeError(ex.getMessage());
+        }
     }
     
     private void pausar() {
