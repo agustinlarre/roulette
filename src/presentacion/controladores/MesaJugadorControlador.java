@@ -68,8 +68,8 @@ public class MesaJugadorControlador implements Observador {
     
     private void pausar() {
         this.mostrarUltimoNumeroSorteado();
-        vista.inhabilitarPantallaMesa();
         vista.limpiarValoresApostados();
+        vista.inhabilitarPantallaMesa();
     }
     
     private void salirDeMesa() {

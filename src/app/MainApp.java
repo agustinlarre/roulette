@@ -44,11 +44,11 @@ public class MainApp {
         Fachada.getInstancia().addCrupier(crupier3);
         
         // Jugadores
-        Jugador jugador1 = new Jugador("201", "LuckyOne321", 500);
-        Jugador jugador2 = new Jugador("202", "DarkSide55", 750);
-        Jugador jugador3 = new Jugador("203", "PinkKitten77", 250);
-        Jugador jugador4 = new Jugador("204", "HappyGuy99", 1000);
-        Jugador jugador5 = new Jugador("205", "UnluckyBastard03", 1500);
+        Jugador jugador1 = new Jugador("Agustin", "201", "LuckyOne321", 500);
+        Jugador jugador2 = new Jugador("Micaela", "202", "DarkSide55", 750);
+        Jugador jugador3 = new Jugador("Carlos", "203", "PinkKitten77", 250);
+        Jugador jugador4 = new Jugador("Maria", "204", "HappyGuy99", 1000);
+        Jugador jugador5 = new Jugador("Darwin", "205", "UnluckyBastard03", 1500);
         Fachada.getInstancia().addJugador(jugador1);
         Fachada.getInstancia().addJugador(jugador2);
         Fachada.getInstancia().addJugador(jugador3);

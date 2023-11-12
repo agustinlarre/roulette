@@ -37,12 +37,12 @@ public class VentanaUnirseMesa extends javax.swing.JFrame implements VistaUnirse
     public VentanaUnirseMesa(Sesion sesionActual) {
         initComponents();
         controlador = new UnirseMesaControlador(sesionActual, this);
+        listaMesasAbiertas.setCellRenderer(new MesaAbiertaCellRenderer());
     }
 
     @Override
     public void obtenerMesasDisponibles(List<Mesa> listaMesas) {
         listaMesasAbiertas.setListData(listaMesas.toArray());
-        listaMesasAbiertas.setCellRenderer(new MesaAbiertaCellRenderer());
     }
 
     @Override

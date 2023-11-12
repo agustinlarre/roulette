@@ -6,10 +6,9 @@ package presentacion.controladores;
 
 import excepcionesSistema.MesaException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import logicaNegocio.Casillero;
 import logicaNegocio.Crupier;
+import logicaNegocio.Participante;
 import logicaNegocio.Efecto;
 import logicaNegocio.Mesa;
 import logicaNegocio.Sesion;
@@ -35,6 +34,7 @@ public class MesaCrupierControlador implements Observador {
         this.mesa = crupier.getMesa();
         this.vista = vista;
         mesa.subscribir(this);
+        Fachada.getInstancia().subscribir(this);
         
         this.inicializarMesa();
     }
@@ -46,8 +46,12 @@ public class MesaCrupierControlador implements Observador {
             this.pausar();
         } else if (evento.equals(Evento.RONDA_REANUDADA)) {
             this.reanudar();
-        } else if (evento.equals(Evento.PARTICIPANTE_AGREGADO)) {
-            vista.actualizarListaParticipantes();
+        } else if (evento.equals(Evento.PARTICIPANTE_AGREGADO) || evento.equals(Evento.APUESTA_REALIZADA) || evento.equals(Evento.APUESTA_MODIFICADA)) {
+            this.actualizarListaParticipantes();
+        } else if (evento.equals(Evento.FICHA_AGREGADA)) {
+            this.actualizarCantYValorApuestasPorRonda();
+            this.actualizarListaParticipantes();
+            this.actualizarMontoApostadoSegunCasillero();
         }
     }
     
@@ -64,13 +68,29 @@ public class MesaCrupierControlador implements Observador {
         }
     }
     
+    private void actualizarMontoApostadoSegunCasillero() {
+        for (Casillero casillero : mesa.getRondaActual().getCasillerosConApuestas()) {
+            int montoDeCasillero = mesa.getRondaActual().calcularMontoPorCasillero(casillero);
+            vista.mostrarValorApostado(casillero.getCellCode(), montoDeCasillero);
+        }
+    }
+    
+    private void actualizarCantYValorApuestasPorRonda() {
+        int cantidadApuestas = mesa.getRondaActual().getCantTotalApuestas();
+        int valorTotalApuestas = mesa.getRondaActual().getMontoTotalApostado();
+        vista.mostrarTotalApostadoPorRonda(valorTotalApuestas);
+        vista.mostrarCantidadApuestasPorRonda(cantidadApuestas);
+    }
+    
     private void pausar() {
         this.mostrarUltimoNumeroSorteado();
-        this.mostrarHistoricoNumSorteados();
         vista.inhabilitarPantallaMesa();
+        vista.limpiarValoresApostados();
     }
     
     private void reanudar() {
+        this.actualizarHistoricoRondas();
+        this.actualizarListaParticipantes();
         this.mostrarBalanceActual();
         vista.actualizarNroRonda(mesa.getNroRondaActual());
         vista.habilitarPantallaMesa();
@@ -78,6 +98,7 @@ public class MesaCrupierControlador implements Observador {
     
     private void inicializarMesa() {
         vista.mostrarNroMesa(this.mesa.getNroMesa());
+        vista.mostrarNroRonda(mesa.getNroRondaActual());
         vista.deshabilitarCasilleros();
         this.popularEfectos();
         this.habilitarTiposApuesta();
@@ -92,15 +113,6 @@ public class MesaCrupierControlador implements Observador {
         vista.mostrarBalanceActual(mesa.getBalance());
     }
     
-    private void mostrarHistoricoNumSorteados() {
-        String cadenaNumerosSorteados = "";
-        for (int num : mesa.getlistaNumerosSorteados()) {
-            cadenaNumerosSorteados += String.valueOf(num) + " - ";
-        }
-        cadenaNumerosSorteados = cadenaNumerosSorteados.substring(0, cadenaNumerosSorteados.length()-1);
-        vista.mostrarUltimosLanzamientos(cadenaNumerosSorteados);
-    }
-    
     private void habilitarTiposApuesta() {
         for (TipoApuesta tipoApuesta : this.mesa.getTiposApuesta()) {
             this.habilitarCasilleros(tipoApuesta);
@@ -111,6 +123,21 @@ public class MesaCrupierControlador implements Observador {
         for (Casillero casillero : tipoApuesta.getCasillerosDisponibles()) {
             vista.habilitarCasillero(casillero.getCellCode());
         }
+    }
+    
+    private void actualizarHistoricoRondas() {
+        int nroRonda = mesa.getNroUltimaRonda();
+        int balanceAnterior = mesa.getBalanceAnterior();
+        int montoTotalApuestas = mesa.getUltimaRonda().getMontoTotalApostado();
+        int montoRecolectado = mesa.getUltimaRonda().getMontoTotalGanadoPorMesa();
+        int montoPagado = mesa.getUltimaRonda().getMontoTotalGanadoPorParticipantes();
+        int balancePosterior = mesa.getBalance();
+        vista.popularHistoricoRondas(nroRonda, balanceAnterior, montoTotalApuestas, montoRecolectado, montoPagado, balancePosterior);
+        //System.out.println("Ronda: " + nroRonda + " balance anterior: " + balanceAnterior + " apuestas: " + montoTotalApuestas + " Recolectado: " + montoRecolectado + " Pagado: " + montoPagado + " balance posterior: " + balancePosterior);
+    }
+    
+    private void actualizarListaParticipantes() {
+        vista.agregarParticipantes(mesa.getParticipantes());
     }
     
     private void popularEfectos() {

@@ -29,6 +29,7 @@ public class Mesa extends Observable {
     private List<Participante> listaParticipantes;
     private List<Integer> listaNumerosSorteados;
     private int balance;
+    private int balanceAnterior;
     private Ronda rondaActual;
     private boolean hayPausa;
     private int nroMesa;
@@ -90,11 +91,6 @@ public class Mesa extends Observable {
         }
     }
     
-    public void modificarApuesta(Apuesta apuesta, Ficha nuevoValorFicha) {
-        this.rondaActual.agregarNuevoValorApuesta(apuesta, nuevoValorFicha);
-        Fachada.getInstancia().notificar(Observador.Evento.APUESTA_MODIFICADA);
-    }
-    
     public void accionarMesa(Efecto efecto) {
         //Necesario? ya que al inicializar la ventana mesa, el primer select queda seleccionado por defecto, nunca van a existir valores nulos
         if (efecto != null) {
@@ -118,6 +114,10 @@ public class Mesa extends Observable {
     public int getNroRondaActual() {
         // La ronda se agregará una vez lanzada la bola
         return listaRondas.size() +1;
+    }
+    
+    public int getBalanceAnterior() {
+        return balanceAnterior;
     }
     
     public void addParticipante(Participante participante) {
@@ -205,6 +205,7 @@ public class Mesa extends Observable {
     }
     
     private void generarSorteo(Efecto efecto) {
+        balanceAnterior = this.balance;
         // Se trae a la instancia de apuesta directa para obtener los números 1 - 36
         this.rondaActual.setEfecto(efecto);
         // Pasaje de mesa por parámetro, ya que es esta quien es la responsable de conocer los casilleros que se encuentran actualmente disponibles
@@ -235,6 +236,10 @@ public class Mesa extends Observable {
     
     public Ronda getUltimaRonda() {
         return listaRondas.get(listaRondas.size()-1);
+    }
+    
+    public int getNroUltimaRonda() {
+        return this.getNroRondaActual()-1;
     }
     
     private List<Integer> listaHistoricoNumerosSorteados() {

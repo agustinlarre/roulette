@@ -63,14 +63,6 @@ public class Ronda {
         return listaApuestasParticipante;
     }
     
-    public void agregarNuevoValorApuesta(Apuesta unaApuesta, Ficha ficha) {
-        for (Apuesta apuesta : listaApuestas) {
-            if (apuesta.equals(unaApuesta)) {
-                apuesta.addFicha(ficha);
-            }
-        }        
-    }
-    
     public int getCantTotalApuestas() {
         return this.listaApuestas.size();
     }
@@ -100,10 +92,18 @@ public class Ronda {
         return listaApuestasGanadoras;
     }
     
+    public int getMontoTotalGanadoPorParticipantes() {
+        int montoTotal = 0;
+        for (Apuesta apuesta : this.listaApuestas) {
+            if (esApuestaGanadora(apuesta)) montoTotal += (apuesta.getMonto() * apuesta.getCasillero().getTipoApuesta().getFactorPago());
+        }
+        return montoTotal;
+    }
+    
     public int getMontoGanadoSegunParticipante(Participante participante) {
         int montoGanado = 0;
         for (Apuesta apuesta : this.getApuestasSegunParticipante(participante)) {
-            if (esApuestaGanadora(apuesta)) montoGanado += apuesta.getMonto();
+            if (esApuestaGanadora(apuesta)) montoGanado += (apuesta.getMonto() * apuesta.getCasillero().getTipoApuesta().getFactorPago());
         }
         return montoGanado;
     }
@@ -115,6 +115,14 @@ public class Ronda {
             if (!esApuestaGanadora(apuesta)) listaApuestasPerdedoras.add(apuesta);
         }
         return listaApuestasPerdedoras;
+    }
+    
+    public int getMontoTotalGanadoPorMesa() {
+        int montoTotal = 0;
+        for (Apuesta apuesta : this.listaApuestas) {
+            if (!esApuestaGanadora(apuesta)) montoTotal += (apuesta.getMonto());
+        }
+        return montoTotal;
     }
     
     public int getMontoPerdidoSegunParticipante(Participante participante) {
@@ -140,6 +148,25 @@ public class Ronda {
             }
         }
         return listaNum;
+    }
+    
+    public List<Casillero> getCasillerosConApuestas() {
+        if (!listaApuestas.isEmpty()) {
+            List<Casillero> listaCasilleros = new ArrayList();
+            for (Apuesta apuesta : this.listaApuestas) {
+                if (!listaCasilleros.contains(apuesta.getCasillero())) listaCasilleros.add(apuesta.getCasillero());
+            }
+            return listaCasilleros;
+        }
+        return null;
+    }
+    
+    public int calcularMontoPorCasillero(Casillero casillero) {
+        int monto = 0;
+        for (Apuesta apuesta : this.listaApuestas) {
+            if (apuesta.getCasillero().equals(casillero)) monto += apuesta.getMonto();
+        }
+        return monto;
     }
     
     private boolean esApuestaGanadora(Apuesta apuesta) {

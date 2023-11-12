@@ -17,13 +17,13 @@ import servicios.Observador;
  * @author agust
  */
 public class Jugador extends Usuario {
-    private String cedula;
-    private String password;
+    private String nombre;
     private int saldo;
     private List<Participante> participaciones;
 
-    public Jugador(String cedula, String password, int saldoInicial) {
+    public Jugador(String nombre, String cedula, String password, int saldoInicial) {
         super(cedula, password);
+        this.nombre = nombre;
         this.participaciones = new ArrayList();
         this.saldo = saldoInicial;
     }
@@ -34,6 +34,10 @@ public class Jugador extends Usuario {
 
     public void setSaldo(int saldo) {
         this.saldo = saldo;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
     
     public List<Participante> getParticipaciones() {

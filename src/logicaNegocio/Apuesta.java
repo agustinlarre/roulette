@@ -8,6 +8,8 @@ import excepcionesSistema.ApuestaException;
 import excepcionesSistema.RestriccionTipoApuestaException;
 import java.util.ArrayList;
 import java.util.List;
+import servicios.Observable;
+import servicios.Observador;
 
 /**
  *

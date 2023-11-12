@@ -67,11 +67,13 @@ public class Participante {
                 actualizarSaldoDuranteApuesta(ficha);
                 this.apuestas.add(apuesta);
                 this.mesa.recibirApuesta(apuesta);
+                this.mesa.notificar(Observador.Evento.FICHA_AGREGADA);
             } else {
                 checkFichaParticipante(ficha);
                 apuesta.addFicha(ficha);
                 apuesta.validarRestriccionesApuesta(this);
                 actualizarSaldoDuranteApuesta(ficha);
+                this.mesa.notificar(Observador.Evento.FICHA_AGREGADA);
                 Fachada.getInstancia().notificar(Observador.Evento.APUESTA_MODIFICADA);
             }
         } catch (MesaPausadaException ex1) {
@@ -85,10 +87,6 @@ public class Participante {
             throw new ApuestaException(ex4.getMessage());
         }
     }
-    
-//    private void modificarApuestaDeParticipante(Apuesta apuesta, Ficha ficha) {
-//        this.mesa.getRondaActual().agregarNuevoValorApuesta(apuesta, ficha);
-//    }
     
     public List<Apuesta> getApuestasPerdedorasUltimaRonda() {
         if (mesa.tieneLanzamientos()) {
@@ -123,7 +121,7 @@ public class Participante {
     }
     
     public int getMontoApostadoSegunCasillero(Casillero casillero) {
-        for (Apuesta apuesta : apuestas) {
+        for (Apuesta apuesta : this.getApuestasEnCurso()) {
             if (apuesta.getCasillero().equals(casillero)) return apuesta.getMonto();
         }
         return 0;
