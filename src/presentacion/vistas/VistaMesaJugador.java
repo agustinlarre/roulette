@@ -21,4 +21,7 @@ public interface VistaMesaJugador {
     public void mostrarValorApostado(int cellCode, int monto);
     public void limpiarValoresApostados();
     public void cerrarVentanaMesa();
+    public void popularHistoricoRondas(int nroRonda, int totalApostado, int ganado, int perdido, int balance);
+    public void limpiarOcurrencias();
+    public void recibirOcurrencia(int nroSorteado, double ocurrencia);
 }

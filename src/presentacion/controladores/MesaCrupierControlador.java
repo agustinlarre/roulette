@@ -8,7 +8,6 @@ import excepcionesSistema.MesaException;
 import java.util.List;
 import logicaNegocio.Casillero;
 import logicaNegocio.Crupier;
-import logicaNegocio.Participante;
 import logicaNegocio.Efecto;
 import logicaNegocio.Mesa;
 import logicaNegocio.Sesion;

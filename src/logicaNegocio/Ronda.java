@@ -77,9 +77,11 @@ public class Ronda {
     
     public int getMontoTotalApostadoSegunParticipante(Participante participante) {
         int montoTotal = 0; 
-        for (Apuesta apuesta : this.getApuestasSegunParticipante(participante)) {
-            montoTotal += apuesta.getMonto();
-        }
+        if (!this.getApuestasSegunParticipante(participante).isEmpty()) {
+            for (Apuesta apuesta : this.getApuestasSegunParticipante(participante)) {
+                montoTotal += apuesta.getMonto();
+            }
+        } 
         return montoTotal;
     }
     
@@ -102,9 +104,12 @@ public class Ronda {
     
     public int getMontoGanadoSegunParticipante(Participante participante) {
         int montoGanado = 0;
-        for (Apuesta apuesta : this.getApuestasSegunParticipante(participante)) {
-            if (esApuestaGanadora(apuesta)) montoGanado += (apuesta.getMonto() * apuesta.getCasillero().getTipoApuesta().getFactorPago());
+        if (!this.getApuestasSegunParticipante(participante).isEmpty()) {
+            for (Apuesta apuesta : this.getApuestasSegunParticipante(participante)) {
+                if (esApuestaGanadora(apuesta)) montoGanado += (apuesta.getMonto() * apuesta.getCasillero().getTipoApuesta().getFactorPago());
+            }
         }
+        
         return montoGanado;
     }
     
@@ -127,8 +132,10 @@ public class Ronda {
     
     public int getMontoPerdidoSegunParticipante(Participante participante) {
         int montoPerdido = 0;
-        for (Apuesta apuesta : this.getApuestasSegunParticipante(participante)) {
-            if (!esApuestaGanadora(apuesta)) montoPerdido += apuesta.getMonto();
+        if (!this.getApuestasSegunParticipante(participante).isEmpty()) {
+            for (Apuesta apuesta : this.getApuestasSegunParticipante(participante)) {
+                if (!esApuestaGanadora(apuesta)) montoPerdido += apuesta.getMonto();
+            }
         }
         return montoPerdido;
     }

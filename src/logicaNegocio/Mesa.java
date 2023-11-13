@@ -242,13 +242,27 @@ public class Mesa extends Observable {
         return this.getNroRondaActual()-1;
     }
     
-    private List<Integer> listaHistoricoNumerosSorteados() {
-        List<Integer> listaNum = new ArrayList();
-        //Deberiamos evaluar si hay rondas -> posible manejo de excepciones?
-        for (Ronda ronda : listaRondas) {
-            listaNum.add(ronda.getNumeroSorteado());
+    public List<Casillero> obtenerTodosLosCasilleros() {
+        List<Casillero> listaCasilleros = new ArrayList();
+        for (TipoApuesta tipoApuesta : tiposApuesta) {
+            for (Casillero cas : tipoApuesta.getCasillerosDisponibles()) {
+                listaCasilleros.add(cas);
+            }
         }
-        return listaNum;
+        return listaCasilleros;
+    }
+    
+    public double calcularOcurrencia(Casillero casillero) {
+        int cantRondas = this.listaRondas.size();
+        int ocurrencia = 0;
+        for (int numero : this.listaNumerosSorteados) {
+            for (int cellCode : casillero.getNumerosVinculados()) {
+                if (cellCode == numero) {
+                    ocurrencia++;
+                }
+            }
+        }
+        return (double)ocurrencia / cantRondas * 100;
     }
     
     private void eliminarParticipantes() {

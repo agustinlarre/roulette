@@ -50,9 +50,9 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
         labelMesa = new javax.swing.JLabel();
         labelNroMesa = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        listaRondas = new javax.swing.JTextArea();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        listaOcurrencias = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -115,13 +115,13 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
         labelNroMesa.setText(" ");
         labelNroMesa.setToolTipText("");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane3.setViewportView(jTextArea1);
+        listaRondas.setColumns(20);
+        listaRondas.setRows(5);
+        jScrollPane3.setViewportView(listaRondas);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane4.setViewportView(jTextArea2);
+        listaOcurrencias.setColumns(20);
+        listaOcurrencias.setRows(5);
+        jScrollPane4.setViewportView(listaOcurrencias);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -240,8 +240,6 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JLabel labelMesa;
     private javax.swing.JLabel labelNombreJugador;
     private javax.swing.JLabel labelNroMesa;
@@ -250,6 +248,8 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
     private javax.swing.JLabel labelRonda;
     private javax.swing.JLabel labelSaldoJugador;
     private javax.swing.JLabel labelUltimoNumSorteado;
+    private javax.swing.JTextArea listaOcurrencias;
+    private javax.swing.JTextArea listaRondas;
     private presentacion.PanelRuleta r;
     // End of variables declaration//GEN-END:variables
     
@@ -321,5 +321,20 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
     public void cerrarVentanaMesa() {
         JOptionPane.showMessageDialog(this, "La mesa se cerrará...");
         dispose();
+    }
+
+    @Override
+    public void popularHistoricoRondas(int nroRonda, int totalApostado, int ganado, int perdido, int balance) {
+        listaRondas.setText(listaRondas.getText() + "Ronda: " + nroRonda + " - Total apostado: " + totalApostado + " - Ganado: " + ganado + " - Perdido: " + perdido + " Balance: " + balance + "\n");
+    }
+
+    @Override
+    public void recibirOcurrencia(int cellCode, double ocurrencia) {
+        listaOcurrencias.setText(listaOcurrencias.getText() + "Casillero: " + cellCode + " - Ocurrencia: " + ocurrencia + "% \n");
+    }
+    
+    @Override
+    public void limpiarOcurrencias() {
+        listaOcurrencias.setText("");
     }
 }

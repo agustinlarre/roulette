@@ -77,6 +77,8 @@ public class MesaJugadorControlador implements Observador {
     }
     
     private void reanudar() {
+        vista.limpiarOcurrencias();
+        this.actualizarHistoricoRondas();
         this.mostrarSaldoActual();
         vista.actualizarNroRonda(mesa.getNroRondaActual());
         vista.habilitarPantallaMesa();
@@ -96,6 +98,19 @@ public class MesaJugadorControlador implements Observador {
     private void mostrarUltimoNumeroSorteado() {
         vista.mostrarUltimoNroSorteado(mesa.getUltimoNumeroSorteado());
     }
+    
+   private void actualizarHistoricoRondas() {
+        int nroRonda = mesa.getNroUltimaRonda();
+        int totalApostado = mesa.getUltimaRonda().getMontoTotalApostadoSegunParticipante(participante);
+        int montoGanado = mesa.getUltimaRonda().getMontoGanadoSegunParticipante(participante);
+        int montoPerdido = mesa.getUltimaRonda().getMontoPerdidoSegunParticipante(participante);
+        int balance = mesa.getUltimaRonda().getBalanceSegunParticipante(participante);
+        vista.popularHistoricoRondas(nroRonda, totalApostado, montoGanado, montoPerdido, balance);
+        
+        for (Casillero casillero : mesa.obtenerTodosLosCasilleros()) {
+            vista.recibirOcurrencia(casillero.getCellCode(), mesa.calcularOcurrencia(casillero));
+        }
+   }
     
     private void mostrarSaldoActual() {
         vista.mostrarSaldoActual(participante.getJugador().getSaldo());

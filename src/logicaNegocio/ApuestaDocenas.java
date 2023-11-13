@@ -91,9 +91,15 @@ public final class ApuestaDocenas extends TipoApuesta {
     public void validarApuestaSegunTipo(Participante participante, Apuesta apuestaActual) throws RestriccionTipoApuestaException {
         int contadorCasillerosDocenas = 0;
         List<Apuesta> apuestasActivas = participante.getApuestasEnCurso();
+
         for (Apuesta apuesta : apuestasActivas) {
-            if (this.listaCasilleros.contains(apuesta.getCasillero())) contadorCasillerosDocenas++;
+            if (this.listaCasilleros.contains(apuesta.getCasillero())) {
+                contadorCasillerosDocenas++;
+
+                if (!apuesta.getCasillero().equals(apuestaActual.getCasillero())) {
+                    throw new RestriccionTipoApuestaException("No se puede apostar a más de una docena.");
+                }
+            }
         }
-        if (contadorCasillerosDocenas >= 1) throw new RestriccionTipoApuestaException("No se puede apostar a mas de una docena.");
     }
 }
