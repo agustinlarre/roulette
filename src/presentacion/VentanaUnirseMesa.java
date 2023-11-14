@@ -88,7 +88,12 @@ public class VentanaUnirseMesa extends javax.swing.JFrame implements VistaUnirse
         btnUnirseMesa = new javax.swing.JButton();
         btnLogOff = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jLabel1.setText("Mesas abiertas");
 
@@ -150,6 +155,9 @@ public class VentanaUnirseMesa extends javax.swing.JFrame implements VistaUnirse
         Mesa mesaElegida = (Mesa) listaMesasAbiertas.getSelectedValue();
         controlador.unirseMesa(mesaElegida);
     }//GEN-LAST:event_btnUnirseMesaActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    }//GEN-LAST:event_formWindowClosed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogOff;

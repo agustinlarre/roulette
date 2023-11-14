@@ -65,6 +65,7 @@ public class MesaCrupierControlador implements Observador {
         try {
             mesa.cerrarMesa();
             vista.cerrarVentanaMesa();
+            mesa.desubscribir(this);
         } catch (MesaException ex) {
             vista.mostrarMensajeError(ex.getMessage());
         }

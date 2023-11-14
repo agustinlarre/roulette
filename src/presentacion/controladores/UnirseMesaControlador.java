@@ -46,6 +46,7 @@ public class UnirseMesaControlador implements Observador {
             jugador.logoff();
             Fachada.getInstancia().logout(sesion);
             vista.cerrarVentana();
+            Fachada.getInstancia().desubscribir(this);
         } catch (MesaException ex) {
             vista.mostrarError(ex.getMessage());
         }

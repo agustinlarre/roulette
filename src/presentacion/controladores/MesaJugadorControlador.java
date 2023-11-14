@@ -75,6 +75,7 @@ public class MesaJugadorControlador implements Observador {
         try {
             participante.abandonarMesa(false);
             vista.cerrarVentanaMesa();
+            mesa.desubscribir(this);
         } catch (MesaException ex) {
             vista.mostrarMensajeError(ex.getMessage());
         }
