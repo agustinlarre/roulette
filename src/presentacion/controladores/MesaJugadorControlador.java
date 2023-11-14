@@ -5,6 +5,9 @@
 package presentacion.controladores;
 
 import excepcionesSistema.ApuestaException;
+import excepcionesSistema.MesaException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import logicaNegocio.TipoApuesta;
 import logicaNegocio.Casillero;
 import logicaNegocio.Ficha;
@@ -46,7 +49,9 @@ public class MesaJugadorControlador implements Observador {
         } else if (evento.equals(Evento.APUESTA_REALIZADA) || evento.equals(Evento.APUESTA_MODIFICADA) || evento.equals(Evento.PAGO_REALIZADO)) {
             this.mostrarSaldoActual();
         } else if (evento.equals(Evento.MESA_CERRADA)) {
-            this.salirDeMesa();
+            this.salirDeMesaPorCierre();
+        } else if (evento.equals(Evento.JUGADOR_DESLOGUEADO)) {
+            vista.cerrarVentanaMesa();
         }
     }
     
@@ -66,13 +71,24 @@ public class MesaJugadorControlador implements Observador {
         fichaSeleccionada = Fachada.getInstancia().getFichaSegunValor(valor);
     }
     
+    public void abandonarMesa() {
+        try {
+            participante.abandonarMesa(false);
+            vista.cerrarVentanaMesa();
+        } catch (MesaException ex) {
+            vista.mostrarMensajeError(ex.getMessage());
+        }
+    }
+    
     private void pausar() {
         this.mostrarUltimoNumeroSorteado();
         vista.limpiarValoresApostados();
         vista.inhabilitarPantallaMesa();
     }
     
-    private void salirDeMesa() {
+    private void salirDeMesaPorCierre() {
+        participante.getJugador().abandonarParticipacionPorCierre(participante);
+        vista.avisarCierreMesa();
         vista.cerrarVentanaMesa();
     }
     
@@ -80,8 +96,10 @@ public class MesaJugadorControlador implements Observador {
         vista.limpiarOcurrencias();
         this.actualizarHistoricoRondas();
         this.mostrarSaldoActual();
-        vista.actualizarNroRonda(mesa.getNroRondaActual());
         vista.habilitarPantallaMesa();
+        vista.deshabilitarCasilleros();
+        this.habilitarTiposApuesta();
+        vista.actualizarNroRonda(mesa.getNroRondaActual());
     }
     
     private void inicializarMesa() {

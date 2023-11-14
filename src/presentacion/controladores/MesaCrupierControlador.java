@@ -45,7 +45,10 @@ public class MesaCrupierControlador implements Observador {
             this.pausar();
         } else if (evento.equals(Evento.RONDA_REANUDADA)) {
             this.reanudar();
-        } else if (evento.equals(Evento.PARTICIPANTE_AGREGADO) || evento.equals(Evento.APUESTA_REALIZADA) || evento.equals(Evento.APUESTA_MODIFICADA)) {
+        } else if (evento.equals(Evento.PARTICIPANTE_AGREGADO) || 
+                evento.equals(Evento.PARTICIPANTE_ELIMINADO) || 
+                evento.equals(Evento.APUESTA_REALIZADA) || 
+                evento.equals(Evento.APUESTA_MODIFICADA)) {
             this.actualizarListaParticipantes();
         } else if (evento.equals(Evento.FICHA_AGREGADA)) {
             this.actualizarCantYValorApuestasPorRonda();
@@ -91,8 +94,10 @@ public class MesaCrupierControlador implements Observador {
         this.actualizarHistoricoRondas();
         this.actualizarListaParticipantes();
         this.mostrarBalanceActual();
-        vista.actualizarNroRonda(mesa.getNroRondaActual());
         vista.habilitarPantallaMesa();
+        vista.deshabilitarCasilleros();
+        this.habilitarTiposApuesta();
+        vista.actualizarNroRonda(mesa.getNroRondaActual());
     }
     
     private void inicializarMesa() {

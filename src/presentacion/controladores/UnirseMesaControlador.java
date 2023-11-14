@@ -5,6 +5,8 @@
 package presentacion.controladores;
 
 import excepcionesSistema.MesaException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import logicaNegocio.Jugador;
 import logicaNegocio.Mesa;
 import logicaNegocio.Participante;
@@ -40,8 +42,13 @@ public class UnirseMesaControlador implements Observador {
     }
     
     public void cerrarSesion() {
-        Fachada.getInstancia().logout(sesion);
-        vista.cerrarVentana();
+        try {
+            jugador.logoff();
+            Fachada.getInstancia().logout(sesion);
+            vista.cerrarVentana();
+        } catch (MesaException ex) {
+            vista.mostrarError(ex.getMessage());
+        }
     }
     
     public void unirseMesa(Mesa mesa) {

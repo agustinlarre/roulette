@@ -49,7 +49,7 @@ public abstract class VentanaLogin extends javax.swing.JFrame implements LoginVi
         t_contrasenia = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lab_ingreso.setText("Iniciar sesión:");
 
@@ -127,10 +127,6 @@ public abstract class VentanaLogin extends javax.swing.JFrame implements LoginVi
     @Override
     public void cerrar() {
         dispose();
-    }
-
-    private void usuarioClickeaX() {
-        controlador.cerrar();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

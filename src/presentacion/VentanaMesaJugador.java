@@ -54,7 +54,7 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
         jScrollPane4 = new javax.swing.JScrollPane();
         listaOcurrencias = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         labelSaldoJugador.setText("SaldoJugador");
 
@@ -67,6 +67,11 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
         labelNumSorteado.setText("Numero Sorteado: ");
 
         btnAbandonar.setText("Abandonar");
+        btnAbandonar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbandonarActionPerformed(evt);
+            }
+        });
 
         btnFicha1.setBackground(new java.awt.Color(204, 204, 204));
         btnFicha1.setText("1");
@@ -229,6 +234,10 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
         controlador.almacenarFicha(100);
     }//GEN-LAST:event_btnFicha100ActionPerformed
 
+    private void btnAbandonarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbandonarActionPerformed
+       controlador.abandonarMesa();
+    }//GEN-LAST:event_btnAbandonarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbandonar;
     private javax.swing.JButton btnFicha1;
@@ -316,10 +325,14 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
     public void limpiarValoresApostados() {
         r.limpiar();
     }
+    
+    @Override
+    public void avisarCierreMesa() {
+        JOptionPane.showMessageDialog(this, "La mesa se cerrará...");
+    }
 
     @Override
     public void cerrarVentanaMesa() {
-        JOptionPane.showMessageDialog(this, "La mesa se cerrará...");
         dispose();
     }
 

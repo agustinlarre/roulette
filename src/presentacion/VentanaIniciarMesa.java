@@ -89,7 +89,12 @@ public class VentanaIniciarMesa extends javax.swing.JFrame implements VistaInici
         listaTiposApuesta = new javax.swing.JList();
         btnIniciarMesa = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jLabel1.setText("Tipo de apuesta");
 
@@ -133,6 +138,10 @@ public class VentanaIniciarMesa extends javax.swing.JFrame implements VistaInici
     private void btnIniciarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarMesaActionPerformed
         controlador.iniciarMesa(listaTiposApuesta.getSelectedValuesList());        
     }//GEN-LAST:event_btnIniciarMesaActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        controlador.cerrarSesion();
+    }//GEN-LAST:event_formWindowClosed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIniciarMesa;

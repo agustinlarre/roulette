@@ -36,8 +36,6 @@ public class Participante {
     
     public void validar() throws MesaNoSeleccionadaException {
         if (this.mesa == null) throw new MesaNoSeleccionadaException();
-        // Contemplar posibles excepciones
-        mesa.addParticipante(this);
     }
 
     public List<Apuesta> getApuestas() {
@@ -109,15 +107,24 @@ public class Participante {
         return listaApuestas;
     }
     
-    public void abandonarMesa() throws MesaException {
+    public void abandonarMesa(boolean hayLogoff) throws MesaException {
         // Preguntar si es necesario enviar una UsuarioException en el caso de que se quiera borrar un usuario inexistente
-        try {
-            this.mesa.removeParticipante(this);
-        } catch(AbandonarMesaEnPausaException ex1) {
-            throw new MesaException("No se puede abandonar la mesa mientras esté pausada.");
-        } catch (ApuestasEnProgresoException ex2) {
-            throw new MesaException("No se puede abandonar la mesa mientras tengas apuestas en curso.");
+        if (hayLogoff) {
+            this.mesa.eliminarParticipante(this);
+        } else {
+            try {
+                this.mesa.removeParticipacionActiva(this);
+            } catch(AbandonarMesaEnPausaException ex1) {
+                throw new MesaException("No se puede abandonar la mesa mientras esté pausada.");
+            } catch (ApuestasEnProgresoException ex2) {
+                throw new MesaException("No se puede abandonar la mesa mientras tengas apuestas en curso.");
+            }
         }
+        
+    }
+    
+    public void abandonarMesaPorCierre() {
+        this.mesa.eliminarParticipante(this);
     }
     
     public int getMontoApostadoSegunCasillero(Casillero casillero) {
@@ -126,7 +133,7 @@ public class Participante {
         }
         return 0;
     }
-        
+
     private void actualizarSaldoDuranteApuesta(Ficha ficha) {
         this.jugador.setSaldo(jugador.getSaldo() - ficha.getValor());
     }

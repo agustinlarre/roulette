@@ -42,6 +42,10 @@ public class IniciarMesaControlador {
         }
     }
     
+    public void cerrarSesion() {
+        Fachada.getInstancia().logout(sesion);
+    }
+    
     private void hidratarTiposApuesta() {
         vista.obtenerTiposApuesta(Fachada.getInstancia().getTiposApuesta());
     }

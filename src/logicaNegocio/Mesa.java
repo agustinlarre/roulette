@@ -58,15 +58,11 @@ public class Mesa extends Observable {
     public int getBalance() {
         return balance;
     }
-    
-    public void removeParticipante(Participante participante) throws AbandonarMesaEnPausaException, ApuestasEnProgresoException {
-        if (this.hayPausa) {
-            throw new AbandonarMesaEnPausaException();
-        }
-        if (!this.rondaActual.getApuestasSegunParticipante(participante).isEmpty()) {
-            throw new ApuestasEnProgresoException();
-        }
-        this.listaParticipantes.remove(participante);
+        
+    public void removeParticipacionActiva(Participante participante) throws AbandonarMesaEnPausaException, ApuestasEnProgresoException {
+        this.validarPausa();
+        this.validarNoHayApuestasEnCursoDeParticipante(participante);
+        this.eliminarParticipante(participante);
     }
     
     public void validar() throws TipoApuestaObligatoriaException, TiposApuestaVaciaException {
@@ -130,7 +126,6 @@ public class Mesa extends Observable {
         if (this.hayPausa) {
             realizarLiquidacion();
             this.notificar(Observador.Evento.MESA_CERRADA);
-            eliminarParticipantes();
             Fachada.getInstancia().removeMesa(this);
         } else {
             throw new MesaException("Solamente puede cerrar la mesa en caso de que esta se encuentre pausada.");
@@ -216,6 +211,18 @@ public class Mesa extends Observable {
         this.notificar(Observador.Evento.MESA_PAUSADA);
     }
     
+    public void validarPausa() throws AbandonarMesaEnPausaException {
+        if (this.hayPausa) {
+            throw new AbandonarMesaEnPausaException();
+        }
+    }
+    
+    public void validarNoHayApuestasEnCursoDeParticipante(Participante participante) throws ApuestasEnProgresoException {
+        if (!this.rondaActual.getApuestasSegunParticipante(participante).isEmpty()) {
+            throw new ApuestasEnProgresoException();
+        }
+    }
+    
     public int getUltimoNumeroSorteado() {
         // posible manejo de excepciones
         return rondaActual.getNumeroSorteado();
@@ -265,13 +272,11 @@ public class Mesa extends Observable {
         return (double)ocurrencia / cantRondas * 100;
     }
     
-    private void eliminarParticipantes() {
-        // Preguntar, ya que para poder borrar al participante de la lista del jugador, debemos pasar por el propio participante para acceder a este ultimo
-        if (!listaParticipantes.isEmpty()) {
-            for (Participante participante : this.listaParticipantes) {
-                participante.getJugador().abandonarParticipacion(participante);
-            }
-        }        
+    public void eliminarParticipante(Participante participante) {
+        if (listaParticipantes.contains(participante)) {
+            listaParticipantes.remove(participante);
+            this.notificar(Observador.Evento.PARTICIPANTE_ELIMINADO);
+        }
     }
     
     private void inicializarMesa(List<TipoApuesta> tiposApuesta) {

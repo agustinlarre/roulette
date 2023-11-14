@@ -185,7 +185,15 @@ public class VentanaMesaCrupier extends javax.swing.JFrame implements VistaMesaC
         jScrollPane1 = new javax.swing.JScrollPane();
         listaRondas = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         labelNroRuleta.setText("jLabel1");
 
@@ -324,6 +332,14 @@ public class VentanaMesaCrupier extends javax.swing.JFrame implements VistaMesaC
     private void comboEfectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEfectosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboEfectosActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        controlador.cerrarMesa();
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosing
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarMesa;

@@ -20,6 +20,7 @@ public interface VistaMesaJugador {
     public void mostrarSaldoActual(int saldo);
     public void mostrarValorApostado(int cellCode, int monto);
     public void limpiarValoresApostados();
+    public void avisarCierreMesa();
     public void cerrarVentanaMesa();
     public void popularHistoricoRondas(int nroRonda, int totalApostado, int ganado, int perdido, int balance);
     public void limpiarOcurrencias();
