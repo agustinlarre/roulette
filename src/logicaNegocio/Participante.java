@@ -123,10 +123,6 @@ public class Participante {
         
     }
     
-    public void abandonarMesaPorCierre() {
-        this.mesa.eliminarParticipante(this);
-    }
-    
     public int getMontoApostadoSegunCasillero(Casillero casillero) {
         for (Apuesta apuesta : this.getApuestasEnCurso()) {
             if (apuesta.getCasillero().equals(casillero)) return apuesta.getMonto();
