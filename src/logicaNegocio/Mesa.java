@@ -146,71 +146,6 @@ public class Mesa extends Observable {
         return null;
     }
     
-    private void realizarLiquidacion() {
-        List<Apuesta> listaApuestasGanadoras = this.rondaActual.getApuestasGanadoras();
-        List<Apuesta> listaApuestasPerdedoras = this.rondaActual.getApuestasPerdedoras();
-        if (!listaApuestasGanadoras.isEmpty()) {
-            for (Participante participante : listaParticipantes) {
-                procesarApuestas(participante, listaApuestasGanadoras);
-            }
-        }
-        if (!listaApuestasPerdedoras.isEmpty()) {
-            for (Apuesta apuesta : listaApuestasPerdedoras) {
-                modificarBalanceMesa(apuesta.getMonto(), true);
-            }
-        }
-    }
-    
-    private void procesarApuestas(Participante participante, List<Apuesta> apuestasGanadoras) {
-        for (Apuesta apuesta : participante.getApuestas()) {
-            if (apuestasGanadoras.contains(apuesta)) {
-                procesarPagoApuesta(participante, apuesta);
-            }
-        }
-    }
-    
-    private void procesarPagoApuesta(Participante participante, Apuesta apuesta) {
-        Jugador jugador = participante.getJugador();
-        int montoGanado = calcularMontoGanado(apuesta);
-        actualizarSaldoJugador(jugador, montoGanado);
-        modificarBalanceMesa(montoGanado, false);
-    }
-    
-    private int calcularMontoGanado(Apuesta apuesta) {
-        for (TipoApuesta tipoApuesta : tiposApuesta) {
-            if (tipoApuesta.getCasillerosDisponibles().contains(apuesta.getCasillero())) {
-                return tipoApuesta.getFactorPago() * apuesta.getMonto();
-            }
-        }
-        return 0;
-    }
-    
-    private void actualizarSaldoJugador(Jugador jugador, int montoGanado) {
-        int nuevoSaldo = jugador.getSaldo() + montoGanado;
-        jugador.setSaldo(nuevoSaldo);
-        Fachada.getInstancia().notificar(Observador.Evento.PAGO_REALIZADO);
-    }
-
-    private void modificarBalanceMesa(int montoApostado, boolean laCasaGana) {
-        if (laCasaGana) {
-            this.balance += montoApostado;
-        } else {
-            this.balance -= montoApostado;
-        }
-    }
-    
-    private void generarSorteo(Efecto efecto) {
-        balanceAnterior = this.balance;
-        // Se trae a la instancia de apuesta directa para obtener los números 1 - 36
-        this.rondaActual.setEfecto(efecto);
-        // Pasaje de mesa por parámetro, ya que es esta quien es la responsable de conocer los casilleros que se encuentran actualmente disponibles
-        this.rondaActual.sortearNumero(this);
-        this.listaRondas.add(rondaActual);
-        this.listaNumerosSorteados.add(rondaActual.getNumeroSorteado());
-        this.hayPausa = true;
-        this.notificar(Observador.Evento.MESA_PAUSADA);
-    }
-    
     public void validarPausa() throws AbandonarMesaEnPausaException {
         if (this.hayPausa) {
             throw new AbandonarMesaEnPausaException();
@@ -277,6 +212,71 @@ public class Mesa extends Observable {
             listaParticipantes.remove(participante);
             this.notificar(Observador.Evento.PARTICIPANTE_ELIMINADO);
         }
+    }
+    
+    private void realizarLiquidacion() {
+        List<Apuesta> listaApuestasGanadoras = this.rondaActual.getApuestasGanadoras();
+        List<Apuesta> listaApuestasPerdedoras = this.rondaActual.getApuestasPerdedoras();
+        if (!listaApuestasGanadoras.isEmpty()) {
+            for (Participante participante : listaParticipantes) {
+                procesarApuestas(participante, listaApuestasGanadoras);
+            }
+        }
+        if (!listaApuestasPerdedoras.isEmpty()) {
+            for (Apuesta apuesta : listaApuestasPerdedoras) {
+                modificarBalanceMesa(apuesta.getMonto(), true);
+            }
+        }
+    }
+    
+    private void procesarApuestas(Participante participante, List<Apuesta> apuestasGanadoras) {
+        for (Apuesta apuesta : participante.getApuestas()) {
+            if (apuestasGanadoras.contains(apuesta)) {
+                procesarPagoApuesta(participante, apuesta);
+            }
+        }
+    }
+    
+    private void procesarPagoApuesta(Participante participante, Apuesta apuesta) {
+        Jugador jugador = participante.getJugador();
+        int montoGanado = calcularMontoGanado(apuesta);
+        actualizarSaldoJugador(jugador, montoGanado);
+        modificarBalanceMesa(montoGanado, false);
+    }
+    
+    private int calcularMontoGanado(Apuesta apuesta) {
+        for (TipoApuesta tipoApuesta : tiposApuesta) {
+            if (tipoApuesta.getCasillerosDisponibles().contains(apuesta.getCasillero())) {
+                return tipoApuesta.getFactorPago() * apuesta.getMonto();
+            }
+        }
+        return 0;
+    }
+    
+    private void actualizarSaldoJugador(Jugador jugador, int montoGanado) {
+        int nuevoSaldo = jugador.getSaldo() + montoGanado;
+        jugador.setSaldo(nuevoSaldo);
+        Fachada.getInstancia().notificar(Observador.Evento.PAGO_REALIZADO);
+    }
+
+    private void modificarBalanceMesa(int montoApostado, boolean laCasaGana) {
+        if (laCasaGana) {
+            this.balance += montoApostado;
+        } else {
+            this.balance -= montoApostado;
+        }
+    }
+    
+    private void generarSorteo(Efecto efecto) {
+        balanceAnterior = this.balance;
+        // Se trae a la instancia de apuesta directa para obtener los números 1 - 36
+        this.rondaActual.setEfecto(efecto);
+        // Pasaje de mesa por parámetro, ya que es esta quien es la responsable de conocer los casilleros que se encuentran actualmente disponibles
+        this.rondaActual.sortearNumero(this);
+        this.listaRondas.add(rondaActual);
+        this.listaNumerosSorteados.add(rondaActual.getNumeroSorteado());
+        this.hayPausa = true;
+        this.notificar(Observador.Evento.MESA_PAUSADA);
     }
     
     private void inicializarMesa(List<TipoApuesta> tiposApuesta) {

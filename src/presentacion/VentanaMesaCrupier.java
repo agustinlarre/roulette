@@ -66,11 +66,6 @@ public class VentanaMesaCrupier extends javax.swing.JFrame implements VistaMesaC
     }
     
     @Override
-    public void actualizarNroRonda(int nroRonda) {
-        labelRonda.setText("Ronda #" + String.valueOf(nroRonda));
-    }
-    
-    @Override
     public void mostrarNroMesa(int nroMesa) {
         this.labelNroRuleta.setText("Ruleta #" + nroMesa);
     }

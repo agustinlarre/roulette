@@ -28,7 +28,8 @@ public abstract class Observable {
     }
     
     public void notificar(Evento evento) {
-        for (Observador obs : subscriptores) {
+        List<Observador> copiaSubscriptores = new ArrayList<>(subscriptores);
+        for (Observador obs : copiaSubscriptores) {
             obs.actualizar(this, evento);
         }
     }

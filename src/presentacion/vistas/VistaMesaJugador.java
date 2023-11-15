@@ -12,12 +12,13 @@ public interface VistaMesaJugador {
     public void deshabilitarCasilleros();
     public void habilitarCasillero(int cellCode);
     public void mostrarMensajeError(String mensaje);
-    public void actualizarNroRonda(int nro);
+    public void mostrarNroRonda(int nro);
     public void habilitarPantallaMesa();
     public void inhabilitarPantallaMesa();
     public void mostrarNroMesa(int nro);
     public void mostrarUltimoNroSorteado(int ultimoNum);
     public void mostrarSaldoActual(int saldo);
+    public void mostrarNombreJugador(String nombre);
     public void mostrarValorApostado(int cellCode, int monto);
     public void limpiarValoresApostados();
     public void avisarCierreMesa();

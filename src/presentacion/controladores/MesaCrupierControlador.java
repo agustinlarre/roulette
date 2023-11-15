@@ -98,7 +98,7 @@ public class MesaCrupierControlador implements Observador {
         vista.habilitarPantallaMesa();
         vista.deshabilitarCasilleros();
         this.habilitarTiposApuesta();
-        vista.actualizarNroRonda(mesa.getNroRondaActual());
+        vista.mostrarNroRonda(mesa.getNroRondaActual());
     }
     
     private void inicializarMesa() {

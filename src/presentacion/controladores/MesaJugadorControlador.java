@@ -90,6 +90,7 @@ public class MesaJugadorControlador implements Observador {
     private void salirDeMesaPorCierre() {
         participante.getJugador().abandonarParticipacionPorCierre(participante);
         vista.avisarCierreMesa();
+        mesa.desubscribir(this);
         vista.cerrarVentanaMesa();
     }
     
@@ -100,12 +101,14 @@ public class MesaJugadorControlador implements Observador {
         vista.habilitarPantallaMesa();
         vista.deshabilitarCasilleros();
         this.habilitarTiposApuesta();
-        vista.actualizarNroRonda(mesa.getNroRondaActual());
+        vista.mostrarNroRonda(mesa.getNroRondaActual());
     }
     
     private void inicializarMesa() {
         vista.mostrarNroMesa(this.mesa.getNroMesa());
+        vista.mostrarNroRonda(mesa.getNroRondaActual());
         vista.deshabilitarCasilleros();
+        vista.mostrarNombreJugador(participante.getJugador().getNombre());
         this.habilitarTiposApuesta();
         this.mostrarSaldoActual();
     }

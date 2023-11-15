@@ -23,7 +23,6 @@ public interface VistaMesaCrupier {
     public void habilitarCasillero(int cellCode);
     public void agregarEfecto(Efecto efecto);
     public void agregarParticipantes(List<Participante> participantes);
-    public void actualizarNroRonda(int nroRonda);
     public void mostrarUltimoNroSorteado(int ultimoNum);
     public void mostrarBalanceActual(int balance);
     public void mostrarValorApostado(int cellCode, int monto);

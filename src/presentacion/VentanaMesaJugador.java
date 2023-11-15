@@ -277,7 +277,7 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
     }
 
     @Override
-    public void actualizarNroRonda(int nro) {
+    public void mostrarNroRonda(int nro) {
         labelNroRonda.setText("#" + String.valueOf(nro));
     }
 
@@ -329,6 +329,11 @@ public class VentanaMesaJugador extends javax.swing.JFrame implements VistaMesaJ
     @Override
     public void avisarCierreMesa() {
         JOptionPane.showMessageDialog(this, "La mesa se cerrará...");
+    }
+    
+    @Override
+    public void mostrarNombreJugador(String nombre) {
+        labelNombreJugador.setText(nombre);
     }
 
     @Override
